@@ -1,0 +1,332 @@
+/* portal.css - 利用者ポータル専用スタイル */
+
+body {
+    background-color: var(--light-bg);
+}
+
+/* Hero section with welcome */
+.portal-hero {
+    background-color: #fff;
+    padding: 50px 0;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.portal-hero h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.portal-hero p {
+    max-width: 700px;
+    margin: 0 auto 20px;
+    font-size: 1.1rem;
+}
+
+/* Category section */
+.categories {
+    padding: 50px 0;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.category-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+.category-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 2rem;
+}
+
+.category-1 .category-icon {
+    background-color: var(--category-1, #f8d5c8);
+}
+
+.category-2 .category-icon {
+    background-color: var(--category-2, #a3d9d2);
+}
+
+.category-3 .category-icon {
+    background-color: var(--category-3, #f5e7b9);
+}
+
+.category-4 .category-icon {
+    background-color: var(--category-4, #ccd5f3);
+}
+
+.category-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.category-card p {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+/* Therapists section */
+.therapists {
+    padding: 50px 0;
+    background-color: #fff;
+}
+
+.therapists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.therapist-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.therapist-card:hover {
+    transform: translateY(-5px);
+}
+
+.therapist-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.therapist-content {
+    padding: 20px;
+}
+
+.therapist-name {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.therapist-specialty {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.therapist-card p {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.view-all-btn {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Booking process section */
+.booking-process {
+    padding: 50px 0;
+}
+
+.process-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.process-step {
+    width: 23%;
+    text-align: center;
+    position: relative;
+}
+
+.process-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 40px;
+    right: -15%;
+    width: 30%;
+    height: 2px;
+    background-color: var(--secondary-color);
+}
+
+.step-number {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0 auto 20px;
+}
+
+.process-step h3 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.process-step p {
+    font-size: 0.9rem;
+}
+
+.booking-cta {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.booking-cta .btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+}
+
+/* Therapist detail page */
+.therapist-detail {
+    background-color: #fff;
+    padding: 50px 0;
+}
+
+.therapist-profile {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.therapist-photo {
+    width: 300px;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
+
+.therapist-info {
+    flex: 1;
+}
+
+.therapist-info h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.therapist-info .specialty {
+    font-size: 1.2rem;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.qualification-list {
+    margin: 20px 0;
+}
+
+.qualification-list h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.qualification-list ul {
+    padding-left: 20px;
+}
+
+.qualification-list li {
+    margin-bottom: 5px;
+}
+
+.therapist-courses {
+    margin-top: 40px;
+}
+
+.therapist-courses h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.course-card {
+    background-color: var(--light-bg);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.course-card h4 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.course-card .duration,
+.course-card .price {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.booking-button {
+    margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .therapist-profile {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .therapist-photo {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .process-steps {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .process-step {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 30px;
+    }
+
+    .process-step:not(:last-child)::after {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+}

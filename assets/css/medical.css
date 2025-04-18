@@ -1,0 +1,356 @@
+/* 医療機関向けページ専用スタイル */
+
+/* Hero Banner */
+.medical-hero {
+    position: relative;
+    height: 500px;
+    background-image: linear-gradient(rgba(167, 197, 235, 0.8), rgba(167, 197, 235, 0.8)), url('../images/medical-hero.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
+
+.medical-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.medical-hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.medical-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.medical-hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hero-btn:hover {
+    background-color: #3a6348;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Challenges and Solutions */
+.challenges-solutions-section {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+}
+
+.challenges-solutions-container {
+    margin-top: 50px;
+}
+
+.challenge-solution-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.challenge-box,
+.solution-box {
+    flex: 1;
+    min-width: 300px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    display: flex;
+    align-items: flex-start;
+}
+
+.challenge-box {
+    border-left: 5px solid #e57373;
+    margin-right: 20px;
+}
+
+.solution-box {
+    border-left: 5px solid #81c784;
+    margin-left: 20px;
+}
+
+.challenge-icon,
+.solution-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    font-size: 1.8rem;
+}
+
+.challenge-icon {
+    background-color: #ffebee;
+    color: #e57373;
+}
+
+.solution-icon {
+    background-color: #e8f5e9;
+    color: #81c784;
+}
+
+.challenge-content,
+.solution-content {
+    flex: 1;
+}
+
+.challenge-content h3,
+.solution-content h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.solution-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    width: 60px;
+    height: 60px;
+}
+
+.down {
+    color: #e57373;
+}
+
+.up {
+    color: #81c784;
+}
+
+/* Case Studies */
+.case-studies-section {
+    padding: 80px 0;
+    background-color: #fff;
+}
+
+.case-studies-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+.case-study-card {
+    width: 48%;
+    min-width: 300px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+}
+
+.case-study-card:hover {
+    transform: translateY(-5px);
+}
+
+.case-study-image {
+    height: 250px;
+    overflow: hidden;
+}
+
+.case-study-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.case-study-card:hover .case-study-image img {
+    transform: scale(1.05);
+}
+
+.case-study-content {
+    padding: 30px;
+}
+
+.case-study-content h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.case-meta {
+    display: flex;
+    margin-bottom: 15px;
+    color: #777;
+    flex-wrap: wrap;
+}
+
+.case-meta span {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.case-meta i {
+    margin-right: 5px;
+    color: var(--primary-color);
+}
+
+.effect-data {
+    display: flex;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.effect-item {
+    text-align: center;
+    margin-right: 40px;
+    margin-bottom: 15px;
+}
+
+.effect-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: block;
+}
+
+.percentage {
+    font-size: 1.5rem;
+}
+
+.effect-label {
+    font-size: 1rem;
+    color: #777;
+}
+
+/* Strengths Section */
+.strengths-section {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+}
+
+.strengths-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.strength-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.strength-card:hover {
+    transform: translateY(-5px);
+}
+
+.strength-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.strength-card h3 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+/* Plans Section */
+.plans-section {
+    padding: 80px 0;
+    background-color: #fff;
+}
+
+.introduction-methods {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+.method-card {
+    width: 30%;
+    min-width: 250px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+}
+
+.method-card:hover {
+    transform: translateY(-5px);
+}
+
+.method-number {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-right: 20px;
+}
+
+.method-content {
+    flex: 1;
+}
+
+.method-content h3 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+/*
