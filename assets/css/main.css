@@ -434,7 +434,7 @@ footer {
   padding: 60px 40px;
   overflow: hidden;
   background-color: var(--light-bg);
-  background-image: url('/assets/images/hero.jpg'); /* 絶対パスに変更 */
+  background-image: url('../images/hero.jpg'); /* 相対パスに修正 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
