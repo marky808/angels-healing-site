@@ -6,7 +6,7 @@
     --light-bg: #f8f9fa;
     --dark-text: #333;
     --light-text: #fff;
-}
+} /* Added the missing closing curly brace */
 
 * {
     margin: 0;
@@ -290,9 +290,96 @@ footer {
   @media (max-width: 768px) {
     .targets-container {
       flex-direction: column;
+      width: 95%;
+      gap: 20px;
     }
     
     .target-card {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      min-height: auto; /* 高さの最小値制限を解除 */
+      padding: 25px 20px; /* パディングを調整 */
+    }
+    
+    .target-card h3 {
+      font-size: 1.3rem; /* フォントサイズを少し小さく */
+      margin-bottom: 10px;
+    }
+    
+    .target-card p {
+      margin-bottom: 15px;
+      font-size: 0.95rem; /* テキストサイズを調整 */
+    }
+    
+    .target-card .btn {
+      font-size: 0.9rem; /* ボタンのテキストサイズを調整 */
+      padding: 8px 20px; /* ボタンのパディングを調整 */
     }
   }
+  /* ヒーローセクションスタイル - センター寄りに寄り添うように配置 */
+.hero {
+  position: relative;
+  display: flex;
+  justify-content: center; /* 中央揃えに変更 */
+  align-items: center;
+  min-height: 600px;
+  padding: 60px 40px;
+  overflow: hidden;
+  background-color: var(--light-bg);
+}
+
+/* テキストブロックスタイル - センターの左側に配置 */
+.hero-text {
+  position: relative;
+  width: 350px;
+  padding: 25px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  z-index: 2;
+  border-left: 4px solid var(--primary-color);
+  margin-right: 30px; /* ロゴとの間隔を設定 */
+}
+
+.hero-title {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.hero-description {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ロゴスタイル - センターの右側に配置 */
+.hero-logo {
+  width: 40%;
+  max-width: 400px;
+  z-index: 1;
+}
+
+.hero-logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* モバイル対応 */
+@media (max-width: 992px) {
+  .hero {
+    flex-direction: column-reverse; /* テキストを上、ロゴを下に配置 */
+    padding: 40px 20px;
+  }
+  
+  .hero-text {
+    width: 90%;
+    max-width: 400px;
+    margin: 20px auto;
+  }
+  
+  .hero-logo {
+    width: 90%;
+    max-width: 300px;
+    margin: 20px auto;
+    text-align: center;
+  }
+}
