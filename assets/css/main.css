@@ -76,6 +76,11 @@ nav ul li a:hover {
     color: var(--primary-color);
 }
 
+/* mobile-header-left のスタイル */
+.mobile-header-left {
+  display: none; /* デフォルトでは非表示 */
+}
+
 /* ハンバーガーメニュースタイル */
 .hamburger-menu {
   display: none;
@@ -219,6 +224,7 @@ footer {
         align-items: center;
     }
     
+    /* モバイル表示時のみmobile-header-leftを表示 */
     .mobile-header-left {
         display: block;
         order: 1; /* 左端に表示 */
@@ -482,9 +488,4 @@ footer {
     margin: 20px auto;
     text-align: center;
   }
-}
-
-/* mobile-header-left のスタイル */
-.mobile-header-left {
-  display: none;
 }
