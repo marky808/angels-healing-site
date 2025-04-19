@@ -508,17 +508,17 @@ footer {
     margin: 20px auto;
     text-align: center;
   }
+}
+
+/* さらに小さい画面サイズ向け */
+@media (max-width: 480px) {
+  .hero {
+    min-height: 380px; /* さらに高さを小さく */
+    padding: 15px;
+  }
   
-  /* さらに小さい画面サイズ向け */
-  @media (max-width: 480px) {
-    .hero {
-      min-height: 380px; /* さらに高さを小さく */
-      padding: 15px;
-    }
-    
-    .hero-logo {
-      max-width: 280px; /* さらに小さく */
-    }
+  .hero-logo {
+    max-width: 280px; /* さらに小さく */
   }
 }
 
