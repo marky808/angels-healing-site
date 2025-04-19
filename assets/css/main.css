@@ -421,7 +421,7 @@ footer {
     }
 }
 
-/* ヒーローセクションスタイル - センター寄りに寄り添うように配置 */
+/* ヒーローセクションスタイル - 背景画像を設定 */
 .hero {
   position: relative;
   display: flex;
@@ -431,6 +431,23 @@ footer {
   padding: 60px 40px;
   overflow: hidden;
   background-color: var(--light-bg);
+  background-image: url('../images/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* オーバーレイ効果を追加して、テキストが読みやすくなるようにする */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* 暗めのオーバーレイ */
+  z-index: 1;
 }
 
 /* テキストブロックスタイル - センターの左側に配置 */
@@ -461,7 +478,7 @@ footer {
 .hero-logo {
   width: 40%;
   max-width: 400px;
-  z-index: 1;
+  z-index: 2;
 }
 
 .hero-logo img {
