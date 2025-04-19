@@ -13,6 +13,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // ハンバーガーメニュー機能
+    const hamburger = document.querySelector('.hamburger-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    const body = document.body;
+    
+    // オーバーレイ要素を作成
+    const overlay = document.createElement('div');
+    overlay.className = 'menu-overlay';
+    body.appendChild(overlay);
+    
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('open');
+        overlay.classList.toggle('active');
+        
+        // メニュー開いている時はスクロール無効化
+        if (navMenu.classList.contains('open')) {
+            body.style.overflow = 'hidden';
+        } else {
+            body.style.overflow = '';
+        }
+    }
+    
+    hamburger.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
+    
+    // メニューリンククリック時の処理
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (navMenu.classList.contains('open')) {
+                toggleMenu();
+            }
+        });
+    });
+
     // スムーススクロール
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
