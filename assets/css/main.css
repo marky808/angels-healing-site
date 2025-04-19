@@ -81,8 +81,8 @@ nav ul li a:hover {
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 30px;
-  height: 21px;
+  width: 28px;
+  height: 20px;
   cursor: pointer;
   z-index: 100;
 }
@@ -93,6 +93,7 @@ nav ul li a:hover {
   width: 100%;
   background-color: var(--primary-color);
   transition: all 0.3s ease;
+  border-radius: 2px;
 }
 
 /* Section titles */
@@ -212,11 +213,30 @@ footer {
     }
     
     .header-content {
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px 0;
+        align-items: center;
+    }
+    
+    .mobile-header-left {
+        display: block;
+        order: 1; /* 左端に表示 */
     }
     
     .logo {
-        margin-bottom: 15px;
+        margin-bottom: 0;
+        margin-left: auto;
+        margin-right: auto;
+        order: 2; /* 中央に表示 */
+    }
+    
+    .logo h1 {
+        font-size: 1.2rem; /* スマホでのロゴテキストを少し小さく */
+    }
+    
+    .logo img {
+        height: 40px; /* スマホでのロゴ画像を少し小さく */
     }
 
     .hamburger-menu {
@@ -226,28 +246,43 @@ footer {
     .nav-menu {
         position: fixed;
         top: 0;
-        right: -300px;
+        left: -280px; /* 左からスライドインするように変更 */
         width: 250px;
         height: 100vh;
-        background-color: white;
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-        transition: right 0.3s ease;
+        background-color: var(--light-bg);
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        transition: left 0.3s ease;
         z-index: 99;
         padding: 80px 20px 20px;
+        overflow-y: auto;
     }
     
     .nav-menu.open {
-        right: 0;
+        left: 0; /* 左から開くように変更 */
     }
     
     .nav-menu ul {
         flex-direction: column;
         align-items: flex-start;
+        width: 100%;
     }
     
     .nav-menu ul li {
-        margin: 15px 0;
+        margin: 12px 0;
         width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding-bottom: 12px;
+    }
+    
+    .nav-menu ul li:last-child {
+        border-bottom: none;
+    }
+    
+    .nav-menu ul li a {
+        display: block;
+        font-size: 1.1rem;
+        padding: 8px 0;
+        transition: all 0.3s ease;
     }
 
     /* ハンバーガーメニュー アクティブ状態 */
@@ -273,10 +308,21 @@ footer {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 98;
+        backdrop-filter: blur(2px);
     }
     
     .menu-overlay.active {
         display: block;
+    }
+
+    /* 利用者ポータルリンクのモバイルスタイル */
+    .user-portal-link {
+        display: inline-block;
+        width: auto;
+        padding: 8px 15px;
+        margin-top: 10px;
+        text-align: center;
+        border-radius: 4px;
     }
 }
 
@@ -436,4 +482,9 @@ footer {
     margin: 20px auto;
     text-align: center;
   }
+}
+
+/* mobile-header-left のスタイル */
+.mobile-header-left {
+  display: none;
 }
