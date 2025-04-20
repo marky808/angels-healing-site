@@ -96,4 +96,54 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // モーダル機能
+    window.showModal = function(id, title, content) {
+        // 既存のモーダルがあれば削除
+        const existingModal = document.getElementById('info-modal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+        
+        // モーダルの作成
+        const modal = document.createElement('div');
+        modal.id = 'info-modal';
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>${title}</h3>
+                <div class="modal-body">
+                    <p>${content}</p>
+                </div>
+            </div>
+        `;
+        
+        // bodyに追加
+        document.body.appendChild(modal);
+        
+        // モーダルを表示
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
+        
+        // 閉じるボタンの処理
+        const closeBtn = modal.querySelector('.close-modal');
+        closeBtn.addEventListener('click', function() {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.remove();
+            }, 300); // トランジション時間分待つ
+        });
+        
+        // モーダル外クリックで閉じる
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.remove();
+                }, 300); // トランジション時間分待つ
+            }
+        });
+    };
 });

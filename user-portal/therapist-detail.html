@@ -66,6 +66,22 @@
                 </div>
             </div>
             
+            <!-- サロン情報セクション -->
+            <div class="therapist-salon-info" id="therapist-salon-info" style="display: none;">
+                <h3>サロン情報</h3>
+                <div class="salon-details" id="salon-details">
+                    <!-- サロン情報がJSで挿入されます -->
+                </div>
+            </div>
+            
+            <!-- 施術写真セクション -->
+            <div class="treatment-photos" id="treatment-photos-section" style="display: none;">
+                <h3>施術写真</h3>
+                <div class="photos-grid" id="treatment-photos">
+                    <!-- 施術写真がJSで挿入されます -->
+                </div>
+            </div>
+            
             <div class="therapist-courses">
                 <h3>提供コース</h3>
                 
@@ -199,6 +215,62 @@
                     
                     coursesElement.appendChild(courseCard);
                 });
+
+                // サロン情報を更新
+                const salonInfoElement = document.getElementById('therapist-salon-info');
+                const salonDetailsElement = document.getElementById('salon-details');
+                if (therapist.salon_info) {
+                    salonInfoElement.style.display = 'block';
+                    salonDetailsElement.innerHTML = '';
+                    
+                    // サロン名の表示
+                    if (therapist.salon_info.name) {
+                        const salonName = document.createElement('h4');
+                        salonName.textContent = therapist.salon_info.name;
+                        salonDetailsElement.appendChild(salonName);
+                    }
+                    
+                    // サロンURLの表示（リンクとして）
+                    if (therapist.salon_info.url) {
+                        const salonUrl = document.createElement('p');
+                        const salonLink = document.createElement('a');
+                        salonLink.href = therapist.salon_info.url;
+                        salonLink.textContent = 'サロン公式サイト';
+                        salonLink.target = '_blank';
+                        salonUrl.appendChild(salonLink);
+                        salonDetailsElement.appendChild(salonUrl);
+                    }
+                    
+                    // サロン写真の表示
+                    if (therapist.salon_info.photo) {
+                        const salonPhoto = document.createElement('div');
+                        salonPhoto.className = 'salon-photo';
+                        const img = document.createElement('img');
+                        img.src = therapist.salon_info.photo;
+                        img.alt = therapist.salon_info.name || 'サロン写真';
+                        salonPhoto.appendChild(img);
+                        salonDetailsElement.appendChild(salonPhoto);
+                    }
+                }
+
+                // 施術写真を更新
+                const treatmentPhotosSection = document.getElementById('treatment-photos-section');
+                const treatmentPhotosElement = document.getElementById('treatment-photos');
+                if (therapist.treatment_photos && therapist.treatment_photos.length > 0) {
+                    treatmentPhotosSection.style.display = 'block';
+                    treatmentPhotosElement.innerHTML = '';
+                    therapist.treatment_photos.forEach(photo => {
+                        const photoContainer = document.createElement('div');
+                        photoContainer.className = 'treatment-photo';
+                        
+                        const img = document.createElement('img');
+                        img.src = photo;
+                        img.alt = '施術写真';
+                        
+                        photoContainer.appendChild(img);
+                        treatmentPhotosElement.appendChild(photoContainer);
+                    });
+                }
             } else {
                 // セラピストが見つからない場合
                 document.querySelector('.therapist-detail .container').innerHTML = `

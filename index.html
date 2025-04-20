@@ -11,31 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <div class="mobile-header-left">
-                <div class="hamburger-menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="天使たちの癒し">
-                <h1>天使たちの癒し</h1>
-            </div>
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="#about">サービス概要</a></li>
-                    <li><a href="medical.html">医療機関向け</a></li>
-                    <li><a href="corporate.html">企業向け</a></li>
-                    <li><a href="#contact">お問い合わせ</a></li>
-                    <li><a href="user-portal/index.html" class="user-portal-link">利用者ポータル</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <!-- ヘッダーコンポーネント -->
+    <div id="header" data-component="common-header"></div>
 
     <section class="hero">
         <!-- ロゴを右側に、テキストを左側に配置するように順序を入れ替え -->
@@ -50,21 +27,22 @@
         <div class="hero-logo">
           <img src="assets/images/logo.png" alt="天使たちの癒し">
         </div>
-      </section>
-<!-- Target Sections -->
-<section class="targets-container">
-    <div class="target-card medical">
-      <h3>医療関係者向け</h3>
-      <p>医療従事者の皆様に健康と癒しをお届けします。わずかな時間でリラックスできるサービスを通じて、業務効率の向上と病院のイメージアップに貢献します。</p>
-      <a href="medical.html" class="btn">詳細を見る</a>
-    </div>
+    </section>
     
-    <div class="target-card corporate">
-      <h3>企業向け</h3>
-      <p>働く社員様へ健康と癒しをお届けします。健康経営・生産性向上・イメージアップ・採用面での差別化など、多くのメリットをもたらします。</p>
-      <a href="corporate.html" class="btn">詳細を見る</a>
-    </div>
-  </section>
+    <!-- Target Sections -->
+    <section class="targets-container">
+        <div class="target-card medical">
+          <h3>医療関係者向け</h3>
+          <p>医療従事者の皆様に健康と癒しをお届けします。わずかな時間でリラックスできるサービスを通じて、業務効率の向上と病院のイメージアップに貢献します。</p>
+          <a href="medical.html" class="btn">詳細を見る</a>
+        </div>
+        
+        <div class="target-card corporate">
+          <h3>企業向け</h3>
+          <p>働く社員様へ健康と癒しをお届けします。健康経営・生産性向上・イメージアップ・採用面での差別化など、多くのメリットをもたらします。</p>
+          <a href="corporate.html" class="btn">詳細を見る</a>
+        </div>
+    </section>
 
     <!-- Benefits Section -->
     <section class="benefits">
@@ -135,7 +113,11 @@
             </div>
             
             <div class="contact-form">
-                <form action="#" method="POST">
+                <form action="https://formsubmit.co/info@angels-healing.com" method="POST">
+                    <!-- FormSubmit用の設定 -->
+                    <input type="hidden" name="_subject" value="【天使たちの癒し】お問い合わせがありました">
+                    <input type="hidden" name="_next" value="https://angels-healing.com/thanks.html">
+                    
                     <div class="form-group">
                         <label for="company">会社名/施設名</label>
                         <input type="text" id="company" name="company" required>
@@ -178,43 +160,10 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-info">
-                <div class="footer-logo">
-                    <img src="assets/images/logo.png" alt="天使たちの癒し">
-                </div>
-                <p>天使たちの癒し</p>
-                <p>運営会社: 株式会社メカニカル技研（機械・ロボット）</p>
-                <p>所在地: 東京都町田市南成瀬5-1-8 小室ビル2F</p>
-            </div>
-            
-            <div class="footer-links">
-                <h3>サイトマップ</h3>
-                <ul>
-                    <li><a href="#about">サービス概要</a></li>
-                    <li><a href="medical.html">医療機関向け</a></li>
-                    <li><a href="corporate.html">企業向け</a></li>
-                    <li><a href="#contact">お問い合わせ</a></li>
-                    <li><a href="user-portal/index.html">利用者ポータル</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-contact">
-                <h3>お問い合わせ</h3>
-                <p>担当: 宮本</p>
-                <p>TEL: 090-3434-1970</p>
-                <p>Email: info@angels-healing.com</p>
-                <p>URL: https://www.angels-healing.com</p>
-            </div>
-        </div>
-        
-        <div class="container copyright">
-            <p>&copy; 2025 天使たちの癒し All Rights Reserved.</p>
-        </div>
-    </footer>
+    <!-- フッターコンポーネント -->
+    <div id="footer" data-component="common-footer"></div>
 
+    <script src="assets/js/load-components.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>

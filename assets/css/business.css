@@ -1,7 +1,7 @@
 /* business.css - ビジネスサイト専用スタイル */
 
-/* Hero section */
-.hero {
+/* Hero section - business専用スタイル（medical.htmlとcorporate.html用） */
+.business-hero {
     background-image: url('../images/hero-bg.jpg');
     background-size: cover;
     background-position: center;
@@ -11,7 +11,7 @@
     position: relative;
 }
 
-.hero::before {
+.business-hero::before {
     content: '';
     position: absolute;
     top: 0;
@@ -21,20 +21,20 @@
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-.hero-content {
+.business-hero-content {
     position: relative;
     z-index: 10;
     text-align: center;
     width: 100%;
 }
 
-.hero h2 {
+.business-hero h2 {
     font-size: 2.5rem;
     color: var(--primary-color);
     margin-bottom: 20px;
 }
 
-.hero p {
+.business-hero p {
     font-size: 1.2rem;
     max-width: 700px;
     margin: 0 auto 30px;

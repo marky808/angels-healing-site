@@ -72,69 +72,66 @@
     margin-top: 50px;
 }
 
-.challenge-solution-item {
+/* ソリューションカード基本設計 */
+.solution-card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.solution-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* カードヘッダー - バッジ表示部分 */
+.solution-header {
     display: flex;
-    align-items: center;
-    margin-bottom: 50px;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.challenge-badge, .solution-badge {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-right: 10px;
+}
+
+.challenge-badge {
+    background-color: #ffebee;
+    color: #d32f2f;
+}
+
+.solution-badge {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+/* カードボディ - 実際のコンテンツ部分 */
+.solution-body {
+    display: flex;
+    padding: 25px;
     flex-wrap: wrap;
 }
 
-.challenge-box,
-.solution-box {
+.challenge-side, .solution-side {
     flex: 1;
-    min-width: 300px;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    background-color: #fff;
-    display: flex;
-    align-items: flex-start;
+    min-width: 250px;
+    padding: 20px;
+    position: relative;
 }
 
-.challenge-box {
-    border-left: 5px solid #e57373;
-    margin-right: 20px;
+.challenge-side {
+    border-right: 1px dashed #ddd;
 }
 
-.solution-box {
-    border-left: 5px solid #81c784;
-    margin-left: 20px;
-}
-
-.challenge-icon,
-.solution-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px;
-    font-size: 1.8rem;
-}
-
-.challenge-icon {
-    background-color: #ffebee;
-    color: #e57373;
-}
-
-.solution-icon {
-    background-color: #e8f5e9;
-    color: #81c784;
-}
-
-.challenge-content,
-.solution-content {
-    flex: 1;
-}
-
-.challenge-content h3,
-.solution-content h3 {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    color: var(--primary-color);
-}
-
+/* 矢印部分 */
 .solution-arrow {
     display: flex;
     align-items: center;
@@ -142,15 +139,165 @@
     font-size: 1.5rem;
     color: var(--primary-color);
     width: 60px;
-    height: 60px;
+    padding: 0 10px;
 }
 
-.down {
-    color: #e57373;
+/* アイコン */
+.solution-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    background-color: #ffebee;
+    color: #d32f2f;
 }
 
-.up {
-    color: #81c784;
+.solution-icon.solution {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+/* テキスト部分 */
+.solution-side h3, .challenge-side h3 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.solution-side p, .challenge-side p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+/* 追加のアイコン装飾 */
+.fa-chart-line.down {
+    transform: rotate(45deg);
+}
+
+.fa-chart-line.up {
+    transform: rotate(-45deg);
+}
+
+/* モバイル対応 */
+@media (max-width: 991px) {
+    .solution-body {
+        flex-direction: column;
+    }
+    
+    .challenge-side, .solution-side {
+        width: 100%;
+    }
+    
+    .challenge-side {
+        border-right: none;
+        border-bottom: 1px dashed #ddd;
+    }
+    
+    .solution-arrow {
+        width: 100%;
+        padding: 15px 0;
+        transform: rotate(90deg);
+    }
+}
+
+@media (max-width: 767px) {
+    .solution-card {
+        margin-bottom: 30px;
+    }
+    
+    .solution-header {
+        padding: 10px;
+    }
+    
+    .challenge-badge, .solution-badge {
+        padding: 4px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .solution-body {
+        padding: 15px;
+    }
+    
+    .challenge-side, .solution-side {
+        padding: 15px;
+    }
+    
+    .solution-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .solution-side h3, .challenge-side h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    .solution-side p, .challenge-side p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+}
+
+/* PC表示用スタイル */
+@media (min-width: 768px) {
+    /* 古い課題と解決策用のスタイルを完全に無効化 */
+    .challenge-box,
+    .solution-box,
+    .compact-card-header,
+    .compact-card-body,
+    .compact-card-challenge,
+    .compact-card-solution,
+    .compact-card-arrow,
+    .compact-card-icon,
+    .compact-card-heading,
+    .compact-card-text,
+    .compact-card-button {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        pointer-events: none !important;
+        z-index: -9999 !important;
+    }
+}
+
+/* モーダルを完全に無効化 */
+.modal {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+    z-index: -999 !important;
+}
+
+.modal-content,
+.modal-close,
+.modal-title,
+.modal-body {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+    z-index: -999 !important;
 }
 
 /* Case Studies */
@@ -254,6 +401,59 @@
     color: #777;
 }
 
+/* モバイル表示の改善 - 事例・効果データセクション */
+@media (max-width: 767px) {
+    .case-studies-container {
+        flex-direction: column;
+    }
+    
+    .case-study-card {
+        width: 100%;
+        min-width: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .case-study-image {
+        height: 200px;
+    }
+    
+    .case-study-content {
+        padding: 20px;
+    }
+    
+    .case-study-content h3 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+    
+    .case-meta {
+        justify-content: center;
+    }
+    
+    .case-study-card p {
+        text-align: center;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .effect-data {
+        justify-content: center;
+    }
+    
+    .effect-item {
+        margin: 0 20px 15px;
+    }
+    
+    .effect-number {
+        font-size: 2rem;
+    }
+    
+    .percentage {
+        font-size: 1.2rem;
+    }
+}
+
 /* Strengths Section */
 .strengths-section {
     padding: 80px 0;
@@ -299,58 +499,283 @@
     margin-bottom: 15px;
 }
 
+/* モバイル表示の改善 - 天使たちの6つの強み */
+@media (max-width: 767px) {
+    .strengths-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .strength-card {
+        padding: 20px 15px;
+    }
+    
+    .strength-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin: 0 auto 15px;
+    }
+    
+    .strength-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    
+    .strength-card p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+}
+
+/* さらに小さい画面（スマートフォンの縦向きなど）でのレイアウト調整 */
+@media (max-width: 480px) {
+    .strengths-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .strength-card {
+        display: flex;
+        text-align: left;
+        align-items: center;
+        padding: 15px;
+    }
+    
+    .strength-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+        margin: 0 15px 0 0;
+        flex-shrink: 0;
+    }
+    
+    .strength-content {
+        flex: 1;
+    }
+    
+    .strength-card h3 {
+        margin-bottom: 5px;
+        font-size: 1rem;
+    }
+    
+    .strength-card p {
+        margin-bottom: 0;
+        font-size: 0.85rem;
+    }
+}
+
 /* Plans Section */
 .plans-section {
     padding: 80px 0;
     background-color: #fff;
+    position: relative;
+}
+
+/* 背景の装飾要素を追加 */
+.plans-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 10% 10%, rgba(167, 197, 235, 0.1) 0%, transparent 80%),
+        radial-gradient(circle at 90% 90%, rgba(167, 197, 235, 0.1) 0%, transparent 80%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.plans-section .section-title p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    color: #555;
 }
 
 .introduction-methods {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;  /* 縦方向に配置するように変更 */
     margin-top: 50px;
-    flex-wrap: wrap;
+    align-items: center;    /* 中央揃えに */
+    position: relative;
+    z-index: 1;
+    gap: 50px; /* カード間の間隔を増やす */
 }
 
 .method-card {
-    width: 30%;
-    min-width: 250px;
+    width: 90%;
+    max-width: 800px;      /* 最大幅を増やす */
+    min-width: 300px;
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    padding: 30px;
+    border-radius: 16px;   /* より丸みを持たせる */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);  /* シャドウを改良 */
+    padding: 40px;    /* パディングを調整 */
     display: flex;
-    align-items: flex-start;
-    margin-bottom: 30px;
-    transition: transform 0.3s ease;
+    margin-bottom: 10px;
+    transition: all 0.4s ease;
+    border-left: 5px solid var(--primary-color);  /* 左端にアクセントカラー */
+    position: relative;
+    overflow: hidden;
+}
+
+/* 各カードの背景に装飾効果を追加 */
+.method-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(167, 197, 235, 0.2) 0%, rgba(167, 197, 235, 0.05) 60%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(30%, -30%);
+    z-index: 0;
 }
 
 .method-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .method-number {
-    width: 60px;
-    height: 60px;
-    background-color: var(--primary-color);
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #3a6348 100%); /* グラデーション追加 */
     color: #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 2rem;     /* フォントサイズ拡大 */
     font-weight: 700;
-    margin-right: 20px;
+    margin-right: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.method-card:hover .method-number {
+    transform: rotate(10deg) scale(1.1);
+    background: linear-gradient(135deg, #3a6348 0%, var(--primary-color) 100%); /* ホバー時グラデーション反転 */
 }
 
 .method-content {
     flex: 1;
+    position: relative;
+    z-index: 1;
 }
 
 .method-content h3 {
-    font-size: 1.3rem;
+    font-size: 1.8rem;     /* フォントサイズ拡大 */
     color: var(--primary-color);
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    font-weight: 700;
+    position: relative;
 }
 
-/*
+.method-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px dashed rgba(167, 197, 235, 0.4);
+}
+
+.method-description {
+    color: #555;
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 20px;
+}
+
+.method-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.method-benefits li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #444;
+}
+
+.method-benefits li i {
+    color: var(--primary-color);
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.method-cta {
+    margin-top: 20px;
+}
+
+.method-cta .btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(58, 99, 72, 0.2);
+}
+
+.method-cta .btn:hover {
+    background-color: #3a6348;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(58, 99, 72, 0.3);
+}
+
+.btn-small {
+    font-size: 0.9rem;
+    padding: 10px 20px !important;
+}
+
+/* スマートフォン向けレスポンシブ対応 */
+@media (max-width: 767px) {
+    .method-card {
+        width: 95%;
+        padding: 30px 25px;
+        flex-direction: column;
+    }
+    
+    .method-number {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+        margin: 0 0 20px 0;
+        align-self: center;
+    }
+    
+    .method-content h3 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+    
+    .method-subtitle {
+        text-align: center;
+        font-size: 1rem;
+    }
+    
+    .method-description {
+        text-align: center;
+        font-size: 0.95rem;
+    }
+    
+    .method-benefits li {
+        font-size: 0.9rem;
+    }
+    
+    .method-cta {
+        text-align: center;
+    }
+}

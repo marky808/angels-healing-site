@@ -132,127 +132,161 @@
     margin-bottom: 15px;
 }
 
-/* Challenges and Solutions */
+/* Challenges and Solutions Section */
 .challenges-solutions-section {
-    padding: 80px 0;
     background-color: #f9f9f9;
+    padding: 80px 0;
 }
 
-.challenges-solutions-container {
-    margin-top: 50px;
+.cs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
 }
 
-.challenge-solution-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 50px;
-    flex-wrap: wrap;
-}
-
-.challenge-box,
-.solution-box {
-    flex: 1;
-    min-width: 300px;
-    padding: 30px;
+.cs-item {
+    background: #fff;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    background-color: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cs-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.cs-header {
+    background: #5a78ac;
+    padding: 18px 25px;
+    color: white;
+    text-align: center;
+}
+
+.cs-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.cs-content {
+    padding: 25px;
+}
+
+.cs-challenge, .cs-solution {
+    position: relative;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.cs-challenge {
+    background-color: #fff5f5;
+    border-left: 4px solid #e06666;
+    margin-bottom: 20px;
+}
+
+.cs-solution {
+    background-color: #f5fff8;
+    border-left: 4px solid #5bb665;
+}
+
+.cs-label {
+    display: inline-block;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.cs-challenge .cs-label {
+    background-color: #ffe1e1;
+    color: #d43939;
+}
+
+.cs-solution .cs-label {
+    background-color: #d1ffd8;
+    color: #2c9138;
+}
+
+.cs-icon-wrap {
     display: flex;
-    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 15px;
 }
 
-.challenge-box {
-    border-left: 5px solid #e57373;
-    margin-right: 20px;
-}
-
-.solution-box {
-    border-left: 5px solid #81c784;
-    margin-left: 20px;
-}
-
-.challenge-icon,
-.solution-icon {
+.cs-icon {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 20px;
     font-size: 1.8rem;
 }
 
 .challenge-icon {
-    background-color: #ffebee;
-    color: #e57373;
+    background-color: #ffe1e1;
+    color: #d43939;
 }
 
 .solution-icon {
-    background-color: #e8f5e9;
-    color: #81c784;
+    background-color: #d1ffd8;
+    color: #2c9138;
 }
 
-.challenge-content,
-.solution-content {
-    flex: 1;
+.cs-text {
+    margin-top: 15px;
 }
 
-.challenge-content h3,
-.solution-content h3 {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    color: var(--primary-color);
+.cs-text p {
+    margin: 0;
+    line-height: 1.6;
+    color: #444;
 }
 
-.solution-arrow {
+.cs-arrow {
     display: flex;
-    align-items: center;
     justify-content: center;
+    margin: 15px 0;
+    color: #5a78ac;
     font-size: 1.5rem;
-    color: var(--primary-color);
-    width: 60px;
-    height: 60px;
 }
 
-.down {
-    color: #e57373;
-}
-
-.up {
-    color: #81c784;
-}
-
-/* Case Studies */
+/* Case Studies Section (導入事例セクション) */
 .case-studies-section {
     padding: 80px 0;
-    background-color: #fff;
+    background-color: #f5f9f7;
 }
 
 .case-studies-container {
     display: flex;
-    justify-content: space-between;
-    margin-top: 50px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 40px;
 }
 
 .case-study-card {
-    width: 48%;
-    min-width: 300px;
+    display: flex;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
-    transition: transform 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .case-study-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .case-study-image {
-    height: 250px;
+    flex: 1;
+    min-width: 280px;
+    max-width: 400px;
+    object-fit: cover;
     overflow: hidden;
 }
 
@@ -260,35 +294,30 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.case-study-card:hover .case-study-image img {
-    transform: scale(1.05);
 }
 
 .case-study-content {
+    flex: 2;
     padding: 30px;
 }
 
 .case-study-content h3 {
-    font-size: 1.5rem;
     color: var(--primary-color);
     margin-bottom: 15px;
+    font-size: 1.5rem;
 }
 
 .case-meta {
     display: flex;
-    margin-bottom: 15px;
-    color: #777;
-    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 0.9rem;
 }
 
 .case-meta span {
-    margin-right: 20px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .case-meta i {
@@ -297,44 +326,31 @@
 }
 
 .case-testimonial {
-    background-color: #f9f9f9;
+    margin-top: 25px;
     padding: 20px;
+    background-color: #f9f9f9;
     border-radius: 10px;
-    margin-top: 20px;
     position: relative;
 }
 
 .quote-icon {
-    position: absolute;
-    top: -15px;
-    left: 20px;
-    width: 30px;
-    height: 30px;
-    background-color: var(--primary-color);
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-}
-
-.case-testimonial p {
-    font-style: italic;
+    color: var(--primary-color);
+    font-size: 1.5rem;
     margin-bottom: 10px;
 }
 
 .testimonial-author {
-    font-weight: 600;
-    color: var(--primary-color);
-    text-align: right;
     display: block;
+    text-align: right;
+    font-style: italic;
+    margin-top: 10px;
+    color: #555;
 }
 
-/* Strengths Section */
+/* Strengths Section (6つの強みセクション) */
 .strengths-section {
     padding: 80px 0;
-    background-color: #f9f9f9;
+    background-color: #fff;
 }
 
 .strengths-grid {
@@ -345,23 +361,26 @@
 }
 
 .strength-card {
-    background-color: #fff;
+    background-color: #f9fafb;
     padding: 30px;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    border-top: 4px solid var(--primary-color);
 }
 
 .strength-card:hover {
     transform: translateY(-5px);
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .strength-icon {
     width: 80px;
     height: 80px;
     margin: 0 auto 20px;
-    background-color: #f9ebc8;
+    background-color: rgba(94, 153, 120, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -376,48 +395,58 @@
     margin-bottom: 15px;
 }
 
-/* Plans Section */
+.strength-card p {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* 導入方法セクション (Plans Section) */
 .plans-section {
     padding: 80px 0;
-    background-color: #fff;
+    background-color: #f9f9f9;
 }
 
 .introduction-methods {
     display: flex;
-    justify-content: space-between;
+    gap: 30px;
     margin-top: 50px;
-    flex-wrap: wrap;
+}
+
+.introduction-methods.vertical {
+    flex-direction: column;
+    max-width: 800px;
+    margin: 50px auto 0;
 }
 
 .method-card {
-    width: 30%;
-    min-width: 250px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     padding: 30px;
     display: flex;
     align-items: flex-start;
-    margin-bottom: 30px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .method-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .method-number {
-    width: 60px;
-    height: 60px;
     background-color: var(--primary-color);
     color: #fff;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: bold;
     margin-right: 20px;
+    flex-shrink: 0;
 }
 
 .method-content {
@@ -425,267 +454,578 @@
 }
 
 .method-content h3 {
-    font-size: 1.3rem;
     color: var(--primary-color);
+    font-size: 1.4rem;
     margin-bottom: 10px;
 }
 
-/* Calculator Section */
-.calculator-section {
-    padding: 80px 0;
-    background-color: #f9f9f9;
+.method-content p {
+    margin: 0 0 10px;
+    color: #666;
 }
 
-.calculator-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 50px;
-    align-items: center;
+.method-content p.method-description {
+    margin-top: 15px;
+    line-height: 1.6;
+    color: #333;
 }
 
-.calculator-form {
-    flex: 1;
-    min-width: 300px;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    margin-right: 50px;
-}
-
-.calculator-image {
-    flex: 1;
-    min-width: 300px;
-    height: 400px;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.calculator-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.form-row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    flex: 1;
-    min-width: 200px;
-    margin-bottom: 20px;
-    margin-right: 20px;
-}
-
-.form-group:last-child {
-    margin-right: 0;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-#calculate-btn {
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-}
-
-.calculation-result {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-.result-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.result-item:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-}
-
-.result-label {
-    font-weight: 600;
-    color: #555;
-}
-
-.result-value {
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.calculator-note {
-    font-size: 0.9rem;
-    color: #777;
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* Try Service Section */
-.try-service-section {
-    padding: 80px 0;
-    background-color: #fff;
-}
-
-.try-service-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.try-service-image {
-    flex: 1;
-    min-width: 300px;
-    height: 400px;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    margin-right: 50px;
-}
-
-.try-service-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.try-service-content {
-    flex: 1;
-    min-width: 300px;
-}
-
-.try-service-content h2 {
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
-
-.try-details {
-    margin: 30px 0;
-}
-
-.try-item {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 20px;
-}
-
-.try-item i {
-    width: 40px;
-    height: 40px;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    margin-right: 15px;
-}
-
-.try-item h4 {
-    font-size: 1.1rem;
-    color: var(--primary-color);
-    margin-bottom: 5px;
-}
-
-/* Contact CTA */
+/* お問い合わせCTAセクション */
 .contact-cta-section {
     padding: 80px 0;
-    background-color: var(--primary-color);
-    color: #fff;
+    background-color: #f0f7f4;
     text-align: center;
+}
+
+.contact-cta-content {
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 .contact-cta-content h2 {
-    font-size: 2.5rem;
+    color: var(--primary-color);
+    font-size: 2.2rem;
     margin-bottom: 20px;
-    color: #fff;
 }
 
 .contact-cta-content p {
+    color: #666;
     font-size: 1.2rem;
     margin-bottom: 30px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-.large-btn {
+.btn.large-btn {
     padding: 15px 40px;
     font-size: 1.2rem;
-    background-color: #fff;
-    color: var(--primary-color);
+    font-weight: 600;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
 }
 
-.large-btn:hover {
-    background-color: #f9f9f9;
-    color: var(--primary-color);
+.btn.large-btn:hover {
+    background-color: #3a6348;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Responsive */
+/* モバイル対応 */
 @media (max-width: 768px) {
+    .cs-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cs-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .cs-content {
+        padding: 20px 15px;
+    }
+    
+    .cs-challenge, .cs-solution {
+        padding: 15px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .cs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 追加アニメーション効果 */
+.cs-item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.cs-item:nth-child(1) { animation-delay: 0.1s; }
+.cs-item:nth-child(2) { animation-delay: 0.3s; }
+.cs-item:nth-child(3) { animation-delay: 0.5s; }
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 992px) {
+    .challenge-solution-item {
+        flex-direction: column;
+    }
+
+    .cs-arrow {
+        margin: 15px 0;
+    }
+
+    .pc-arrow {
+        display: none;
+    }
+
+    .mobile-arrow {
+        display: block;
+    }
+    
+    .challenges-solutions-container {
+        gap: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .challenges-solutions-section {
+        padding: 60px 0;
+    }
+    
+    .cs-body {
+        padding: 25px 20px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .cs-icon {
+        margin-bottom: 20px;
+    }
+    
+    .cs-content h3 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+    }
+    
+    .cs-content p {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+    
+    .cs-label {
+        font-size: 0.85rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
     .strengths-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .calculator-form {
-        margin-right: 0;
-        margin-bottom: 30px;
+    .case-study-card {
+        flex-direction: column;
     }
     
-    .try-service-image {
-        margin-right: 0;
-        margin-bottom: 30px;
-    }
-    
-    .corporate-hero h1 {
-        font-size: 2.5rem;
-    }
-    
-    .corporate-hero p {
-        font-size: 1.2rem;
+    .case-study-image {
+        max-width: 100%;
+        height: 250px;
     }
 }
 
-@media (max-width: 576px) {
+@media screen and (max-width: 768px) {
+    .case-studies-container {
+        gap: 30px;
+    }
+    
+    .case-study-content {
+        padding: 20px;
+    }
+    
+    .case-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
     .strengths-grid {
         grid-template-columns: 1fr;
+        gap: 25px;
     }
     
-    .method-card {
-        width: 100%;
+    .strength-card {
+        padding: 25px;
     }
     
-    .corporate-hero h1 {
-        font-size: 2rem;
+    .strength-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .case-study-image {
+        height: 200px;
     }
     
-    .corporate-hero p {
-        font-size: 1rem;
+    .case-testimonial {
+        padding: 15px;
     }
+    
+    .quote-icon {
+        font-size: 1.2rem;
+    }
+    
+    .case-study-content h3 {
+        font-size: 1.3rem;
+    }
+    
+    .strength-card {
+        padding: 20px;
+    }
+    
+    .strength-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+}
+
+/* アップとダウンのアイコン向き調整 */
+.fa-chart-line.up {
+    transform: rotate(45deg);
+}
+
+.fa-chart-line.down {
+    transform: rotate(-45deg);
+}
+
+/* デフォルトでモバイル用要素を完全に非表示 */
+.compact-card-header,
+.compact-card-body,
+.compact-card-challenge,
+.compact-card-solution,
+.compact-card-arrow,
+.compact-card-icon,
+.compact-card-heading,
+.compact-card-text,
+.compact-card-button {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+    z-index: -9999 !important;
+}
+
+/* PC表示用スタイル */
+@media (min-width: 768px) {
+    .challenge-box,
+    .solution-box {
+        flex: 1;
+        min-width: 300px;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        background-color: #fff;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .challenge-box {
+        border-left: 5px solid #e57373;
+        margin-right: 20px;
+    }
+
+    .solution-box {
+        border-left: 5px solid #81c784;
+        margin-left: 20px;
+    }
+
+    .challenge-icon,
+    .solution-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        font-size: 1.8rem;
+        flex-shrink: 0;
+    }
+
+    .challenge-icon {
+        background-color: #ffebee;
+        color: #e57373;
+    }
+
+    .solution-icon {
+        background-color: #e8f5e9;
+        color: #81c784;
+    }
+
+    .challenge-content,
+    .solution-content {
+        flex: 1;
+    }
+
+    .challenge-content h3,
+    .solution-content h3 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+    }
+
+    .solution-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        width: 60px;
+        height: 60px;
+    }
+}
+
+/* モバイル向けコンパクトカードデザイン */
+@media (max-width: 767px) {
+    /* PC表示用の要素を非表示 */
+    .challenge-box,
+    .solution-box,
+    .solution-arrow {
+        display: none;
+    }
+    
+    .challenge-solution-item {
+        flex-direction: column;
+        background-color: #fff;
+        border-radius: 12px;
+        overflow: visible; /* visibleに変更して、コンテンツが切れないようにする */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+    
+    /* カードヘッダー部分（課題と解決策タイトル） */
+    .compact-card-header {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        width: 100% !important;
+        overflow: visible !important;
+        position: relative !important;
+        pointer-events: auto !important;
+        z-index: 1 !important;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+    }
+    
+    .compact-card-title-challenge {
+        font-weight: bold;
+        color: #d32f2f; /* 課題は赤色 */
+        padding: 5px 10px;
+        border-radius: 4px;
+        background-color: #ffebee;
+    }
+    
+    .compact-card-title-solution {
+        font-weight: bold;
+        color: #388e3c; /* 解決策は緑色 */
+        padding: 5px 10px;
+        border-radius: 4px;
+        background-color: #e8f5e9;
+    }
+    
+    /* コンパクトカード本体部分 */
+    .compact-card-body {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        width: 100% !important;
+        overflow: visible !important;
+        position: relative !important;
+        pointer-events: auto !important;
+        z-index: 1 !important;
+        flex-direction: column;
+    }
+    
+    /* 課題部分 */
+    .compact-card-challenge {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        width: 100% !important;
+        overflow: visible !important;
+        position: relative !important;
+        pointer-events: auto !important;
+        z-index: 1 !important;
+        padding: 20px;
+        border-top: 3px solid #e57373;
+        background-color: #fff;
+    }
+    
+    /* 矢印部分 - 視覚的な区切りとして残し、小さくする */
+    .compact-card-arrow {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        width: 100% !important;
+        overflow: visible !important;
+        position: relative !important;
+        pointer-events: auto !important;
+        z-index: 1 !important;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 0;
+        color: var(--primary-color);
+        font-size: 1.2rem;
+        background-color: #f5f5f5;
+    }
+    
+    /* 解決策部分 */
+    .compact-card-solution {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        width: 100% !important;
+        overflow: visible !important;
+        position: relative !important;
+        pointer-events: auto !important;
+        z-index: 1 !important;
+        padding: 20px;
+        border-top: 3px solid #81c784;
+        background-color: #fff;
+    }
+    
+    .compact-card-icon {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: 60px !important;
+        width: 60px !important;
+        overflow: visible !important;
+        position: relative !important;
+        pointer-events: auto !important;
+        z-index: 1 !important;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-size: 1.8rem;
+        flex-shrink: 0;
+    }
+    
+    .compact-card-challenge .compact-card-icon {
+        background-color: #ffebee;
+        color: #e57373;
+    }
+    
+    .compact-card-solution .compact-card-icon {
+        background-color: #e8f5e9;
+        color: #81c784;
+    }
+    
+    .compact-card-content {
+        flex: 1;
+    }
+    
+    .compact-card-heading {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        width: auto !important;
+        overflow: visible !important;
+        position: relative !important;
+        pointer-events: auto !important;
+        z-index: 1 !important;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 12px;
+    }
+    
+    .compact-card-text {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        width: auto !important;
+        overflow: visible !important;
+        position: relative !important;
+        pointer-events: auto !important;
+        z-index: 1 !important;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 0;
+        /* 制限を解除して、テキストが完全に表示されるようにする */
+        max-height: none;
+        white-space: normal;
+    }
+    
+    /* 「詳細はこちら」ボタンを完全に削除 */
+    .compact-card-button {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        pointer-events: none !important;
+        z-index: -999 !important;
+    }
+    
+    .compact-card-button button {
+        display: none !important;
+    }
+}
+
+/* 重複セクションを削除し、1つにまとめる */
+/* モーダルを完全に無効化 */
+.modal,
+.modal-content,
+.modal-close,
+.modal-title,
+.modal-body {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+    z-index: -999 !important;
+}
+
+/* モーダル関連のJavaScriptイベントを無効化するためのスタイル */
+[data-toggle="modal"],
+[data-modal],
+.modal-trigger {
+    pointer-events: none !important;
+    cursor: default !important;
+}
+
+/* 詳細はこちらのリンク関連を完全に非表示 */
+.detail-link,
+.read-more,
+.more-info,
+.card-link {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    pointer-events: none !important;
+    z-index: -999 !important;
 }

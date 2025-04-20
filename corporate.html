@@ -13,31 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <div class="mobile-header-left">
-                <div class="hamburger-menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-            <div class="logo">
-                <img src="assets/images/logo.png" alt="天使たちの癒し">
-                <h1>天使たちの癒し</h1>
-            </div>
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="index.html#about">サービス概要</a></li>
-                    <li><a href="medical.html">医療機関向け</a></li>
-                    <li><a href="corporate.html">企業向け</a></li>
-                    <li><a href="index.html#contact">お問い合わせ</a></li>
-                    <li><a href="user-portal/index.html" class="user-portal-link">利用者ポータル</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <!-- ヘッダーコンポーネント -->
+    <div id="header" data-component="common-header"></div>
 
     <!-- Hero Banner -->
     <section class="corporate-hero">
@@ -111,75 +88,114 @@
                 <p>現代企業が抱える様々な課題を「癒し」で解決します</p>
             </div>
             
-            <div class="challenges-solutions-container">
-                <div class="challenge-solution-item">
-                    <div class="challenge-box">
-                        <div class="challenge-icon">
-                            <i class="fas fa-head-side-virus"></i>
-                        </div>
-                        <div class="challenge-content">
-                            <h3>健康経営の推進</h3>
-                            <p>従業員の健康管理は企業の重要な責任となっています。メンタルヘルスの悪化や慢性的な疲労によるパフォーマンス低下、休職者の増加は企業経営にも大きな影響を与えます。</p>
-                        </div>
+            <div class="cs-grid">
+                <!-- 健康経営の課題と解決策 -->
+                <div class="cs-item">
+                    <div class="cs-header">
+                        <h3>健康経営の推進</h3>
                     </div>
-                    <div class="solution-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <div class="solution-box">
-                        <div class="solution-icon">
-                            <i class="fas fa-heartbeat"></i>
+                    
+                    <div class="cs-content">
+                        <div class="cs-challenge">
+                            <div class="cs-label">課題</div>
+                            <div class="cs-icon-wrap">
+                                <div class="cs-icon challenge-icon">
+                                    <i class="fas fa-head-side-virus"></i>
+                                </div>
+                            </div>
+                            <div class="cs-text">
+                                <p>従業員の健康管理は企業の重要な責任となっています。メンタルヘルスの悪化や慢性的な疲労によるパフォーマンス低下、休職者の増加は企業経営にも大きな影響を与えます。</p>
+                            </div>
                         </div>
-                        <div class="solution-content">
-                            <h3>健康経営の実践</h3>
-                            <p>天使たちの癒しによる定期的な施術は、従業員の健康維持・増進に貢献。これにより休職者の減少や生産性の向上に繋がり、健康経営優良法人認定の取得にも役立ちます。</p>
+
+                        <div class="cs-arrow">
+                            <i class="fas fa-arrow-down"></i>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="challenge-solution-item">
-                    <div class="challenge-box">
-                        <div class="challenge-icon">
-                            <i class="fas fa-chart-line down"></i>
-                        </div>
-                        <div class="challenge-content">
-                            <h3>生産性の低下</h3>
-                            <p>長時間労働やストレスの蓄積により、従業員の集中力や創造性が低下。これが企業全体の生産性低下に繋がっています。また、リモートワークの普及により、身体的な不調を訴える社員も増加しています。</p>
-                        </div>
-                    </div>
-                    <div class="solution-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <div class="solution-box">
-                        <div class="solution-icon">
-                            <i class="fas fa-chart-line up"></i>
-                        </div>
-                        <div class="solution-content">
-                            <h3>生産性の向上</h3>
-                            <p>定期的な施術によるリフレッシュは、集中力の回復や疲労感の軽減に効果的。これにより従業員の生産性が向上し、企業パフォーマンスの向上にも繋がります。</p>
+                        
+                        <div class="cs-solution">
+                            <div class="cs-label">解決策</div>
+                            <div class="cs-icon-wrap">
+                                <div class="cs-icon solution-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                            </div>
+                            <div class="cs-text">
+                                <p>天使たちの癒しによる定期的な施術は、従業員の健康維持・増進に貢献。これにより休職者の減少や生産性の向上に繋がり、健康経営優良法人認定の取得にも役立ちます。</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="challenge-solution-item">
-                    <div class="challenge-box">
-                        <div class="challenge-icon">
-                            <i class="fas fa-building"></i>
+                <!-- 生産性の課題と解決策 -->
+                <div class="cs-item">
+                    <div class="cs-header">
+                        <h3>生産性の向上</h3>
+                    </div>
+                    
+                    <div class="cs-content">
+                        <div class="cs-challenge">
+                            <div class="cs-label">課題</div>
+                            <div class="cs-icon-wrap">
+                                <div class="cs-icon challenge-icon">
+                                    <i class="fas fa-chart-line down"></i>
+                                </div>
+                            </div>
+                            <div class="cs-text">
+                                <p>長時間労働やストレスの蓄積により、従業員の集中力や創造性が低下。これが企業全体の生産性低下に繋がっています。また、リモートワークの普及により、身体的な不調を訴える社員も増加しています。</p>
+                            </div>
                         </div>
-                        <div class="challenge-content">
-                            <h3>企業イメージと採用</h3>
-                            <p>人材確保の競争が激化する中、企業の魅力や福利厚生の充実度が採用活動の成否を左右します。また、優秀な人材の流出を防ぐためにも、働きやすい環境の整備が求められています。</p>
+
+                        <div class="cs-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        
+                        <div class="cs-solution">
+                            <div class="cs-label">解決策</div>
+                            <div class="cs-icon-wrap">
+                                <div class="cs-icon solution-icon">
+                                    <i class="fas fa-chart-line up"></i>
+                                </div>
+                            </div>
+                            <div class="cs-text">
+                                <p>定期的な施術によるリフレッシュは、集中力の回復や疲労感の軽減に効果的。これにより従業員の生産性が向上し、企業パフォーマンスの向上にも繋がります。</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="solution-arrow">
-                        <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <!-- 企業イメージと採用の課題と解決策 -->
+                <div class="cs-item">
+                    <div class="cs-header">
+                        <h3>企業イメージと採用</h3>
                     </div>
-                    <div class="solution-box">
-                        <div class="solution-icon">
-                            <i class="fas fa-medal"></i>
+                    
+                    <div class="cs-content">
+                        <div class="cs-challenge">
+                            <div class="cs-label">課題</div>
+                            <div class="cs-icon-wrap">
+                                <div class="cs-icon challenge-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                            </div>
+                            <div class="cs-text">
+                                <p>人材確保の競争が激化する中、企業の魅力や福利厚生の充実度が採用活動の成否を左右します。また、優秀な人材の流出を防ぐためにも、働きやすい環境の整備が求められています。</p>
+                            </div>
                         </div>
-                        <div class="solution-content">
-                            <h3>イメージアップと採用差別化</h3>
-                            <p>社員の健康と福利厚生を重視する姿勢は、企業としての信頼性やイメージ向上に大きく貢献。採用活動での差別化や優秀な人材の定着率向上にも繋がります。</p>
+
+                        <div class="cs-arrow">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        
+                        <div class="cs-solution">
+                            <div class="cs-label">解決策</div>
+                            <div class="cs-icon-wrap">
+                                <div class="cs-icon solution-icon">
+                                    <i class="fas fa-medal"></i>
+                                </div>
+                            </div>
+                            <div class="cs-text">
+                                <p>社員の健康と幸福を重視する企業姿勢は、企業イメージの向上に繋がります。福利厚生としての癒しの提供は、他社との差別化を図り、人材採用の強力な武器となります。</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -187,49 +203,57 @@
         </div>
     </section>
 
-    <!-- Case Studies -->
+    <!-- Case Studies Section (導入事例) -->
     <section class="case-studies-section">
         <div class="container">
             <div class="section-title">
                 <h2>導入事例</h2>
-                <p>実際に天使たちの癒しを導入した企業の事例をご紹介します</p>
+                <p>天使たちの癒しを導入いただいた企業様の声をご紹介します</p>
             </div>
             
             <div class="case-studies-container">
+                <!-- Case Study 1 -->
                 <div class="case-study-card">
                     <div class="case-study-image">
-                        <img src="assets/images/it-company-case.jpg" alt="IT企業A社の事例">
+                        <img src="assets/images/case-study-1.jpg" alt="大手IT企業の導入事例">
                     </div>
                     <div class="case-study-content">
-                        <h3>IT企業A社の事例</h3>
+                        <h3>大手IT企業 A社様</h3>
                         <div class="case-meta">
-                            <span><i class="fas fa-users"></i> 従業員数: 約100名</span>
-                            <span><i class="fas fa-calendar-alt"></i> 期間: 1年</span>
+                            <span><i class="fas fa-building"></i> 業種: IT・ソフトウェア開発</span>
+                            <span><i class="fas fa-users"></i> 従業員数: 約500名</span>
+                            <span><i class="fas fa-map-marker-alt"></i> 場所: 東京都品川区</span>
                         </div>
-                        <p>週1回のオフィス訪問施術を導入。エンジニアの肩こりや腰痛が改善され、集中力の向上に繋がりました。また、施術を楽しみにする社員が増え、職場の雰囲気も明るくなったとの声が寄せられています。</p>
+                        <p>デスクワーク中心の環境で肩こりや腰痛を訴える社員が多く、休職者も増加傾向にありました。毎週金曜日を「癒しの日」として当社サービスを導入いただき、社内の空きスペースでセラピストが施術を行っています。</p>
+                        <p>導入後、社員のストレス軽減と共に休職者数が30%減少。また、健康経営優良法人の認定取得にも役立ったと好評です。</p>
+                        
                         <div class="case-testimonial">
                             <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                            <p>「プログラミング作業による肩こりや目の疲れが軽減され、業務効率が上がりました。この施策は社員からの評価も高く、福利厚生の目玉となっています」</p>
-                            <span class="testimonial-author">人事部長</span>
+                            <p>社員の健康意識が高まり、職場の雰囲気も明るくなりました。癒しの日を楽しみにしている社員が多く、予約はいつもすぐに埋まってしまいます。コスト以上の効果を実感しています。</p>
+                            <span class="testimonial-author">人事部長 佐藤様</span>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Case Study 2 -->
                 <div class="case-study-card">
                     <div class="case-study-image">
-                        <img src="assets/images/manufacturing-case.jpg" alt="製造業B社の事例">
+                        <img src="assets/images/case-study-2.jpg" alt="製造業企業の導入事例">
                     </div>
                     <div class="case-study-content">
-                        <h3>製造業B社の事例</h3>
+                        <h3>製造業 B社様</h3>
                         <div class="case-meta">
+                            <span><i class="fas fa-building"></i> 業種: 製造業</span>
                             <span><i class="fas fa-users"></i> 従業員数: 約300名</span>
-                            <span><i class="fas fa-calendar-alt"></i> 期間: 2年</span>
+                            <span><i class="fas fa-map-marker-alt"></i> 場所: 大阪府</span>
                         </div>
-                        <p>工場勤務の従業員を対象に、週3回の施術サービスを導入。作業による身体的負担が軽減され、労災や休職の減少に繋がりました。健康経営優良法人の認定取得にも貢献しています。</p>
+                        <p>工場勤務の社員を中心に、長時間の立ち仕事による身体的な疲労が課題でした。月に2回、各部署を回る形で施術を提供するプランを導入いただきました。</p>
+                        <p>特に、管理職へのケアにより、職場全体の雰囲気が改善。結果として離職率の低下と生産性の向上が見られています。</p>
+                        
                         <div class="case-testimonial">
                             <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
-                            <p>「立ち仕事や重労働による身体の不調が減り、欠勤率が20%低下しました。社員の健康維持は生産性向上に直結すると実感しています」</p>
-                            <span class="testimonial-author">総務部長</span>
+                            <p>当初は半信半疑でしたが、導入後は社員からの評判も良く、思った以上の効果が出ています。特に工場勤務の社員は身体的な負担が大きいため、定期的なケアは非常に重要だと実感しています。</p>
+                            <span class="testimonial-author">工場長 田中様</span>
                         </div>
                     </div>
                 </div>
@@ -305,12 +329,13 @@
                 <p>企業のニーズに合わせた柔軟な導入プランをご用意しています</p>
             </div>
             
-            <div class="introduction-methods">
+            <div class="introduction-methods vertical">
                 <div class="method-card">
                     <div class="method-number">1</div>
                     <div class="method-content">
                         <h3>福利厚生の導入</h3>
                         <p>全額負担または一部負担</p>
+                        <p class="method-description">企業が費用の全額または一部を負担し、社員の福利厚生として導入するプランです。健康経営の一環として導入する企業様に人気です。</p>
                     </div>
                 </div>
                 
@@ -319,6 +344,7 @@
                     <div class="method-content">
                         <h3>利用者が全額負担</h3>
                         <p>社員が全額負担するプラン</p>
+                        <p class="method-description">企業は場所の提供のみを行い、利用者が料金を全額負担するプランです。企業側の費用負担なく導入できます。</p>
                     </div>
                 </div>
                 
@@ -327,124 +353,8 @@
                     <div class="method-content">
                         <h3>お試し施術</h3>
                         <p>導入前にお試しサービスあり</p>
+                        <p class="method-description">導入前に一度お試しいただくことが可能です。実際の効果を体験してから本格導入をご検討いただけます。</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Calculator -->
-    <section class="calculator-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>料金シミュレーション</h2>
-                <p>以下のフォームに情報を入力すると、おおよその料金目安を計算できます</p>
-            </div>
-            
-            <div class="calculator-container">
-                <div class="calculator-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="employees">従業員数</label>
-                            <input type="number" id="employees" min="1" value="50">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="frequency">施術頻度</label>
-                            <select id="frequency">
-                                <option value="1">月1回</option>
-                                <option value="2" selected>月2回</option>
-                                <option value="4">週1回</option>
-                                <option value="12">週3回</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="duration">施術時間（分/人）</label>
-                            <select id="duration">
-                                <option value="15" selected>15分</option>
-                                <option value="20">20分</option>
-                                <option value="30">30分</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="payment">負担割合</label>
-                            <select id="payment">
-                                <option value="100">企業100%負担</option>
-                                <option value="75">企業75%・社員25%</option>
-                                <option value="50">企業50%・社員50%</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <button type="button" id="calculate-btn" class="btn">計算する</button>
-                    
-                    <div class="calculation-result">
-                        <div class="result-item">
-                            <span class="result-label">月額費用（概算）:</span>
-                            <span class="result-value" id="monthly-cost">¥80,000</span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">1人あたりの月額費用:</span>
-                            <span class="result-value" id="per-person-cost">¥1,600</span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">企業負担額:</span>
-                            <span class="result-value" id="company-cost">¥80,000</span>
-                        </div>
-                        <div class="result-item">
-                            <span class="result-label">社員負担額（1人あたり）:</span>
-                            <span class="result-value" id="employee-cost">¥0</span>
-                        </div>
-                    </div>
-                    
-                    <p class="calculator-note">※ こちらはあくまで概算です。正確なお見積りは、お問い合わせください。</p>
-                </div>
-                <div class="calculator-image">
-                    <img src="assets/images/calculator-image.jpg" alt="料金シミュレーション">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Try Before You Buy -->
-    <section class="try-service-section">
-        <div class="container">
-            <div class="try-service-container">
-                <div class="try-service-image">
-                    <img src="assets/images/trial-service-corporate.jpg" alt="お試し施術">
-                </div>
-                <div class="try-service-content">
-                    <h2>お試し施術</h2>
-                    <p>導入前に天使たちの癒しを体験していただけます</p>
-                    <p>天使たちの癒しでは、サービス導入前に企業様で実際の施術を体験していただけるお試しサービスをご用意しています。実際のサービスクオリティや効果を確認した上で導入を検討いただけます。</p>
-                    
-                    <div class="try-details">
-                        <div class="try-item">
-                            <i class="fas fa-user-friends"></i>
-                            <div>
-                                <h4>お試し内容</h4>
-                                <p>最大10名までの社員様に15分間の施術を提供</p>
-                            </div>
-                        </div>
-                        <div class="try-item">
-                            <i class="fas fa-yen-sign"></i>
-                            <div>
-                                <h4>お試し料金</h4>
-                                <p>初回無料（2回目以降は有料）</p>
-                            </div>
-                        </div>
-                        <div class="try-item">
-                            <i class="fas fa-clipboard-list"></i>
-                            <div>
-                                <h4>お申し込み方法</h4>
-                                <p>下記お問い合わせフォームより「お試し施術希望」とご記入ください</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <a href="index.html#contact" class="btn">お問い合わせ</a>
                 </div>
             </div>
         </div>
@@ -461,89 +371,37 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-info">
-                <div class="footer-logo">
-                    <img src="assets/images/logo.png" alt="天使たちの癒し">
-                </div>
-                <p>天使たちの癒し</p>
-                <p>運営会社: 株式会社メカニカル技研（機械・ロボット）</p>
-                <p>所在地: 東京都町田市南成瀬5-1-8 小室ビル2F</p>
-            </div>
-            
-            <div class="footer-links">
-                <h3>サイトマップ</h3>
-                <ul>
-                    <li><a href="index.html">ホーム</a></li>
-                    <li><a href="medical.html">医療機関向け</a></li>
-                    <li><a href="corporate.html">企業向け</a></li>
-                    <li><a href="index.html#contact">お問い合わせ</a></li>
-                    <li><a href="user-portal/index.html">利用者ポータル</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-contact">
-                <h3>お問い合わせ</h3>
-                <p>担当: 宮本</p>
-                <p>TEL: 090-3434-1970</p>
-                <p>Email: info@angels-healing.com</p>
-                <p>URL: https://www.angels-healing.com</p>
-            </div>
-        </div>
-        
-        <div class="container copyright">
-            <p>&copy; 2025 天使たちの癒し All Rights Reserved.</p>
-        </div>
-    </footer>
+    <!-- フッターコンポーネント -->
+    <div id="footer" data-component="common-footer"></div>
 
+    <script src="assets/js/load-components.js"></script>
     <script src="assets/js/main.js"></script>
+    
+    <!-- モーダル機能用JavaScript -->
     <script>
-        // 料金シミュレーション用のJavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            const calculateBtn = document.getElementById('calculate-btn');
+        // モーダル表示用関数
+        function showModal(id, title, content) {
+            const modal = document.getElementById('detailModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
             
-            calculateBtn.addEventListener('click', function() {
-                const employees = parseInt(document.getElementById('employees').value);
-                const frequency = parseInt(document.getElementById('frequency').value);
-                const duration = parseInt(document.getElementById('duration').value);
-                const payment = parseInt(document.getElementById('payment').value);
-                
-                // 基本料金計算（これは仮の計算式です。実際の料金設定に合わせて調整してください）
-                let baseCost = 0;
-                if (employees <= 50) {
-                    baseCost = 40000; // 基本料金: 小規模企業
-                } else if (employees <= 200) {
-                    baseCost = 75000; // 基本料金: 中規模企業
-                } else {
-                    baseCost = 150000; // 基本料金: 大規模企業
-                }
-                
-                // 頻度による調整
-                const frequencyMultiplier = frequency / 2;
-                
-                // 施術時間による調整
-                const durationMultiplier = duration / 15;
-                
-                // 月額費用計算
-                const monthlyCost = baseCost * frequencyMultiplier * durationMultiplier;
-                
-                // 1人あたりの月額
-                const perPersonCost = monthlyCost / employees;
-                
-                // 企業負担額
-                const companyCost = monthlyCost * (payment / 100);
-                
-                // 社員負担額
-                const employeeCost = perPersonCost * (1 - payment / 100);
-                
-                // 結果表示
-                document.getElementById('monthly-cost').textContent = '¥' + Math.round(monthlyCost).toLocaleString();
-                document.getElementById('per-person-cost').textContent = '¥' + Math.round(perPersonCost).toLocaleString();
-                document.getElementById('company-cost').textContent = '¥' + Math.round(companyCost).toLocaleString();
-                document.getElementById('employee-cost').textContent = '¥' + Math.round(employeeCost).toLocaleString();
-            });
+            modalTitle.textContent = title;
+            modalBody.textContent = content;
+            
+            modal.style.display = 'block';
+        }
+        
+        // モーダルを閉じる
+        document.querySelector('.modal-close').addEventListener('click', function() {
+            document.getElementById('detailModal').style.display = 'none';
+        });
+        
+        // モーダル外クリックで閉じる
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('detailModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
         });
     </script>
 </body>

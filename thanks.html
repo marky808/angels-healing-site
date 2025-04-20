@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせありがとうございます - 天使たちの癒し</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .thanks-container {
+            text-align: center;
+            padding: 100px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+        }
+        
+        .thanks-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #4a6f8a;
+        }
+        
+        .thanks-message {
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background-color: #4a6f8a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #385369;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダーコンポーネント -->
+    <div id="header" data-component="common-header"></div>
+
+    <div class="thanks-container">
+        <div class="logo">
+            <img src="assets/images/logo.png" alt="天使たちの癒し" width="80" height="80">
+        </div>
+        <h1 class="thanks-title">お問い合わせありがとうございます</h1>
+        <p class="thanks-message">
+            送信完了いたしました。<br>
+            ご返信までしばらくお待ちください。
+        </p>
+        <a href="index.html" class="back-button">トップページに戻る</a>
+    </div>
+
+    <!-- フッターコンポーネント -->
+    <div id="footer" data-component="common-footer"></div>
+
+    <script src="assets/js/load-components.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
