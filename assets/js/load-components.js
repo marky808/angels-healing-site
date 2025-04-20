@@ -48,21 +48,24 @@ async function loadComponent(element, componentType) {
         
         switch (componentType) {
             case 'common-header':
-                componentPath = '/components/common/header.html';
+                componentPath = 'components/common/header.html';
                 break;
             case 'common-footer':
-                componentPath = '/components/common/footer.html';
+                componentPath = 'components/common/footer.html';
                 break;
             case 'portal-header':
-                componentPath = '/components/portal/header.html';
+                componentPath = 'components/portal/header.html';
                 break;
             case 'portal-footer':
-                componentPath = '/components/portal/footer.html';
+                componentPath = 'components/portal/footer.html';
                 break;
             default:
                 console.error(`不明なコンポーネントタイプ: ${componentType}`);
                 return;
         }
+        
+        // GitHub Pagesかどうかを判定
+        const isGitHubPages = location.hostname.includes('github.io');
         
         // パスの調整: user-portalディレクトリにいるかどうかを確認
         const isInUserPortal = window.location.pathname.includes('/user-portal/') || 
@@ -71,16 +74,28 @@ async function loadComponent(element, componentType) {
                               window.location.pathname.endsWith('user-portal/therapists.html') ||
                               window.location.pathname.endsWith('user-portal/therapist-detail.html');
         
+        // パスの調整
+        let adjustedPath = '';
+        
         if (isInUserPortal) {
-            componentPath = '..' + componentPath;
+            adjustedPath = '../' + componentPath; // ユーザーポータル内の場合は上の階層に移動
+        } else {
+            adjustedPath = './' + componentPath; // 通常は現在の階層から相対パスで
         }
         
+        // GitHubPagesでのリポジトリ名を考慮したパス調整（必要な場合）
+        // リポジトリ名が判明している場合は以下のようにパスを調整できます
+        // if (isGitHubPages) {
+        //     const repoName = 'angels-healing-site'; // GitHubリポジトリ名
+        //     adjustedPath = `/${repoName}/${componentPath}`;
+        // }
+        
         // コンポーネントのHTMLを取得
-        console.log(`コンポーネントを読み込み中: ${componentPath}`);
-        const response = await fetch(componentPath);
+        console.log(`コンポーネントを読み込み中: ${adjustedPath}`);
+        const response = await fetch(adjustedPath);
         
         if (!response.ok) {
-            throw new Error(`コンポーネントの読み込みに失敗しました: ${componentPath} (${response.status})`);
+            throw new Error(`コンポーネントの読み込みに失敗しました: ${adjustedPath} (${response.status})`);
         }
         
         const htmlContent = await response.text();
