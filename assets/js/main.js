@@ -13,6 +13,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // 利用者ポータルのパスワード認証
+    const portalLinks = document.querySelectorAll('.user-portal-link');
+    portalLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const password = prompt('パスワードを入力してください');
+            
+            if (password === '104184') {
+                // パスワードが正しい場合、ポータルページへ移動
+                window.location.href = this.getAttribute('href');
+            } else if (password !== null) {
+                // パスワードが間違っている場合（キャンセルではない）
+                alert('パスワードが正しくありません');
+            }
+            // キャンセルの場合は何もしない
+        });
+    });
+
     // ハンバーガーメニュー機能
     const hamburger = document.querySelector('.hamburger-menu');
     const navMenu = document.querySelector('.nav-menu');

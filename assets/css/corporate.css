@@ -1,90 +1,91 @@
 /* 企業向けページ専用スタイル */
 
-/* Hero Banner */
+/* Hero Section */
 .corporate-hero {
     position: relative;
+    width: 100%;
     height: 500px;
-    background-image: linear-gradient(rgba(249, 235, 200, 0.8), rgba(249, 235, 200, 0.8)), url('../images/corporate-hero.jpg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #333;
+    overflow: hidden;
 }
 
-.corporate-hero::before {
-    content: '';
+.corporate-hero-image {
+    width: 100%;
+    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.corporate-hero-image img {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
+    object-fit: contain; /* 画像が全体を表示するように変更 */
+    object-position: center; /* 画像を中央に配置 */
 }
 
 .corporate-hero-content {
-    position: relative;
-    z-index: 2;
+    position: absolute;
+    top: auto; /* topの指定をなくし */
+    bottom: 80px; /* 下からの位置を指定 */
+    left: 0;
     width: 100%;
+    height: auto; /* 高さを自動に設定 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
 }
 
-.corporate-hero h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    color: var(--primary-color);
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+.corporate-hero-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 80%;
+    width: 600px;
 }
 
-.corporate-hero p {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    color: #333;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+.corporate-hero-overlay h1 {
+    color: #ffffff;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
 }
 
-.hero-tag {
-    display: inline-block;
-    background-color: var(--primary-color);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
+.corporate-hero-overlay p {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
 }
 
 .hero-btn {
     display: inline-block;
-    padding: 15px 30px;
+    padding: 0.8rem 2rem;
     background-color: var(--primary-color);
-    color: #fff;
-    font-size: 1.2rem;
+    color: #ffffff;
     font-weight: 600;
-    border-radius: 5px;
+    border-radius: 4px;
     text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .hero-btn:hover {
-    background-color: #3a6348;
+    background-color: var(--secondary-color);
     transform: translateY(-3px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hero-tag {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+    padding: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    z-index: 2;
 }
 
 /* Benefits Section */
@@ -284,9 +285,9 @@
 
 .case-study-image {
     flex: 1;
-    min-width: 280px;
+    min-width: 300px;
     max-width: 400px;
-    object-fit: cover;
+    position: relative;
     overflow: hidden;
 }
 
@@ -294,6 +295,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+.case-study-card:hover .case-study-image img {
+    transform: scale(1.05);
 }
 
 .case-study-content {
@@ -313,6 +320,7 @@
     margin-bottom: 20px;
     color: #666;
     font-size: 0.9rem;
+    flex-wrap: wrap;
 }
 
 .case-meta span {
@@ -331,6 +339,7 @@
     background-color: #f9f9f9;
     border-radius: 10px;
     position: relative;
+    border-left: 4px solid var(--primary-color);
 }
 
 .quote-icon {
@@ -345,6 +354,7 @@
     font-style: italic;
     margin-top: 10px;
     color: #555;
+    font-weight: 500;
 }
 
 /* Strengths Section (6つの強みセクション) */
@@ -515,26 +525,105 @@
 
 /* モバイル対応 */
 @media (max-width: 768px) {
+    .corporate-hero {
+        height: 400px;
+    }
+
+    .corporate-hero-overlay {
+        max-width: 90%;
+        padding: 1.5rem;
+        /* オーバーレイが画面上部にのみかかるように調整 */
+        margin-top: -100px;
+    }
+
+    .corporate-hero-overlay h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .corporate-hero-overlay p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .hero-tag {
+        bottom: 60px;
+        font-size: 0.9rem;
+    }
+
     .cs-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .cs-header h3 {
         font-size: 1.2rem;
     }
-    
+
     .cs-content {
         padding: 20px 15px;
     }
-    
+
     .cs-challenge, .cs-solution {
         padding: 15px;
+    }
+
+    .case-study-card {
+        flex-direction: column;
+    }
+
+    .case-study-image {
+        max-width: 100%;
+        height: 200px;
+    }
+
+    .case-study-content {
+        padding: 20px;
+    }
+
+    .case-meta {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .corporate-hero {
+        height: 350px;
+    }
+
+    .corporate-hero-overlay {
+        padding: 1rem;
+    }
+
+    .corporate-hero-overlay h1 {
+        font-size: 1.5rem;
+    }
+
+    .corporate-hero-overlay p {
+        font-size: 0.9rem;
     }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
+    .corporate-hero {
+        height: 500px;
+    }
+
+    .corporate-hero-content {
+        width: 80%;
+    }
+
     .cs-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .case-study-image {
+        min-width: 250px;
     }
 }
 
@@ -577,7 +666,7 @@
     .mobile-arrow {
         display: block;
     }
-    
+
     .challenges-solutions-container {
         gap: 50px;
     }
@@ -587,28 +676,28 @@
     .challenges-solutions-section {
         padding: 60px 0;
     }
-    
+
     .cs-body {
         padding: 25px 20px;
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
-    
+
     .cs-icon {
         margin-bottom: 20px;
     }
-    
+
     .cs-content h3 {
         font-size: 1.4rem;
         margin-bottom: 15px;
     }
-    
+
     .cs-content p {
         font-size: 1rem;
         line-height: 1.7;
     }
-    
+
     .cs-label {
         font-size: 0.85rem;
     }
@@ -618,11 +707,11 @@
     .strengths-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .case-study-card {
         flex-direction: column;
     }
-    
+
     .case-study-image {
         max-width: 100%;
         height: 250px;
@@ -633,25 +722,25 @@
     .case-studies-container {
         gap: 30px;
     }
-    
+
     .case-study-content {
         padding: 20px;
     }
-    
+
     .case-meta {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .strengths-grid {
         grid-template-columns: 1fr;
         gap: 25px;
     }
-    
+
     .strength-card {
         padding: 25px;
     }
-    
+
     .strength-icon {
         width: 70px;
         height: 70px;
@@ -663,23 +752,23 @@
     .case-study-image {
         height: 200px;
     }
-    
+
     .case-testimonial {
         padding: 15px;
     }
-    
+
     .quote-icon {
         font-size: 1.2rem;
     }
-    
+
     .case-study-content h3 {
         font-size: 1.3rem;
     }
-    
+
     .strength-card {
         padding: 20px;
     }
-    
+
     .strength-icon {
         width: 60px;
         height: 60px;
@@ -796,7 +885,7 @@
     .solution-arrow {
         display: none;
     }
-    
+
     .challenge-solution-item {
         flex-direction: column;
         background-color: #fff;
@@ -805,7 +894,7 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         margin-bottom: 30px;
     }
-    
+
     /* カードヘッダー部分（課題と解決策タイトル） */
     .compact-card-header {
         display: flex !important;
@@ -821,7 +910,7 @@
         align-items: center;
         padding: 10px 15px;
     }
-    
+
     .compact-card-title-challenge {
         font-weight: bold;
         color: #d32f2f; /* 課題は赤色 */
@@ -829,7 +918,7 @@
         border-radius: 4px;
         background-color: #ffebee;
     }
-    
+
     .compact-card-title-solution {
         font-weight: bold;
         color: #388e3c; /* 解決策は緑色 */
@@ -837,7 +926,7 @@
         border-radius: 4px;
         background-color: #e8f5e9;
     }
-    
+
     /* コンパクトカード本体部分 */
     .compact-card-body {
         display: flex !important;
@@ -851,7 +940,7 @@
         z-index: 1 !important;
         flex-direction: column;
     }
-    
+
     /* 課題部分 */
     .compact-card-challenge {
         display: flex !important;
@@ -867,7 +956,7 @@
         border-top: 3px solid #e57373;
         background-color: #fff;
     }
-    
+
     /* 矢印部分 - 視覚的な区切りとして残し、小さくする */
     .compact-card-arrow {
         display: flex !important;
@@ -886,7 +975,7 @@
         font-size: 1.2rem;
         background-color: #f5f5f5;
     }
-    
+
     /* 解決策部分 */
     .compact-card-solution {
         display: flex !important;
@@ -902,7 +991,7 @@
         border-top: 3px solid #81c784;
         background-color: #fff;
     }
-    
+
     .compact-card-icon {
         display: flex !important;
         visibility: visible !important;
@@ -920,21 +1009,21 @@
         font-size: 1.8rem;
         flex-shrink: 0;
     }
-    
+
     .compact-card-challenge .compact-card-icon {
         background-color: #ffebee;
         color: #e57373;
     }
-    
+
     .compact-card-solution .compact-card-icon {
         background-color: #e8f5e9;
         color: #81c784;
     }
-    
+
     .compact-card-content {
         flex: 1;
     }
-    
+
     .compact-card-heading {
         display: block !important;
         visibility: visible !important;
@@ -950,7 +1039,7 @@
         color: var(--primary-color);
         margin-bottom: 12px;
     }
-    
+
     .compact-card-text {
         display: block !important;
         visibility: visible !important;
@@ -969,7 +1058,7 @@
         max-height: none;
         white-space: normal;
     }
-    
+
     /* 「詳細はこちら」ボタンを完全に削除 */
     .compact-card-button {
         display: none !important;
@@ -982,7 +1071,7 @@
         pointer-events: none !important;
         z-index: -999 !important;
     }
-    
+
     .compact-card-button button {
         display: none !important;
     }

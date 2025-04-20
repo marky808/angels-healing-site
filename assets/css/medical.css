@@ -4,14 +4,16 @@
 .medical-hero {
     position: relative;
     height: 500px;
-    background-image: linear-gradient(rgba(167, 197, 235, 0.8), rgba(167, 197, 235, 0.8)), url('../images/medical-hero.jpg');
-    background-size: cover;
+    background-image: linear-gradient(rgba(167, 197, 235, 0.8), rgba(167, 197, 235, 0.8)), url('../images/medical-hero.png');
+    background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     text-align: center;
     color: #fff;
+    padding-bottom: 40px;
 }
 
 .medical-hero::before {
@@ -28,19 +30,62 @@
     position: relative;
     z-index: 2;
     width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .medical-hero h1 {
     font-size: 3rem;
     margin-bottom: 20px;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: #3a6348;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+    font-weight: 700;
 }
 
 .medical-hero p {
     font-size: 1.5rem;
     margin-bottom: 30px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    color: #3a6348;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+/* モバイル用のスタイル */
+@media (max-width: 767px) {
+    .medical-hero {
+        align-items: flex-end;
+        padding-bottom: 20px;
+    }
+    
+    .medical-hero-content {
+        max-width: 90%;
+        padding: 15px;
+    }
+    
+    .medical-hero h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    .medical-hero p {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+}
+
+/* さらに小さい画面用 */
+@media (max-width: 480px) {
+    .medical-hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .medical-hero p {
+        font-size: 1rem;
+    }
 }
 
 .hero-btn {
@@ -457,7 +502,7 @@
 /* Strengths Section */
 .strengths-section {
     padding: 80px 0;
-    background-color: #f9f9f9;
+    background-color: #fff;
 }
 
 .strengths-grid {
@@ -468,23 +513,29 @@
 }
 
 .strength-card {
-    background-color: #fff;
+    background-color: #f9fafb;
     padding: 30px;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    border-top: 4px solid var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .strength-card:hover {
     transform: translateY(-5px);
+    background-color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .strength-icon {
     width: 80px;
     height: 80px;
     margin: 0 auto 20px;
-    background-color: var(--secondary-color);
+    background-color: rgba(94, 153, 120, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -499,69 +550,46 @@
     margin-bottom: 15px;
 }
 
-/* モバイル表示の改善 - 天使たちの6つの強み */
-@media (max-width: 767px) {
+.strength-card p {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* モバイル対応 */
+@media screen and (max-width: 992px) {
     .strengths-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .strengths-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
     }
     
     .strength-card {
-        padding: 20px 15px;
+        padding: 25px;
+    }
+    
+    .strength-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .strength-card {
+        padding: 20px;
     }
     
     .strength-icon {
         width: 60px;
         height: 60px;
         font-size: 1.5rem;
-        margin: 0 auto 15px;
-    }
-    
-    .strength-card h3 {
-        font-size: 1.1rem;
-        margin-bottom: 10px;
-    }
-    
-    .strength-card p {
-        font-size: 0.9rem;
-        line-height: 1.5;
-    }
-}
-
-/* さらに小さい画面（スマートフォンの縦向きなど）でのレイアウト調整 */
-@media (max-width: 480px) {
-    .strengths-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .strength-card {
-        display: flex;
-        text-align: left;
-        align-items: center;
-        padding: 15px;
-    }
-    
-    .strength-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.3rem;
-        margin: 0 15px 0 0;
-        flex-shrink: 0;
-    }
-    
-    .strength-content {
-        flex: 1;
-    }
-    
-    .strength-card h3 {
-        margin-bottom: 5px;
-        font-size: 1rem;
-    }
-    
-    .strength-card p {
-        margin-bottom: 0;
-        font-size: 0.85rem;
+        margin-bottom: 15px;
     }
 }
 
@@ -777,5 +805,238 @@
     
     .method-cta {
         text-align: center;
+    }
+}
+
+/* コンタクトCTAセクション（特にモバイル用に最適化） */
+.contact-cta-section {
+    position: relative;
+    padding: 60px 0;
+    background: linear-gradient(120deg, rgba(94, 153, 120, 0.9), rgba(58, 99, 72, 0.95));
+    overflow: hidden;
+    margin-top: 50px;
+}
+
+/* 装飾的な背景要素 */
+.contact-cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    transform: rotate(45deg);
+    z-index: 1;
+}
+
+.contact-cta-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+    z-index: 1;
+}
+
+.contact-cta-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.contact-cta-content h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to right, #fff, #e8f5e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.contact-cta-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.contact-cta-content .btn.large-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 30px;
+    background-color: #fff;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.contact-cta-content .btn.large-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.6s ease;
+    z-index: -1;
+}
+
+.contact-cta-content .btn.large-btn:hover {
+    background-color: transparent;
+    color: #fff;
+    border-color: #fff;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.contact-cta-content .btn.large-btn:hover::before {
+    left: 100%;
+}
+
+.contact-cta-content .btn.large-btn i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+/* コンタクトセクションのアニメーションとアイコンスタイル */
+.cta-icon {
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+}
+
+.cta-icon i {
+    color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.15);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+/* パルスアニメーション */
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+    }
+    
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+    }
+    
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+/* コンタクト方法のスタイル */
+.contact-methods {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.contact-methods span {
+    margin: 0 15px;
+    padding: 10px;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    padding: 8px 15px;
+    transition: all 0.3s ease;
+}
+
+.contact-methods span:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.contact-methods span i {
+    margin-right: 8px;
+}
+
+/* モバイル向けの最適化 */
+@media (max-width: 767px) {
+    .contact-methods {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .contact-methods span {
+        margin: 5px 0;
+        width: 100%;
+        max-width: 200px;
+        justify-content: center;
+    }
+}
+
+/* モバイル用の最適化スタイル */
+@media (max-width: 767px) {
+    .contact-cta-section {
+        padding: 50px 0;
+    }
+    
+    .contact-cta-content h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .contact-cta-content p {
+        font-size: 1rem;
+        margin-bottom: 25px;
+        padding: 0 10px;
+    }
+    
+    .contact-cta-content .btn.large-btn {
+        width: 85%;
+        max-width: 280px;
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-cta-section {
+        padding: 40px 0;
+    }
+    
+    .contact-cta-content h2 {
+        font-size: 1.5rem;
     }
 }
