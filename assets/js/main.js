@@ -3,12 +3,36 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    // 初期設定
+    setupCommonFeatures();
+    
+    // コンポーネント読み込み完了時のイベントリスナー
+    document.addEventListener('componentsLoaded', function() {
+        console.log('すべてのコンポーネントが読み込まれました - main.jsからの確認');
+        setupNavigationFeatures();
+    });
+    
+    // 個別コンポーネント読み込み完了時のイベントリスナー
+    document.addEventListener('componentLoaded', function(e) {
+        console.log(`コンポーネントが読み込まれました: ${e.detail.componentType}`);
+        
+        // ヘッダーコンポーネントが読み込まれたら特定の処理を実行
+        if (e.detail.element.id === 'header') {
+            setupHeaderFeatures();
+        }
+    });
+});
+
+/**
+ * コンポーネントに依存しない共通機能のセットアップ
+ */
+function setupCommonFeatures() {
     // ナビゲーションのスクロール時の挙動
     window.addEventListener('scroll', function() {
         const header = document.querySelector('header');
-        if (window.scrollY > 100) {
+        if (header && window.scrollY > 100) {
             header.classList.add('sticky');
-        } else {
+        } else if (header) {
             header.classList.remove('sticky');
         }
     });
@@ -31,43 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // キャンセルの場合は何もしない
         });
     });
-
-    // ハンバーガーメニュー機能
-    const hamburger = document.querySelector('.hamburger-menu');
-    const navMenu = document.querySelector('.nav-menu');
-    const body = document.body;
     
-    // オーバーレイ要素を作成
-    const overlay = document.createElement('div');
-    overlay.className = 'menu-overlay';
-    body.appendChild(overlay);
-    
-    function toggleMenu() {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('open');
-        overlay.classList.toggle('active');
-        
-        // メニュー開いている時はスクロール無効化
-        if (navMenu.classList.contains('open')) {
-            body.style.overflow = 'hidden';
-        } else {
-            body.style.overflow = '';
-        }
-    }
-    
-    hamburger.addEventListener('click', toggleMenu);
-    overlay.addEventListener('click', toggleMenu);
-    
-    // メニューリンククリック時の処理
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            if (navMenu.classList.contains('open')) {
-                toggleMenu();
-            }
-        });
-    });
-
     // スムーススクロール
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -165,4 +153,60 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     };
-});
+}
+
+/**
+ * ヘッダーコンポーネント関連の機能セットアップ
+ */
+function setupHeaderFeatures() {
+    // オーバーレイ要素を作成
+    const body = document.body;
+    let overlay = document.querySelector('.menu-overlay');
+    
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'menu-overlay';
+        body.appendChild(overlay);
+    }
+}
+
+/**
+ * ナビゲーション関連の機能セットアップ（コンポーネント読み込み後）
+ */
+function setupNavigationFeatures() {
+    // ハンバーガーメニュー機能
+    const hamburger = document.querySelector('.hamburger-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    const body = document.body;
+    const overlay = document.querySelector('.menu-overlay');
+    
+    if (hamburger && navMenu && overlay) {
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('open');
+            overlay.classList.toggle('active');
+            
+            // メニュー開いている時はスクロール無効化
+            if (navMenu.classList.contains('open')) {
+                body.style.overflow = 'hidden';
+            } else {
+                body.style.overflow = '';
+            }
+        }
+        
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+        
+        // メニューリンククリック時の処理
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (navMenu.classList.contains('open')) {
+                    toggleMenu();
+                }
+            });
+        });
+    } else {
+        console.warn('ナビゲーション要素が見つかりません');
+    }
+}

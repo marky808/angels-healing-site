@@ -1,7 +1,11 @@
 /**
  * コンポーネント読み込み用スクリプト
  * データ属性に基づいてヘッダーとフッターを動的に読み込むための機能を提供します
+ * GitHub Pages対応版
  */
+
+// リポジトリ名の設定（GitHub Pages用）
+const REPO_NAME = 'angels-healing-site';
 
 document.addEventListener('DOMContentLoaded', function() {
     // コンポーネント読み込み処理を開始
@@ -34,6 +38,25 @@ async function loadComponents() {
     
     // コンポーネント読み込み後のイベントハンドラをセットアップ
     setupEventHandlers();
+    
+    // コンポーネント読み込み完了イベントを発火
+    document.dispatchEvent(new CustomEvent('componentsLoaded'));
+}
+
+/**
+ * 環境に応じたベースURLを取得する関数
+ * @returns {string} ベースURL
+ */
+function getBaseUrl() {
+    // GitHub Pagesかどうかチェック
+    const isGitHubPages = location.hostname.includes('github.io');
+    
+    if (isGitHubPages) {
+        return `/${REPO_NAME}`;
+    }
+    
+    // ローカル環境の場合は空文字を返す
+    return '';
 }
 
 /**
@@ -77,18 +100,21 @@ async function loadComponent(element, componentType) {
         // パスの調整
         let adjustedPath = '';
         
-        if (isInUserPortal) {
-            adjustedPath = '../' + componentPath; // ユーザーポータル内の場合は上の階層に移動
+        // GitHub Pagesでのリポジトリ名を考慮したパス調整
+        if (isGitHubPages) {
+            if (isInUserPortal) {
+                adjustedPath = `/${REPO_NAME}/${componentPath}`; // GitHub Pages上のユーザーポータル
+            } else {
+                adjustedPath = `/${REPO_NAME}/${componentPath}`; // GitHub Pages上の通常ページ
+            }
         } else {
-            adjustedPath = './' + componentPath; // 通常は現在の階層から相対パスで
+            // ローカル環境
+            if (isInUserPortal) {
+                adjustedPath = '../' + componentPath; // ユーザーポータル内の場合は上の階層に移動
+            } else {
+                adjustedPath = './' + componentPath; // 通常は現在の階層から相対パスで
+            }
         }
-        
-        // GitHubPagesでのリポジトリ名を考慮したパス調整（必要な場合）
-        // リポジトリ名が判明している場合は以下のようにパスを調整できます
-        // if (isGitHubPages) {
-        //     const repoName = 'angels-healing-site'; // GitHubリポジトリ名
-        //     adjustedPath = `/${repoName}/${componentPath}`;
-        // }
         
         // コンポーネントのHTMLを取得
         console.log(`コンポーネントを読み込み中: ${adjustedPath}`);
@@ -102,6 +128,14 @@ async function loadComponent(element, componentType) {
         
         // 要素にコンポーネントのHTMLを挿入
         element.innerHTML = htmlContent;
+        
+        // コンポーネント読み込み完了イベントを発火
+        document.dispatchEvent(new CustomEvent('componentLoaded', { 
+            detail: { 
+                element: element, 
+                componentType: componentType 
+            }
+        }));
         
     } catch (error) {
         console.error('コンポーネント読み込みエラー:', error);
