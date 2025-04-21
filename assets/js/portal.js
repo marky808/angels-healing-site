@@ -5,13 +5,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded - portal.js');
     
+    // ポータル用基本機能の初期化
+    setupPortalFeatures();
+    
     // コンポーネント読み込み完了後のモバイルメニュー初期化
     document.addEventListener('componentsLoaded', function() {
         console.log('Componentsロード完了 - portal.js');
-        // ポータル用モバイルメニューの初期化（main.js内の関数を使用）
-        if (typeof setupNewMobileMenu === 'function') {
-            setupNewMobileMenu();
-        }
+        // ポータル専用モバイルメニューの初期化
+        setupPortalMobileMenu();
     });
     
     // カテゴリーをクリックした時のフィルタリング
@@ -57,3 +58,57 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+/**
+ * ポータル専用のモバイルメニューセットアップ
+ */
+function setupPortalMobileMenu() {
+    console.log('ポータル用モバイルメニューをセットアップします');
+    
+    // ハンバーガーボタン要素を取得
+    const hamburgerBtn = document.querySelector('.portal-header .hamburger-menu');
+    
+    if (!hamburgerBtn) {
+        console.warn('ポータル用ハンバーガーメニューボタンが見つかりません');
+        return;
+    }
+    
+    // 現在のナビゲーションメニュー要素を取得
+    const navMenu = document.querySelector('.portal-header .nav-menu');
+    
+    if (!navMenu) {
+        console.warn('ポータル用ナビゲーションメニューが見つかりません');
+        return;
+    }
+    
+    // headerコンポーネントに既に含まれているメニューオーバーレイを使用
+    const menuOverlay = document.querySelector('.menu-overlay');
+    
+    if (!menuOverlay) {
+        console.warn('ポータル用メニューオーバーレイが見つかりません');
+        return;
+    }
+    
+    // モバイルメニュー操作のイベント処理を設定
+    hamburgerBtn.addEventListener('click', function() {
+        document.body.classList.toggle('menu-open');
+        hamburgerBtn.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    
+    // メニューオーバーレイをクリックした際にメニューを閉じる
+    menuOverlay.addEventListener('click', function() {
+        document.body.classList.remove('menu-open');
+        hamburgerBtn.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        navMenu.classList.remove('active');
+    });
+}
+
+/**
+ * ポータル用基本機能の初期化
+ */
+function setupPortalFeatures() {
+    // ここにポータル特有の追加機能を実装
+}

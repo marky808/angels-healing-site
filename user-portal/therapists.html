@@ -12,267 +12,116 @@
     <script src="../assets/js/therapist-data.js"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <div class="mobile-header-left">
-                <div class="hamburger-menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-            <div class="logo">
-                <img src="../assets/images/logo.png" alt="天使たちの癒し">
-                <h1>天使たちの癒し</h1>
-            </div>
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="index.html">ホーム</a></li>
-                    <li><a href="therapists.html" class="active">セラピスト一覧</a></li>
-                    <li><a href="index.html#booking">ご予約方法</a></li>
-                    <li><a href="index.html#contact">お問い合わせ</a></li>
-                    <li><a href="../index.html" class="business-link">ビジネス向けサイト</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1>セラピスト一覧</h1>
-            <p>あなたにぴったりのセラピストを見つけてください</p>
-        </div>
-    </section>
-
-    <!-- Filter Section -->
-    <section class="filter-section">
-        <div class="container">
-            <div class="filter-controls">
-                <div class="filter-group">
-                    <label for="category-filter">カテゴリー</label>
-                    <select id="category-filter">
-                        <option value="all">すべて</option>
-                        <option value="massage">マッサージ</option>
-                        <option value="aroma">アロマセラピー</option>
-                        <option value="healing">ヒーリング</option>
-                        <option value="oriental">東洋医学</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="speciality-filter">専門分野</label>
-                    <select id="speciality-filter">
-                        <option value="all">すべて</option>
-                        <option value="shoulder">肩こり</option>
-                        <option value="back">腰痛</option>
-                        <option value="stress">ストレス</option>
-                        <option value="fatigue">疲労回復</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label for="gender-filter">性別</label>
-                    <select id="gender-filter">
-                        <option value="all">すべて</option>
-                        <option value="male">男性</option>
-                        <option value="female">女性</option>
-                    </select>
-                </div>
-                
-                <button id="filter-btn" class="btn">絞り込む</button>
-            </div>
-        </div>
-    </section>
+    <!-- ヘッダーコンポーネント -->
+    <div id="header" data-component="portal-header"></div>
 
     <!-- Therapists List -->
-    <section class="therapists">
+    <section class="therapists-list">
         <div class="container">
-            <div class="therapists-grid">
-                <!-- ここから8人分のセラピスト情報を表示 -->
-                <div class="therapist-card" data-category="massage" data-speciality="shoulder,back" data-gender="female">
-                    <div class="therapist-image" style="background-image: url('../assets/images/therapists/therapist1.jpg');"></div>
-                    <div class="therapist-content">
-                        <h3 class="therapist-name">山田 優子</h3>
-                        <p class="therapist-specialty">マッサージ・指圧</p>
-                        <p>10年以上の経験を持つマッサージのスペシャリスト。特に肩こりや腰痛のケアを得意としています。</p>
-                        <a href="therapist-detail.html?id=1" class="btn">詳細プロフィール</a>
+            <h2>セラピスト一覧</h2>
+            <p>天使たちの癒しの専門セラピストをご紹介します。各セラピストのプロフィールをクリックすると詳細がご覧いただけます。</p>
+            
+            <div class="filter-section">
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="specialty-filter">専門分野</label>
+                        <select id="specialty-filter" class="form-control">
+                            <option value="all">すべての専門分野</option>
+                            <option value="shoulder">肩こり</option>
+                            <option value="head">頭痛</option>
+                            <option value="stress">ストレス</option>
+                        </select>
                     </div>
+                    <button id="filter-button" class="btn btn-primary">検索する</button>
                 </div>
-                
-                <div class="therapist-card" data-category="aroma" data-speciality="stress,fatigue" data-gender="male">
-                    <div class="therapist-image" style="background-image: url('../assets/images/therapists/therapist2.jpg');"></div>
-                    <div class="therapist-content">
-                        <h3 class="therapist-name">鈴木 健太</h3>
-                        <p class="therapist-specialty">アロマセラピー</p>
-                        <p>アロマの知識と技術を活かした施術で、心身の緊張をほぐします。香りによる癒し効果を実感できます。</p>
-                        <a href="therapist-detail.html?id=2" class="btn">詳細プロフィール</a>
-                    </div>
-                </div>
-                
-                <div class="therapist-card" data-category="healing" data-speciality="stress" data-gender="female">
-                    <div class="therapist-image" style="background-image: url('../assets/images/therapists/therapist3.jpg');"></div>
-                    <div class="therapist-content">
-                        <h3 class="therapist-name">佐藤 美香</h3>
-                        <p class="therapist-specialty">ヒーリング・レイキ</p>
-                        <p>エネルギーワークを通じた深いリラクゼーションを提供。ストレスの多い現代人におすすめです。</p>
-                        <a href="therapist-detail.html?id=3" class="btn">詳細プロフィール</a>
-                    </div>
-                </div>
-                
-                <div class="therapist-card" data-category="oriental" data-speciality="shoulder,back,fatigue" data-gender="male">
-                    <div class="therapist-image" style="background-image: url('../assets/images/therapists/therapist4.jpg');"></div>
-                    <div class="therapist-content">
-                        <h3 class="therapist-name">田中 誠</h3>
-                        <p class="therapist-specialty">鍼灸・東洋医学</p>
-                        <p>国家資格を持つ鍼灸師。東洋医学の知識を活かし、体のバランスを整える施術を行います。</p>
-                        <a href="therapist-detail.html?id=4" class="btn">詳細プロフィール</a>
-                    </div>
-                </div>
-                
-                <div class="therapist-card" data-category="massage" data-speciality="fatigue" data-gender="male">
-                    <div class="therapist-image" style="background-image: url('../assets/images/therapists/therapist5.jpg');"></div>
-                    <div class="therapist-content">
-                        <h3 class="therapist-name">中村 大輔</h3>
-                        <p class="therapist-specialty">スポーツマッサージ</p>
-                        <p>元スポーツトレーナーの経験を活かした、疲労回復に特化したマッサージを提供します。</p>
-                        <a href="therapist-detail.html?id=5" class="btn">詳細プロフィール</a>
-                    </div>
-                </div>
-                
-                <div class="therapist-card" data-category="aroma,healing" data-speciality="stress" data-gender="female">
-                    <div class="therapist-image" style="background-image: url('../assets/images/therapists/therapist6.jpg');"></div>
-                    <div class="therapist-content">
-                        <h3 class="therapist-name">小林 さくら</h3>
-                        <p class="therapist-specialty">アロマ・ヒーリング</p>
-                        <p>アロマの香りとヒーリングの力で、ストレスや緊張を解きほぐします。心の深いリラクゼーションを体験できます。</p>
-                        <a href="therapist-detail.html?id=6" class="btn">詳細プロフィール</a>
-                    </div>
-                </div>
-                
-                <div class="therapist-card" data-category="massage,oriental" data-speciality="shoulder,back" data-gender="female">
-                    <div class="therapist-image" style="background-image: url('../assets/images/therapists/therapist7.jpg');"></div>
-                    <div class="therapist-content">
-                        <h3 class="therapist-name">高橋 真由美</h3>
-                        <p class="therapist-specialty">指圧・経絡マッサージ</p>
-                        <p>東洋医学の経絡理論に基づいた、ツボ刺激による施術を行います。肩こり・腰痛に特に効果的です。</p>
-                        <a href="therapist-detail.html?id=7" class="btn">詳細プロフィール</a>
-                    </div>
-                </div>
-                
-                <div class="therapist-card" data-category="massage,healing" data-speciality="fatigue,stress" data-gender="male">
-                    <div class="therapist-image" style="background-image: url('../assets/images/therapists/therapist8.jpg');"></div>
-                    <div class="therapist-content">
-                        <h3 class="therapist-name">伊藤 一郎</h3>
-                        <p class="therapist-specialty">ディープティシューマッサージ</p>
-                        <p>深部組織へアプローチする本格的なマッサージ。慢性的な疲労や長年の凝りに効果的です。</p>
-                        <a href="therapist-detail.html?id=8" class="btn">詳細プロフィール</a>
-                    </div>
-                </div>
+            </div>
+            
+            <div class="therapists-grid" id="therapists-grid">
+                <!-- ここにセラピストカードが動的に挿入されます -->
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-info">
-                <div class="footer-logo">
-                    <img src="../assets/images/logo.png" alt="天使たちの癒し">
-                </div>
-                <p>天使たちの癒し</p>
-                <p>運営会社: 株式会社メカニカル技研</p>
-                <p>所在地: 東京都町田市南成瀬5-1-8 小室ビル2F</p>
-            </div>
-            
-            <div class="footer-links">
-                <h3>サイトマップ</h3>
-                <ul>
-                    <li><a href="index.html">ホーム</a></li>
-                    <li><a href="therapists.html">セラピスト一覧</a></li>
-                    <li><a href="index.html#booking">ご予約方法</a></li>
-                    <li><a href="index.html#contact">お問い合わせ</a></li>
-                    <li><a href="../index.html">ビジネス向けサイト</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-contact">
-                <h3>お問い合わせ</h3>
-                <p>担当: 宮本</p>
-                <p>TEL: 090-3434-1970</p>
-                <p>Email: info@angels-healing.com</p>
-                <p>LINE: @angels-healing</p>
-            </div>
-        </div>
-        
-        <div class="container copyright">
-            <p>&copy; 2025 天使たちの癒し All Rights Reserved.</p>
-        </div>
-    </footer>
+    <!-- フッターコンポーネント -->
+    <div id="footer" data-component="portal-footer"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // フィルターボタンの処理
-            const filterBtn = document.getElementById('filter-btn');
-            const therapistsGrid = document.querySelector('.therapists-grid');
+            const therapistsGrid = document.getElementById('therapists-grid');
+            const specialtyFilter = document.getElementById('specialty-filter');
+            const filterButton = document.getElementById('filter-button');
+            const therapists = getAllTherapists();
             
-            function renderTherapists(therapists) {
-                // セラピスト一覧を空にする
+            // セラピストカードを作成する関数
+            function createTherapistCard(therapist) {
+                const card = document.createElement('div');
+                card.className = 'therapist-card';
+                card.innerHTML = `
+                    <div class="therapist-image" style="background-image: url('${therapist.photo}')"></div>
+                    <div class="therapist-content">
+                        <h3 class="therapist-name">${therapist.name}</h3>
+                        <p class="therapist-specialty">${therapist.specialty}</p>
+                        <div class="therapist-specialty-tags">
+                            ${therapist.specialities ? therapist.specialities.map(spec => `<span class="tag">${getSpecialityDisplayName(spec)}</span>`).join('') : ''}
+                        </div>
+                        <p class="therapist-description">${therapist.description ? therapist.description[0] : ''}</p>
+                        <a href="therapist-detail.html?id=${therapist.id}" class="btn btn-outline">詳細を見る</a>
+                    </div>
+                `;
+                return card;
+            }
+            
+            // 専門分野のコードを表示名に変換する関数
+            function getSpecialityDisplayName(code) {
+                const names = {
+                    'shoulder': '肩こり',
+                    'head': '頭痛',
+                    'stress': 'ストレス'
+                };
+                return names[code] || code;
+            }
+            
+            // セラピストを表示する関数
+            function displayTherapists(filters = {}) {
                 therapistsGrid.innerHTML = '';
                 
-                if (therapists.length === 0) {
-                    therapistsGrid.innerHTML = '<p class="no-results">条件に一致するセラピストが見つかりませんでした。</p>';
+                let filteredTherapists = [...therapists];
+                
+                // 専門分野でフィルタリング
+                if(filters.specialty && filters.specialty !== 'all') {
+                    filteredTherapists = filteredTherapists.filter(t => 
+                        t.specialities && t.specialities.includes(filters.specialty)
+                    );
+                }
+                
+                // 結果がなければメッセージを表示
+                if(filteredTherapists.length === 0) {
+                    therapistsGrid.innerHTML = '<p class="no-results">条件に合うセラピストが見つかりませんでした。</p>';
                     return;
                 }
                 
-                // セラピストカードを生成して追加
-                therapists.forEach(therapist => {
-                    const therapistCard = document.createElement('div');
-                    therapistCard.className = 'therapist-card';
-                    therapistCard.setAttribute('data-category', therapist.categories.join(','));
-                    therapistCard.setAttribute('data-speciality', therapist.specialities.join(','));
-                    therapistCard.setAttribute('data-gender', therapist.gender);
-                    
-                    therapistCard.innerHTML = `
-                        <div class="therapist-image" style="background-image: url('${therapist.photo}');"></div>
-                        <div class="therapist-content">
-                            <h3 class="therapist-name">${therapist.name}</h3>
-                            <p class="therapist-specialty">${therapist.specialty}</p>
-                            <p>${therapist.description[0]}</p>
-                            <a href="therapist-detail.html?id=${therapist.id}" class="btn">詳細プロフィール</a>
-                        </div>
-                    `;
-                    
-                    therapistsGrid.appendChild(therapistCard);
+                // カードを作成して追加
+                filteredTherapists.forEach(therapist => {
+                    const card = createTherapistCard(therapist);
+                    therapistsGrid.appendChild(card);
                 });
             }
             
             // 初期表示
-            renderTherapists(getAllTherapists());
+            displayTherapists();
             
-            // フィルターボタンクリック時
-            filterBtn.addEventListener('click', function() {
-                const category = document.getElementById('category-filter').value;
-                const speciality = document.getElementById('speciality-filter').value;
-                const gender = document.getElementById('gender-filter').value;
-                
-                const filteredTherapists = filterTherapists(category, speciality, gender);
-                renderTherapists(filteredTherapists);
+            // フィルターボタンのイベントリスナー
+            filterButton.addEventListener('click', function() {
+                const filters = {
+                    specialty: specialtyFilter.value
+                };
+                displayTherapists(filters);
             });
-            
-            // URLパラメータによる初期フィルタリング
-            const urlParams = new URLSearchParams(window.location.search);
-            const categoryParam = urlParams.get('category');
-            
-            if (categoryParam) {
-                const categorySelect = document.getElementById('category-filter');
-                categorySelect.value = categoryParam;
-                
-                const filteredTherapists = getTherapistsByCategory(categoryParam);
-                renderTherapists(filteredTherapists);
-            }
         });
     </script>
+
+    <script src="../assets/js/load-components.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/portal.js"></script>
 </body>
 </html>
