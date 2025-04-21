@@ -480,6 +480,217 @@
     color: #333;
 }
 
+/* 強化された縦並び導入方法セクション */
+.corporate-plans {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+    background-image: linear-gradient(to bottom, #f9f9f9, #ffffff);
+}
+
+.corporate-plans .section-title h2 {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 15px;
+}
+
+.corporate-plans .section-title h2:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+.method-card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s ease;
+    border: none;
+    padding: 0;
+    display: block;
+}
+
+.method-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.method-header {
+    position: relative;
+    background: linear-gradient(135deg, #4a7c59, #5e996e);
+    color: white;
+    padding: 25px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.method-number {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    border: 2px solid white;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.method-header h3 {
+    margin: 0 0 10px;
+    font-size: 1.8rem;
+    color: white;
+    padding-right: 60px;
+}
+
+.method-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+.method-content {
+    padding: 30px;
+}
+
+.method-description {
+    margin-bottom: 25px;
+    color: #444;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.method-benefits-container {
+    background-color: #f8fbf9;
+    border-radius: 12px;
+    padding: 20px 25px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.method-benefits-container h4 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.method-benefits {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.method-benefits li {
+    display: flex;
+    align-items: center;
+    line-height: 1.5;
+}
+
+.method-benefits li i {
+    color: var(--primary-color);
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.method-cta {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.btn.btn-primary {
+    background: linear-gradient(135deg, #4a7c59, #5e996e);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    border: none;
+    box-shadow: 0 5px 15px rgba(74, 124, 89, 0.3);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn.btn-primary:hover {
+    background: linear-gradient(135deg, #5e996e, #4a7c59);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(74, 124, 89, 0.4);
+}
+
+.btn.btn-primary i {
+    margin-right: 8px;
+}
+
+.highlight-badge {
+    display: none;  /* おすすめバッジを非表示にする */
+}
+
+.method-card.highlight {
+    border: none;  /* おすすめプランの特別な枠線を削除 */
+}
+
+/* カスタムグラデーションの追加 */
+.method-card:nth-child(1) .method-header {
+    background: linear-gradient(135deg, #4a7c59, #5e996e);
+}
+
+.method-card:nth-child(2) .method-header {
+    background: linear-gradient(135deg, #3f6b4d, #55906c);
+}
+
+.method-card:nth-child(3) .method-header {
+    background: linear-gradient(135deg, #2f5a3d, #4a7c59);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .method-benefits {
+        grid-template-columns: 1fr;
+    }
+    
+    .method-header {
+        padding: 20px;
+    }
+    
+    .method-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+        top: 15px;
+        right: 15px;
+    }
+    
+    .method-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .method-subtitle {
+        font-size: 1rem;
+    }
+    
+    .method-content {
+        padding: 20px;
+    }
+}
+
 /* お問い合わせCTAセクション */
 .contact-cta-section {
     padding: 80px 0;
