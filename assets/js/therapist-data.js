@@ -15,8 +15,7 @@ const therapistData = {
         photo: '../assets/images/hayashi-yumi.jpg',
         thumbnailPhoto: '../assets/images/hayashi-yumi.jpg',
         description: [
-            '皆様の日ごろの心と体の緊張が少しでもほぐれるような時間をご提供いたします。',
-            '頭部や肩のコリに特化した施術で、短時間でも効果的なケアを心がけています。'
+            '皆様の日ごろの心と体の緊張が少しでもほぐれるような時間をご提供いたします。'
         ],
         qualifications: [
             '鍼灸師'
@@ -24,16 +23,17 @@ const therapistData = {
         courses: [
             {
                 title: '頭部と頚肩のスッキリケア',
-                description: '15分でリフレッシュ、頭も肩も軽やかに。頭部のほぐしと頚肩のストレッチで、頭と頚肩の緊張を解消していきます。',
+                description: '頭部のほぐしと頚肩のストレッチで、頭と頚肩の緊張を解消していきます。',
                 duration: '施術時間: 15分'
             }
         ],
         salon_info: {
-            name: 'くらら鍼灸院',
+            name: '',
             url: 'https://kurarahari-yokohama.com/',
             photo: '../assets/images/hayashi-yumi1.jpg'
         },
         treatment_photos: [
+            '../assets/images/hayashi-yumi1.jpg',
             '../assets/images/hayashi-yumi2.jpg'
         ]
     }
