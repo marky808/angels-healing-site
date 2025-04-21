@@ -1,13 +1,13 @@
 /**
  * コンポーネント読み込み用スクリプト
  * データ属性に基づいてヘッダーとフッターを動的に読み込むための機能を提供します
- * GitHub Pages対応版
  */
 
-// リポジトリ名の設定（GitHub Pages用）
-const REPO_NAME = 'angels-healing-site';
+// デバッグ用のフラグ - 読み込み問題の診断に使用
+const DEBUG_MODE = true;
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOMContentLoaded: コンポーネント読み込み処理を開始します');
     // コンポーネント読み込み処理を開始
     loadComponents();
 });
@@ -20,40 +20,56 @@ async function loadComponents() {
     const headerElement = document.getElementById('header');
     const footerElement = document.getElementById('footer');
     
-    // ヘッダーの読み込み
-    if (headerElement) {
-        const headerType = headerElement.getAttribute('data-component');
-        if (headerType) {
-            await loadComponent(headerElement, headerType);
+    try {
+        // ヘッダーの読み込み
+        if (headerElement) {
+            const headerType = headerElement.getAttribute('data-component');
+            if (headerType) {
+                if (DEBUG_MODE) console.log(`ヘッダー(${headerType})の読み込みを試行します`);
+                await loadComponent(headerElement, headerType);
+            }
         }
-    }
-    
-    // フッターの読み込み
-    if (footerElement) {
-        const footerType = footerElement.getAttribute('data-component');
-        if (footerType) {
-            await loadComponent(footerElement, footerType);
+        
+        // フッターの読み込み
+        if (footerElement) {
+            const footerType = footerElement.getAttribute('data-component');
+            if (footerType) {
+                if (DEBUG_MODE) console.log(`フッター(${footerType})の読み込みを試行します`);
+                await loadComponent(footerElement, footerType);
+            }
         }
+        
+        // コンポーネント読み込み完了イベントを発火
+        if (DEBUG_MODE) console.log('すべてのコンポーネント読み込み完了');
+        document.dispatchEvent(new CustomEvent('componentsLoaded'));
+    } catch (error) {
+        console.error('コンポーネント読み込みに失敗しました:', error);
+        showComponentError(headerElement || document.body, 'コンポーネント読み込みエラー: ' + error.message);
     }
-    
-    // コンポーネント読み込み完了イベントを発火
-    document.dispatchEvent(new CustomEvent('componentsLoaded'));
 }
 
 /**
- * 環境に応じたベースURLを取得する関数
- * @returns {string} ベースURL
+ * コンポーネント読み込みエラーを表示する関数
  */
-function getBaseUrl() {
-    // GitHub Pagesかどうかチェック
-    const isGitHubPages = location.hostname.includes('github.io');
+function showComponentError(element, message) {
+    const errorElement = document.createElement('div');
+    errorElement.className = 'component-error-message';
+    errorElement.innerHTML = `
+        <div style="background-color: #ffdddd; color: #d32f2f; padding: 15px; margin: 10px 0; border-radius: 4px; border-left: 5px solid #d32f2f;">
+            <strong>コンポーネント読み込みエラー</strong><br>
+            ${message}<br>
+            <button onclick="location.reload()" style="margin-top: 10px; padding: 5px 15px; background: #d32f2f; color: white; border: none; border-radius: 4px; cursor: pointer;">再読み込み</button>
+        </div>
+    `;
     
-    if (isGitHubPages) {
-        return `/${REPO_NAME}`;
+    // すでにエラーメッセージがある場合は置き換える
+    const existingError = element.querySelector('.component-error-message');
+    if (existingError) {
+        element.replaceChild(errorElement, existingError);
+    } else {
+        // 新しいエラーメッセージを追加
+        element.appendChild(errorElement);
     }
-    
-    // ローカル環境の場合は空文字を返す
-    return '';
 }
 
 /**
@@ -80,53 +96,41 @@ async function loadComponent(element, componentType) {
                 componentPath = 'components/portal/footer.html';
                 break;
             default:
-                console.error(`不明なコンポーネントタイプ: ${componentType}`);
-                return;
+                throw new Error(`不明なコンポーネントタイプ: ${componentType}`);
         }
         
-        // GitHub Pagesかどうかを判定
-        const isGitHubPages = location.hostname.includes('github.io');
+        // 現在のパスを取得（より簡単なアプローチに変更）
+        const isInUserPortal = window.location.pathname.includes('/user-portal/');
         
-        // パスの調整: user-portalディレクトリにいるかどうかを確認
-        const isInUserPortal = window.location.pathname.includes('/user-portal/') || 
-                              window.location.pathname.endsWith('user-portal/') || 
-                              window.location.pathname.endsWith('user-portal/index.html') ||
-                              window.location.pathname.endsWith('user-portal/therapists.html') ||
-                              window.location.pathname.endsWith('user-portal/therapist-detail.html');
-        
-        // パスの調整
-        let adjustedPath = '';
-        
-        // GitHub Pagesでのリポジトリ名を考慮したパス調整
-        if (isGitHubPages) {
-            if (isInUserPortal) {
-                adjustedPath = `/${REPO_NAME}/${componentPath}`; // GitHub Pages上のユーザーポータル
-            } else {
-                adjustedPath = `/${REPO_NAME}/${componentPath}`; // GitHub Pages上の通常ページ
-            }
+        // パスの調整（シンプルに）
+        let adjustedPath;
+        if (isInUserPortal) {
+            adjustedPath = '../' + componentPath; // ユーザーポータル内の場合は上の階層に移動
         } else {
-            // ローカル環境
-            if (isInUserPortal) {
-                adjustedPath = '../' + componentPath; // ユーザーポータル内の場合は上の階層に移動
-            } else {
-                adjustedPath = './' + componentPath; // 通常は現在の階層から相対パスで
-            }
+            adjustedPath = componentPath; // 通常は現在の階層から
         }
+        
+        if (DEBUG_MODE) console.log(`コンポーネントを読み込み中: ${adjustedPath}`);
         
         // コンポーネントのHTMLを取得
-        console.log(`コンポーネントを読み込み中: ${adjustedPath}`);
         const response = await fetch(adjustedPath);
         
         if (!response.ok) {
-            throw new Error(`コンポーネントの読み込みに失敗しました: ${adjustedPath} (${response.status})`);
+            throw new Error(`HTTPエラー: ${response.status} - ${adjustedPath}`);
         }
         
         const htmlContent = await response.text();
+        
+        // 空のコンテンツをチェック
+        if (!htmlContent.trim()) {
+            throw new Error('読み込まれたコンポーネントが空です');
+        }
         
         // 要素にコンポーネントのHTMLを挿入
         element.innerHTML = htmlContent;
         
         // コンポーネント読み込み完了イベントを発火
+        if (DEBUG_MODE) console.log(`コンポーネント読み込み成功: ${componentType}`);
         document.dispatchEvent(new CustomEvent('componentLoaded', { 
             detail: { 
                 element: element, 
@@ -134,9 +138,17 @@ async function loadComponent(element, componentType) {
             }
         }));
         
+        return true;
+        
     } catch (error) {
-        console.error('コンポーネント読み込みエラー:', error);
-        element.innerHTML = `<p class="component-error">コンポーネントの読み込みに失敗しました</p>`;
+        console.error(`コンポーネント(${componentType})読み込みエラー:`, error);
+        element.innerHTML = `
+            <div style="background-color: #ffdddd; color: #d32f2f; padding: 15px; margin: 10px 0; border-radius: 4px; border-left: 5px solid #d32f2f;">
+                <strong>コンポーネントの読み込みに失敗しました</strong><br>
+                ${error.message}
+            </div>
+        `;
+        throw error; // エラーを上位に伝播
     }
 }
 

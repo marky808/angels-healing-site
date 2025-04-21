@@ -2,108 +2,195 @@
  * main.js - 全ページで使用する共通のJavaScript
  */
 
+// デバッグログを追加
+console.log('main.js loaded');
+
+// DOMの読み込み完了時に実行
 document.addEventListener('DOMContentLoaded', function() {
-    // 初期設定
+    console.log('DOM loaded - main.js');
+    
+    // 基本機能のセットアップ
     setupCommonFeatures();
     
-    // 初期化（遅延実行）- コンポーネントの読み込みを待つ
-    setTimeout(initializeMenu, 300);
-    
-    // コンポーネント読み込み完了時のイベントリスナー
+    // コンポーネント読み込み完了後にメニューを初期化
     document.addEventListener('componentsLoaded', function() {
-        console.log('すべてのコンポーネントが読み込まれました - main.jsからの確認');
-        setupNavigationFeatures();
-        initializeMenu(); // ここでも再度初期化を試みる
+        console.log('componentsLoaded イベントを受信 - main.js');
+        // 新しいモバイルメニューの初期化
+        setupNewMobileMenu();
+        
+        // 「上に戻る」ボタンの追加
+        createBackToTopButton();
     });
     
-    // 個別コンポーネント読み込み完了時のイベントリスナー
+    // 個々のコンポーネント読み込み完了時の処理
     document.addEventListener('componentLoaded', function(e) {
-        console.log(`コンポーネントが読み込まれました: ${e.detail.componentType}`);
-        
-        // ヘッダーコンポーネントが読み込まれたら特定の処理を実行
-        if (e.detail.element.id === 'header') {
-            setupHeaderFeatures();
-            initializeMenu(); // ヘッダーコンポーネント読み込み時にメニューを初期化
-        }
+        console.log(`componentLoaded イベントを受信: ${e.detail.componentType} - main.js`);
     });
 });
 
-// メニュー初期化関数
-function initializeMenu() {
-    const hamburgerMenu = document.querySelector('.hamburger-menu');
-    const navMenu = document.querySelector('.nav-menu');
-    const menuOverlay = document.querySelector('.menu-overlay');
+/**
+ * 新しいモバイルメニューのセットアップ
+ */
+function setupNewMobileMenu() {
+    console.log('新しいモバイルメニューをセットアップします');
     
-    if (hamburgerMenu && navMenu) {
-        console.log('ハンバーガーメニュー初期化');
-        
-        // トグル関数を定義
-        function toggleMenu() {
-            console.log('メニュートグル実行');
-            hamburgerMenu.classList.toggle('active');
-            navMenu.classList.toggle('active'); // activeクラスに統一
-            
-            if (menuOverlay) {
-                menuOverlay.classList.toggle('active');
-            }
-            
-            // メニュー開いている時はスクロール無効化
-            if (navMenu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-            
-            console.log('メニュー状態変更:', navMenu.classList.contains('active'));
-        }
-        
-        // 閉じる関数を定義
-        function closeMenu() {
-            hamburgerMenu.classList.remove('active');
-            navMenu.classList.remove('active');
-            
-            if (menuOverlay) {
-                menuOverlay.classList.remove('active');
-            }
-            
-            document.body.style.overflow = '';
-        }
-        
-        // 既存のイベントリスナーを削除（重複防止）
-        hamburgerMenu.removeEventListener('click', toggleMenu);
-        
-        // 新しいイベントリスナーを追加
-        hamburgerMenu.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('ハンバーガーメニュークリック');
-            toggleMenu();
+    // ハンバーガーボタン要素を取得
+    const hamburgerBtn = document.querySelector('.hamburger-menu');
+    
+    if (!hamburgerBtn) {
+        console.warn('ハンバーガーメニューボタンが見つかりません');
+        return;
+    }
+    
+    // 現在のナビゲーションメニュー要素を取得
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (!navMenu) {
+        console.warn('ナビゲーションメニューが見つかりません');
+        return;
+    }
+    
+    // モバイルメニューのオーバーレイを作成
+    let menuOverlay = document.querySelector('.mobile-menu-overlay');
+    if (!menuOverlay) {
+        menuOverlay = document.createElement('div');
+        menuOverlay.className = 'mobile-menu-overlay';
+        document.body.appendChild(menuOverlay);
+    }
+    
+    // モバイルメニュー要素の確認
+    let mobileMenu = document.querySelector('.mobile-menu');
+    
+    // モバイルメニューが存在しない場合は作成
+    if (!mobileMenu) {
+        // メニューのクローンを作成（元のメニューリンクを維持）
+        mobileMenu = document.createElement('div');
+        mobileMenu.className = 'mobile-menu';
+        mobileMenu.innerHTML = navMenu.innerHTML;
+        document.body.appendChild(mobileMenu);
+        console.log('モバイルメニュー要素を作成しました');
+    }
+    
+    // ハンバーガーボタンのクリックイベント
+    hamburgerBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMobileMenu();
+    });
+    
+    // オーバーレイのクリックイベント
+    menuOverlay.addEventListener('click', function() {
+        closeMobileMenu();
+    });
+    
+    // モバイルメニュー内の各リンクにイベントを設定
+    const menuLinks = mobileMenu.querySelectorAll('a');
+    menuLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+            console.log('モバイルメニューリンクがクリックされました:', this.textContent);
+            // メニューを閉じる
+            closeMobileMenu();
         });
-        
-        // オーバーレイクリック時の処理
-        if (menuOverlay) {
-            menuOverlay.removeEventListener('click', closeMenu);
-            menuOverlay.addEventListener('click', closeMenu);
+    });
+    
+    // ページのスクロール時にメニューを閉じる
+    window.addEventListener('scroll', function() {
+        if (document.body.classList.contains('mobile-menu-open')) {
+            closeMobileMenu();
         }
-        
-        // メニューリンククリック時の処理
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (navMenu.classList.contains('active')) {
-                    closeMenu();
-                }
-            });
-        });
+    });
+    
+    console.log('モバイルメニューの初期化が完了しました');
+}
+
+/**
+ * モバイルメニューを開閉する関数
+ */
+function toggleMobileMenu() {
+    const hamburgerBtn = document.querySelector('.hamburger-menu');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const menuOverlay = document.querySelector('.mobile-menu-overlay');
+    
+    if (!hamburgerBtn || !mobileMenu || !menuOverlay) {
+        console.warn('メニュー要素が見つかりません');
+        return;
+    }
+    
+    if (document.body.classList.contains('mobile-menu-open')) {
+        closeMobileMenu();
     } else {
-        console.warn('ナビゲーション要素が見つかりません:', { 
-            hamburgerMenu: hamburgerMenu ? 'あり' : 'なし', 
-            navMenu: navMenu ? 'あり' : 'なし' 
-        });
+        document.body.classList.add('mobile-menu-open');
+        hamburgerBtn.classList.add('active');
+        mobileMenu.classList.add('open');
+        menuOverlay.classList.add('active');
+        // スクロールを無効にする
+        document.body.style.overflow = 'hidden';
+        console.log('モバイルメニューを開きました');
     }
 }
 
 /**
- * コンポーネントに依存しない共通機能のセットアップ
+ * モバイルメニューを閉じる関数
+ */
+function closeMobileMenu() {
+    const hamburgerBtn = document.querySelector('.hamburger-menu');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const menuOverlay = document.querySelector('.mobile-menu-overlay');
+    
+    if (!hamburgerBtn || !mobileMenu || !menuOverlay) {
+        console.warn('メニュー要素が見つかりません');
+        return;
+    }
+    
+    document.body.classList.remove('mobile-menu-open');
+    hamburgerBtn.classList.remove('active');
+    mobileMenu.classList.remove('open');
+    menuOverlay.classList.remove('active');
+    // スクロールを有効に戻す
+    document.body.style.overflow = '';
+    console.log('モバイルメニューを閉じました');
+}
+
+/**
+ * 「上に戻る」ボタンを作成する関数
+ */
+function createBackToTopButton() {
+    // すでに存在するボタンを確認
+    let backToTopBtn = document.querySelector('.back-to-top');
+    
+    // ボタンがない場合は作成
+    if (!backToTopBtn) {
+        backToTopBtn = document.createElement('button');
+        backToTopBtn.className = 'back-to-top';
+        backToTopBtn.innerHTML = '<i class="arrow-up">↑</i>';
+        backToTopBtn.setAttribute('aria-label', 'ページ上部へ戻る');
+        
+        // bodyに追加
+        document.body.appendChild(backToTopBtn);
+        
+        console.log('「トップに戻る」ボタンを作成しました');
+    }
+    
+    // スクロール位置に応じてボタンの表示/非表示を切り替え
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) { // 300px以上スクロールしたら表示
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+    
+    // ボタンのクリックイベント
+    backToTopBtn.addEventListener('click', function() {
+        // スムーズにトップへスクロール
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+/**
+ * 共通機能のセットアップ
  */
 function setupCommonFeatures() {
     // ナビゲーションのスクロール時の挙動
@@ -232,27 +319,4 @@ function setupCommonFeatures() {
             }
         });
     };
-}
-
-/**
- * ヘッダーコンポーネント関連の機能セットアップ
- */
-function setupHeaderFeatures() {
-    // オーバーレイ要素を作成
-    const body = document.body;
-    let overlay = document.querySelector('.menu-overlay');
-    
-    if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.className = 'menu-overlay';
-        body.appendChild(overlay);
-    }
-}
-
-/**
- * ナビゲーション関連の機能セットアップ（コンポーネント読み込み後）
- */
-function setupNavigationFeatures() {
-    // ハンバーガーメニュー機能は initializeMenu() に移動
-    initializeMenu();
 }
