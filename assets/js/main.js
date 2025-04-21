@@ -180,10 +180,17 @@ function setupNavigationFeatures() {
     const body = document.body;
     const overlay = document.querySelector('.menu-overlay');
     
+    console.log('ナビゲーション要素チェック:', { 
+        hamburger: hamburger ? 'あり' : 'なし', 
+        navMenu: navMenu ? 'あり' : 'なし', 
+        overlay: overlay ? 'あり' : 'なし'
+    });
+    
     if (hamburger && navMenu && overlay) {
         function toggleMenu() {
+            console.log('メニュートグル実行');
             hamburger.classList.toggle('active');
-            navMenu.classList.toggle('open');
+            navMenu.classList.toggle('open'); // openクラスを使用するように統一
             overlay.classList.toggle('active');
             
             // メニュー開いている時はスクロール無効化
@@ -194,7 +201,15 @@ function setupNavigationFeatures() {
             }
         }
         
-        hamburger.addEventListener('click', toggleMenu);
+        // 既存のイベントリスナーを削除（念のため）
+        hamburger.removeEventListener('click', toggleMenu);
+        hamburger.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('ハンバーガーメニュークリック');
+            toggleMenu();
+        });
+        
+        overlay.removeEventListener('click', toggleMenu);
         overlay.addEventListener('click', toggleMenu);
         
         // メニューリンククリック時の処理

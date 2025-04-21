@@ -36,9 +36,6 @@ async function loadComponents() {
         }
     }
     
-    // コンポーネント読み込み後のイベントハンドラをセットアップ
-    setupEventHandlers();
-    
     // コンポーネント読み込み完了イベントを発火
     document.dispatchEvent(new CustomEvent('componentsLoaded'));
 }
@@ -140,35 +137,6 @@ async function loadComponent(element, componentType) {
     } catch (error) {
         console.error('コンポーネント読み込みエラー:', error);
         element.innerHTML = `<p class="component-error">コンポーネントの読み込みに失敗しました</p>`;
-    }
-}
-
-/**
- * コンポーネントのイベントハンドラをセットアップ
- */
-function setupEventHandlers() {
-    // ハンバーガーメニューのイベントハンドラ
-    const hamburgerMenu = document.querySelector('.hamburger-menu');
-    const navMenu = document.querySelector('.nav-menu');
-    const menuOverlay = document.querySelector('.menu-overlay');
-    
-    if (hamburgerMenu && navMenu && menuOverlay) {
-        hamburgerMenu.addEventListener('click', function() {
-            hamburgerMenu.classList.toggle('active');
-            navMenu.classList.toggle('open');
-            menuOverlay.classList.toggle('active');
-        });
-        
-        menuOverlay.addEventListener('click', function() {
-            hamburgerMenu.classList.remove('active');
-            navMenu.classList.remove('open');
-            menuOverlay.classList.remove('active');
-        });
-    }
-    
-    // ポータル専用機能のセットアップ
-    if (window.location.pathname.includes('/user-portal/')) {
-        setupPortalFeatures();
     }
 }
 
