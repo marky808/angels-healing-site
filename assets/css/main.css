@@ -472,27 +472,53 @@ footer {
 
     .hamburger-menu {
         display: flex;
-        position: relative;
-        z-index: 1001; /* メニューとオーバーレイより上に表示 */
+        flex-direction: column;
+        justify-content: space-between;
+        width: 28px;
+        height: 20px;
         cursor: pointer;
+        position: relative;
+        z-index: 1001; /* 最前面に表示 */
+    }
+
+    .hamburger-menu span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: var(--primary-color);
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
+    /* ハンバーガーメニュー アクティブ状態 */
+    .hamburger-menu.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
     }
     
+    .hamburger-menu.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger-menu.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
+
     .nav-menu {
         position: fixed;
         top: 0;
-        left: -280px;
+        left: -280px; /* 画面外に配置 */
         width: 250px;
         height: 100vh;
-        background-color: var(--light-bg);
+        background-color: #fff;
         box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
         transition: left 0.3s ease;
-        z-index: 1000; /* オーバーレイより上に表示 */
+        z-index: 1000; /* オーバーレイより上、ハンバーガーより下 */
         padding: 80px 20px 20px;
         overflow-y: auto;
     }
     
-    .nav-menu.open {
-        left: 0;
+    .nav-menu.active {
+        left: 0; /* 画面内に表示 */
     }
     
     .nav-menu ul {
@@ -516,25 +542,12 @@ footer {
         display: block;
         font-size: 1.1rem;
         padding: 8px 0;
+        width: 100%;
         transition: all 0.3s ease;
-    }
-
-    /* ハンバーガーメニュー アクティブ状態 */
-    .hamburger-menu.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 6px);
-    }
-    
-    .hamburger-menu.active span:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .hamburger-menu.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -6px);
     }
 
     /* オーバーレイ */
     .menu-overlay {
-        display: none;
         position: fixed;
         top: 0;
         left: 0;
@@ -542,10 +555,14 @@ footer {
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 999; /* メニューの下、他のコンテンツの上に */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
     }
     
     .menu-overlay.active {
-        display: block;
+        opacity: 1;
+        visibility: visible;
     }
 
     /* 利用者ポータルリンクのモバイルスタイル */

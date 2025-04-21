@@ -6,10 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初期設定
     setupCommonFeatures();
     
+    // 初期化（遅延実行）- コンポーネントの読み込みを待つ
+    setTimeout(initializeMenu, 300);
+    
     // コンポーネント読み込み完了時のイベントリスナー
     document.addEventListener('componentsLoaded', function() {
         console.log('すべてのコンポーネントが読み込まれました - main.jsからの確認');
         setupNavigationFeatures();
+        initializeMenu(); // ここでも再度初期化を試みる
     });
     
     // 個別コンポーネント読み込み完了時のイベントリスナー
@@ -19,9 +23,84 @@ document.addEventListener('DOMContentLoaded', function() {
         // ヘッダーコンポーネントが読み込まれたら特定の処理を実行
         if (e.detail.element.id === 'header') {
             setupHeaderFeatures();
+            initializeMenu(); // ヘッダーコンポーネント読み込み時にメニューを初期化
         }
     });
 });
+
+// メニュー初期化関数
+function initializeMenu() {
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    
+    if (hamburgerMenu && navMenu) {
+        console.log('ハンバーガーメニュー初期化');
+        
+        // トグル関数を定義
+        function toggleMenu() {
+            console.log('メニュートグル実行');
+            hamburgerMenu.classList.toggle('active');
+            navMenu.classList.toggle('active'); // activeクラスに統一
+            
+            if (menuOverlay) {
+                menuOverlay.classList.toggle('active');
+            }
+            
+            // メニュー開いている時はスクロール無効化
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+            
+            console.log('メニュー状態変更:', navMenu.classList.contains('active'));
+        }
+        
+        // 閉じる関数を定義
+        function closeMenu() {
+            hamburgerMenu.classList.remove('active');
+            navMenu.classList.remove('active');
+            
+            if (menuOverlay) {
+                menuOverlay.classList.remove('active');
+            }
+            
+            document.body.style.overflow = '';
+        }
+        
+        // 既存のイベントリスナーを削除（重複防止）
+        hamburgerMenu.removeEventListener('click', toggleMenu);
+        
+        // 新しいイベントリスナーを追加
+        hamburgerMenu.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('ハンバーガーメニュークリック');
+            toggleMenu();
+        });
+        
+        // オーバーレイクリック時の処理
+        if (menuOverlay) {
+            menuOverlay.removeEventListener('click', closeMenu);
+            menuOverlay.addEventListener('click', closeMenu);
+        }
+        
+        // メニューリンククリック時の処理
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (navMenu.classList.contains('active')) {
+                    closeMenu();
+                }
+            });
+        });
+    } else {
+        console.warn('ナビゲーション要素が見つかりません:', { 
+            hamburgerMenu: hamburgerMenu ? 'あり' : 'なし', 
+            navMenu: navMenu ? 'あり' : 'なし' 
+        });
+    }
+}
 
 /**
  * コンポーネントに依存しない共通機能のセットアップ
@@ -174,54 +253,6 @@ function setupHeaderFeatures() {
  * ナビゲーション関連の機能セットアップ（コンポーネント読み込み後）
  */
 function setupNavigationFeatures() {
-    // ハンバーガーメニュー機能
-    const hamburger = document.querySelector('.hamburger-menu');
-    const navMenu = document.querySelector('.nav-menu');
-    const body = document.body;
-    const overlay = document.querySelector('.menu-overlay');
-    
-    console.log('ナビゲーション要素チェック:', { 
-        hamburger: hamburger ? 'あり' : 'なし', 
-        navMenu: navMenu ? 'あり' : 'なし', 
-        overlay: overlay ? 'あり' : 'なし'
-    });
-    
-    if (hamburger && navMenu && overlay) {
-        function toggleMenu() {
-            console.log('メニュートグル実行');
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('open'); // openクラスを使用するように統一
-            overlay.classList.toggle('active');
-            
-            // メニュー開いている時はスクロール無効化
-            if (navMenu.classList.contains('open')) {
-                body.style.overflow = 'hidden';
-            } else {
-                body.style.overflow = '';
-            }
-        }
-        
-        // 既存のイベントリスナーを削除（念のため）
-        hamburger.removeEventListener('click', toggleMenu);
-        hamburger.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('ハンバーガーメニュークリック');
-            toggleMenu();
-        });
-        
-        overlay.removeEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu);
-        
-        // メニューリンククリック時の処理
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (navMenu.classList.contains('open')) {
-                    toggleMenu();
-                }
-            });
-        });
-    } else {
-        console.warn('ナビゲーション要素が見つかりません');
-    }
+    // ハンバーガーメニュー機能は initializeMenu() に移動
+    initializeMenu();
 }
