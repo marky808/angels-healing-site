@@ -3,6 +3,17 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded - portal.js');
+    
+    // コンポーネント読み込み完了後のモバイルメニュー初期化
+    document.addEventListener('componentsLoaded', function() {
+        console.log('Componentsロード完了 - portal.js');
+        // ポータル用モバイルメニューの初期化（main.js内の関数を使用）
+        if (typeof setupNewMobileMenu === 'function') {
+            setupNewMobileMenu();
+        }
+    });
+    
     // カテゴリーをクリックした時のフィルタリング
     const categoryLinks = document.querySelectorAll('.category-card a');
     

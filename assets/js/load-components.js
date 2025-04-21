@@ -99,16 +99,18 @@ async function loadComponent(element, componentType) {
                 throw new Error(`不明なコンポーネントタイプ: ${componentType}`);
         }
         
-        // 現在のパスを取得（より簡単なアプローチに変更）
-        const isInUserPortal = window.location.pathname.includes('/user-portal/');
+        // 現在のURLパスを取得して、適切な相対パスを決定
+        let basePath = '';
+        const currentPath = window.location.pathname;
         
-        // パスの調整（シンプルに）
-        let adjustedPath;
-        if (isInUserPortal) {
-            adjustedPath = '../' + componentPath; // ユーザーポータル内の場合は上の階層に移動
-        } else {
-            adjustedPath = componentPath; // 通常は現在の階層から
+        // URLにuser-portalが含まれている場合（ユーザーポータル内のページ）
+        if (currentPath.includes('user-portal')) {
+            basePath = '../';
+            if (DEBUG_MODE) console.log('ユーザーポータル内のページを検出しました');
         }
+        
+        // 最終的なコンポーネントのパス
+        const adjustedPath = basePath + componentPath;
         
         if (DEBUG_MODE) console.log(`コンポーネントを読み込み中: ${adjustedPath}`);
         
