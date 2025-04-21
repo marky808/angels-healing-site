@@ -483,7 +483,7 @@ footer {
         background-color: var(--light-bg);
         box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
         transition: left 0.3s ease;
-        z-index: 99;
+        z-index: 95; /* z-indexを上げてオーバーレイより上に配置 */
         padding: 80px 20px 20px;
         overflow-y: auto;
     }
@@ -538,7 +538,7 @@ footer {
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
-        z-index: 98;
+        z-index: 90; /* z-indexを下げてメニューの下に配置 */
     }
     
     .menu-overlay.active {
