@@ -27,9 +27,10 @@
                         <label for="specialty-filter">専門分野</label>
                         <select id="specialty-filter" class="form-control">
                             <option value="all">すべての専門分野</option>
-                            <option value="shoulder">肩こり</option>
-                            <option value="head">頭痛</option>
-                            <option value="stress">ストレス</option>
+                            <option value="relaxation">リラクゼーション系</option>
+                            <option value="beauty">美容系</option>
+                            <option value="medical">医療系</option>
+                            <option value="other">その他</option>
                         </select>
                     </div>
                     <button id="filter-button" class="btn btn-primary">検索する</button>
@@ -74,9 +75,10 @@
             // 専門分野のコードを表示名に変換する関数
             function getSpecialityDisplayName(code) {
                 const names = {
-                    'shoulder': '肩こり',
-                    'head': '頭痛',
-                    'stress': 'ストレス'
+                    'relaxation': 'リラクゼーション系',
+                    'beauty': '美容系',
+                    'medical': '医療系',
+                    'other': 'その他'
                 };
                 return names[code] || code;
             }

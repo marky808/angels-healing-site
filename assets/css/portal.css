@@ -137,6 +137,9 @@ body {
     transition: transform 0.3s;
     text-align: center;
     padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    height: 280px; /* カードの高さを固定 */
 }
 
 .category-card:hover {
@@ -179,6 +182,11 @@ body {
 .category-card p {
     font-size: 0.9rem;
     margin-bottom: 15px;
+    flex-grow: 1; /* 説明テキストが可変領域を占めるようにする */
+}
+
+.category-card .btn {
+    margin-top: auto; /* ボタンを下部に配置 */
 }
 
 /* Therapists section */
