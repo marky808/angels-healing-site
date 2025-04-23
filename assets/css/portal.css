@@ -201,37 +201,43 @@ body {
     gap: 30px;
 }
 
+/* セラピストカードのサイズを統一し、ボタン位置を固定 */
 .therapist-card {
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 3px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s;
+    display: flex;
+    flex-direction: column; /* カードを縦方向のフレックスボックスに */
+    height: 450px; /* 高さを統一 */
 }
 
 .therapist-card:hover {
     transform: translateY(-5px);
 }
 
-.therapist-photo {
-    width: 300px;
-    height: 400px;
-    background-size: contain; /* coverからcontainに変更 */
-    background-position: top center; /* centerからtop centerに変更 */
-    background-repeat: no-repeat; /* 追加: 繰り返しを防止 */
-    border-radius: 10px;
-    background-color: #f9f9f9; /* 追加: 背景色を設定 */
-}
-
 .therapist-image {
     height: 200px;
-    background-size: cover; /* サムネイルはcoverのままにして画面を埋める */
-    background-position: center top; /* 上部を重視して表示 */
+    background-size: cover;
+    background-position: center top;
     background-repeat: no-repeat;
+    flex-shrink: 0; /* 画像の高さを固定 */
 }
 
 .therapist-content {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* コンテンツ部分が伸縮可能に */
+    height: 230px; /* 内容部分の高さを統一 */
+    position: relative; /* 位置基準を設定 */
+}
+
+.therapist-content-top {
+    height: 160px; /* テキスト表示部分の高さを固定 */
+    margin-bottom: 0; /* 余白の管理方法を変更 */
+    overflow: hidden; /* はみ出た内容を隠す */
 }
 
 .therapist-name {
@@ -246,9 +252,21 @@ body {
     margin-bottom: 15px;
 }
 
-.therapist-card p {
+.therapist-description {
     font-size: 0.9rem;
-    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 表示行数を3行に固定 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 4.5em; /* 3行分の高さ */
+    margin-bottom: 0;
+}
+
+.therapist-content .btn {
+    position: absolute; /* 絶対位置指定 */
+    bottom: 20px; /* 下部からの距離を固定 */
+    left: 20px; /* 左からの位置 */
 }
 
 .view-all-btn {

@@ -104,11 +104,13 @@
                 therapistCard.className = 'therapist-card';
                 
                 therapistCard.innerHTML = `
-                    <div class="therapist-image" style="background-image: url('${therapist.photo}');"></div>
+                    <div class="therapist-image" style="background-image: url('${therapist.thumbnailPhoto || therapist.photo}');"></div>
                     <div class="therapist-content">
-                        <h3 class="therapist-name">${therapist.name}</h3>
-                        <p class="therapist-specialty">${therapist.specialty}</p>
-                        <p>${therapist.description[0]}</p>
+                        <div class="therapist-content-top">
+                            <h3 class="therapist-name">${therapist.name}</h3>
+                            <p class="therapist-specialty">${therapist.specialty}</p>
+                            <p class="therapist-description">${therapist.description[0]}</p>
+                        </div>
                         <a href="therapist-detail.html?id=${therapist.id}" class="btn">詳細プロフィール</a>
                     </div>
                 `;
