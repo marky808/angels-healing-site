@@ -63,9 +63,6 @@
                         <div class="therapist-content-top">
                             <h3 class="therapist-name">${therapist.name}</h3>
                             <p class="therapist-specialty">${therapist.specialty}</p>
-                            <div class="therapist-specialty-tags">
-                                ${therapist.specialities ? therapist.specialities.map(spec => `<span class="tag">${getSpecialityDisplayName(spec)}</span>`).join('') : ''}
-                            </div>
                             <p class="therapist-description">${therapist.description ? therapist.description[0] : ''}</p>
                         </div>
                         <a href="therapist-detail.html?id=${therapist.id}" class="btn btn-outline">詳細を見る</a>

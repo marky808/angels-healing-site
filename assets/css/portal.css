@@ -210,7 +210,7 @@ body {
     transition: transform 0.3s;
     display: flex;
     flex-direction: column; /* カードを縦方向のフレックスボックスに */
-    height: 450px; /* 高さを統一 */
+    height: 480px; /* 高さを450pxから480pxに増加 */
 }
 
 .therapist-card:hover {
@@ -220,7 +220,7 @@ body {
 .therapist-image {
     height: 200px;
     background-size: cover;
-    background-position: center top;
+    background-position: center;
     background-repeat: no-repeat;
     flex-shrink: 0; /* 画像の高さを固定 */
 }
@@ -230,12 +230,12 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1; /* コンテンツ部分が伸縮可能に */
-    height: 230px; /* 内容部分の高さを統一 */
+    height: 260px; /* 内容部分の高さを230pxから260pxに増加 */
     position: relative; /* 位置基準を設定 */
 }
 
 .therapist-content-top {
-    height: 160px; /* テキスト表示部分の高さを固定 */
+    height: 190px; /* テキスト表示部分の高さを160pxから190pxに増加 */
     margin-bottom: 0; /* 余白の管理方法を変更 */
     overflow: hidden; /* はみ出た内容を隠す */
 }
@@ -255,11 +255,12 @@ body {
 .therapist-description {
     font-size: 0.9rem;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* 表示行数を3行に固定 */
+    -webkit-line-clamp: 4; /* 表示行数を3行から4行に増加 */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 4.5em; /* 3行分の高さ */
+    max-height: 6em; /* 4行分の高さ (1.5em × 4) */
+    line-height: 1.5; /* 行間を明示的に指定 */
     margin-bottom: 0;
 }
 
@@ -350,11 +351,11 @@ body {
 .therapist-photo {
     width: 300px;
     height: 400px;
-    background-size: contain; /* coverからcontainに変更 */
-    background-position: top center; /* centerからtop centerに変更 */
-    background-repeat: no-repeat; /* 追加: 繰り返しを防止 */
+    background-size: cover; /* containからcoverに変更し、常に枠内を埋めるようにする */
+    background-position: center; /* 中央に配置 */
+    background-repeat: no-repeat;
     border-radius: 10px;
-    background-color: #f9f9f9; /* 追加: 背景色を設定 */
+    object-fit: cover; /* 画像のアスペクト比を維持しつつ枠を埋める */
 }
 
 .therapist-info {

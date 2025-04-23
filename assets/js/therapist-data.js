@@ -80,6 +80,206 @@ const therapistData = {
         treatment_photos: [
             '../assets/images/satonanako2.jpg'
         ]
+    },
+    // セラピスト - 佐川美江
+    '3': {
+        id: '3',
+        name: '佐川美江',
+        gender: 'female',
+        categories: [
+            'relaxation',
+            'beauty',
+            'other'
+        ],
+        specialities: [
+            'relaxation',
+            'beauty',
+            'other'
+        ],
+        specialty: '温熱、腸もみセラピスト',
+        photo: '../assets/images/sagawa-mie.jpg',
+        thumbnailPhoto: '../assets/images/sagawa-mie.jpg',
+        description: [
+            '冷えは万病のもと！芯から温め疲れやコリをほぐして心身ともにリラックス出来ます。'
+        ],
+        qualifications: [
+            '民間資格：オンセラー（オンセラピスト養成講師）',
+            '民間資格：東洋式腸活美容'
+        ],
+        courses: [
+            {
+                title: '温熱もみほぐし',
+                description: '遠赤外線効果を高める特殊なセラミックの器に炭化したもぐさを入れ、温めながら身体をさすったり、揉んだり筋肉の疲れやコリをほぐす施術です。',
+                duration: '15分～'
+            },
+            {
+                title: '東洋式腸活美容',
+                description: '初めに温熱で深部まで温め、ドライマッサージで外側から刺激をしていきます。ご希望によりオイルを使用してのオイルマッサージも行います。',
+                duration: '15分～'
+            }
+        ]
+    },
+    // セラピスト - 小岩祐子
+    '4': {
+        id: '4',
+        name: '小岩祐子',
+        gender: 'female',
+        categories: [
+            'relaxation',
+            'beauty',
+            'other'
+        ],
+        specialities: [
+            'relaxation',
+            'beauty',
+            'other'
+        ],
+        specialty: 'セラピスト',
+        photo: '../assets/images/koiwa-yuko.jpg',
+        thumbnailPhoto: '../assets/images/koiwa-yuko.jpg',
+        description: [
+            'こだわりのオイルと心地よい施術で、心と体に安らぎの時間をお届けします。',
+            '東京都出身。米国留学後、ソーシャルワークを専攻。先天性股関節症がきっかけでボディア ライメント(500件以上)と肯認学〜lovable session〜(100件以上)、Rain Drop®︎アロマ施術 (50件以上)を習得。著名人御用達の隠れ家サロンセラピストに師事。自宅サロンや出張/オン ラインで心身の調和と総合的な癒しを提供。'
+        ],
+        qualifications: [
+            'Master of Body Allignment',
+            '肯認学®︎インストラクター',
+            '臼井式 霊気マスター'
+        ],
+        courses: [
+            {
+                title: 'アロマde手美人ケア',
+                description: '医療現場で酷使される手指を、AFNOR基準0.2%の世界最高峰エッセンシャルオイルでケア。指先から腕まで丁寧にアプローチし、手洗い・消毒による乾燥や、PC作業の疲労を癒します。血行促進でこわばった筋肉をリリース。短時間でも心身ともにリフレッシュできる贅沢な時間です。',
+                duration: '15分'
+            }
+        ],
+        salon_info: {
+            name: 'Salon de Yuukichi',
+            url: 'https://linktr.ee/Yuukichi'
+        }
+    },
+    // セラピスト - 渡部 恵美
+    '5': {
+        id: '5',
+        name: '渡部 恵美',
+        gender: 'female',
+        categories: [
+            'relaxation',
+            'beauty',
+            'medical'
+        ],
+        specialities: [
+            'relaxation',
+            'beauty',
+            'medical'
+        ],
+        specialty: 'アロマタッチセラピスト',
+        photo: '../assets/images/watabeemi1.jpg',
+        thumbnailPhoto: '../assets/images/watabeemi1.jpg',
+        description: [
+            '心と身体と健康と栄養と...お悩み解決するためのトータルサロン。',
+            '自然の香りがもたらすリラクゼーション効果や、心と身体のバランスを整える力に感銘を受け、多くの人々にアロマの素晴らしさを伝えたいという強い想いがございます。 ナチュラルなものが大好き！'
+        ],
+        qualifications: [
+            '一般社団法人インターナショナルメディカルアロマスクール(IMAS) 統合医療アドバイザー メディカルアロマコンサルタント',
+            '一般社団法人ボタニカルデザイン協会(bda) オリジナルアロマ香水インストラクター',
+            'アロマタッチテクニック認定',
+            '日本化粧品検定3級'
+        ],
+        courses: [
+            {
+                title: '肘下から指先まで施すハンドケア',
+                description: '肘下から指先までと、様々なツボが集まる手のひらへ、圧をかけ過ぎずに揉みほぐし。',
+                duration: '15分～'
+            },
+            {
+                title: '心もほぐれるフットケア（ふくらはぎ)',
+                description: '膝下からスネやふくらはぎ、足の甲、指先まで揉みほぐします。',
+                duration: '15分～'
+            },
+            {
+                title: '眠れるほど痛くない！足裏の揉みほぐし（足裏)',
+                description: 'さまざまなツボが集まる足裏をほぐします',
+                duration: '15分～'
+            },
+            {
+                title: 'オールハンド！膝下から指先まで、スペシャルフットケア',
+                description: '天然高品質の無香料オイルで潤い与えながら、膝下から足裏の全てを揉みほぐします。',
+                duration: '15分～'
+            }
+        ],
+        salon_info: {
+            name: 'ラヴィジョイ-Lavie Joy-',
+            url: 'https://laviejoy.com/',
+            photo: '../assets/images/watabeemi4.jpg'
+        },
+        treatment_photos: [
+            '../assets/images/watabeemi3.jpg',
+            '../assets/images/watabeemi2.jpg'
+        ]
+    },
+    // セラピスト - 高岡久美子
+    '6': {
+        id: '6',
+        name: '高岡 久美子',
+        gender: 'female',
+        categories: [
+            'beauty',
+            'other'
+        ],
+        specialities: [
+            'beauty',
+            'other'
+        ],
+        specialty: 'エステティシャン',
+        photo: '../assets/images/takaokakumiko.jpg',
+        thumbnailPhoto: '../assets/images/takaokakumiko.jpg',
+        description: [
+            'フェイシャル、ボディケア、温活、ファスティングなど皆様の美肌と健康を本気で応援しています。',
+            '東京都荒川区町屋でプライベートサロン「mennir メニール」を経営しています。 フェイシャルサロンから始まり、今では韓国肌管理セラピール（ララピール）、ハーブピーリング、毛穴洗浄、オイルトリートメント、よもぎ蒸し、東洋式美腸活マッサージ、オンセラ温熱リンパマッサージ、全身脱毛、光フェイシャル、ブライダルエステ、ファスティングサポート、化粧品販売などなど、美と健康の両方から本気でキレイを追求しています。'
+        ],
+        qualifications: [
+            'オンセラ健康法資格保有者養成講師',
+            '東洋式腸活マッサージ',
+            'ララピール認定サロン',
+            'アイマートリガーフェイシャルメソッド'
+        ],
+        courses: [
+            {
+                title: '温セラ温熱リンパマッサージ',
+                description: '炭化もぐさをセラミックの器に入れて温め、全身、またはコリなどの箇所を温めながらほぐしていく、お灸のように温かくて心地の良い施術です。',
+                duration: '15分～'
+            },
+            {
+                title: 'セラピール(フェイシャル )',
+                description: 'LHA成分にアルカリを結合させた韓国で大人気のピーリングソリューションです。特許成分　美容乳酸菌が追加され、さらに進化しました。毛穴、シミ、ハリツヤアップ、肌のキメなど本気でお肌の改善をしたい方にお勧めです。',
+                duration: '15分～'
+            },
+            {
+                title: 'ハーブピーリング(フェイシャル)',
+                description: 'すべての肌トラブルを植物の力で理想の肌へ導く、厳選国産メディカルハーブピーリングです。幹細胞、漢方、薬用植物が肌本来の美しさを引き立てます。シミ、シワ、毛穴、ニキビ、くすみなどあらゆる肌トラブルを根本から改善する魔法のハーブです。',
+                duration: '15分～'
+            },
+            {
+                title: 'オンセラ＋東洋式腸活ドライマッサージ',
+                description: 'オンセラ温熱リンパマッサージでお腹を温めた後、服の上からドライマッサージをしていきます。お腹にあるツボを優しく刺激し、腸の動きを促進。お腹まわりの滞りを流すことで、体全体のバランスも整えていきます。お腹のはり、便秘、冷え、ストレスなどの不調にアプローチするのが、東洋式腸活マッサージです。',
+                duration: '15分～'
+            },
+            {
+                title: 'ドライヘッドマッサージ',
+                description: '頭、首、肩を優しくほぐすリラクゼーションマッサージです。眼精疲労や肩こり、睡眠の質が気になる方におすすめ。脳がリラックスして日々の疲れを感じる方にぴったりのメニューです。',
+                duration: '15分～'
+            }
+        ],
+        salon_info: {
+            name: 'mennir(メニール)',
+            url: 'https://www.instagram.com/mennir_tokyo/',
+            photo: '../assets/images/takaokakumiko4.jpg'
+        },
+        treatment_photos: [
+            '../assets/images/takaokakumiko2.png',
+            '../assets/images/takaokakumiko3.jpg'
+        ]
     }
 };
 
