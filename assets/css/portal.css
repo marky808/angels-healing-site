@@ -213,10 +213,21 @@ body {
     transform: translateY(-5px);
 }
 
+.therapist-photo {
+    width: 300px;
+    height: 400px;
+    background-size: contain; /* coverからcontainに変更 */
+    background-position: top center; /* centerからtop centerに変更 */
+    background-repeat: no-repeat; /* 追加: 繰り返しを防止 */
+    border-radius: 10px;
+    background-color: #f9f9f9; /* 追加: 背景色を設定 */
+}
+
 .therapist-image {
     height: 200px;
-    background-size: cover;
-    background-position: center;
+    background-size: cover; /* サムネイルはcoverのままにして画面を埋める */
+    background-position: center top; /* 上部を重視して表示 */
+    background-repeat: no-repeat;
 }
 
 .therapist-content {
@@ -321,9 +332,11 @@ body {
 .therapist-photo {
     width: 300px;
     height: 400px;
-    background-size: cover;
-    background-position: center;
+    background-size: contain; /* coverからcontainに変更 */
+    background-position: top center; /* centerからtop centerに変更 */
+    background-repeat: no-repeat; /* 追加: 繰り返しを防止 */
     border-radius: 10px;
+    background-color: #f9f9f9; /* 追加: 背景色を設定 */
 }
 
 .therapist-info {

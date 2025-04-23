@@ -36,6 +36,50 @@ const therapistData = {
             '../assets/images/hayashi-yumi1.jpg',
             '../assets/images/hayashi-yumi2.jpg'
         ]
+    },
+    // セラピスト - 佐藤南々子
+    '2': {
+        id: '2',
+        name: '佐藤南々子',
+        gender: 'female',
+        categories: [
+            'relaxation',
+            'other'
+        ],
+        specialities: [
+            'relaxation',
+            'other'
+        ],
+        specialty: 'コンディショニングストレッチ',
+        photo: '../assets/images/satonanako4.jpg',
+        thumbnailPhoto: '../assets/images/satonanako4.jpg',
+        description: [
+            'ストレッチで、心身共にほぐれる癒しのお時間を提供いたします。',
+            'お客様のお身体や生活に合わせたプランで特別な施術を提供します。新潟出身で海や自然が好きです。仕事のエリアの三軒茶屋で、カフェや居酒屋巡りにハマっています。どうぞ宜しくお願いいたします！'
+        ],
+        qualifications: [
+            'コアバランスストレッチトレーナーライセンス'
+        ],
+        courses: [
+            {
+                title: '疲労回復下半身ストレッチ',
+                description: '深筋層まで筋肉を伸ばし、血行を良くし疲労物質や老廃物を流してスッキリさせます ',
+                duration: '未設定'
+            },
+            {
+                title: '肩甲骨はがし・整体ストレッチ',
+                description: '肩甲骨はがしや、首肩周りの筋肉のほぐしも取り入れ、リラックス効果やコリの解消を行います',
+                duration: '未設定'
+            }
+        ],
+        salon_info: {
+            name: 'SPORTS STRETCH ESSENTIAL',
+            url: 'https://lit.link/nanao75',
+            photo: '../assets/images/satonanako1.jpg'
+        },
+        treatment_photos: [
+            '../assets/images/satonanako2.jpg'
+        ]
     }
 };
 

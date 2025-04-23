@@ -58,7 +58,7 @@
                 const card = document.createElement('div');
                 card.className = 'therapist-card';
                 card.innerHTML = `
-                    <div class="therapist-image" style="background-image: url('${therapist.photo}')"></div>
+                    <div class="therapist-image" style="background-image: url('${therapist.thumbnailPhoto || therapist.photo}')"></div>
                     <div class="therapist-content">
                         <h3 class="therapist-name">${therapist.name}</h3>
                         <p class="therapist-specialty">${therapist.specialty}</p>
@@ -95,6 +95,11 @@
                         t.specialities && t.specialities.includes(filters.specialty)
                     );
                 }
+                
+                // デバッグログを追加
+                console.log('全セラピスト数:', therapists.length);
+                console.log('フィルター後のセラピスト数:', filteredTherapists.length);
+                console.log('フィルター後のセラピスト:', filteredTherapists);
                 
                 // 結果がなければメッセージを表示
                 if(filteredTherapists.length === 0) {
