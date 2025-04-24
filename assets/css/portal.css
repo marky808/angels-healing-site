@@ -457,11 +457,44 @@ body {
     .process-step:not(:last-child)::after {
         display: none;
     }
+
+    /* セラピスト一覧カードのモバイル対応 */
+    .therapist-card {
+        height: auto; /* 固定高さを解除し、コンテンツに合わせて伸縮 */
+        margin-bottom: 30px;
+    }
+    
+    .therapist-image {
+        height: 250px; /* 画像の高さを増やす (PCの200pxから変更) */
+        width: 100%;
+    }
+    
+    .therapist-content {
+        height: auto; /* 固定高さを解除 */
+        padding-bottom: 70px; /* ボタン用のスペースを確保 */
+    }
+    
+    .therapist-content-top {
+        height: auto; /* 固定高さを解除 */
+        margin-bottom: 20px;
+    }
+    
+    .therapists-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* カード幅を少し広げる */
+    }
 }
 
 @media (max-width: 480px) {
     .categories-grid {
         grid-template-columns: 1fr;
+    }
+
+    .therapist-image {
+        height: 280px; /* さらに小さい画面では画像の高さをもっと増やす */
+    }
+    
+    .therapists-grid {
+        grid-template-columns: 1fr; /* 1列に変更 */
     }
 }
 
