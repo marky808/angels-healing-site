@@ -991,6 +991,30 @@
     margin-right: 8px;
 }
 
+/* PDFダウンロードリンクのスタイル上書き（視認性向上） */
+.contact-methods .pdf-download-link {
+    background-color: rgba(255, 255, 255, 0.85);
+    color: var(--primary-color);
+    font-weight: 600;
+    margin: 5px 15px;
+    border-radius: 30px;
+    padding: 8px 15px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.contact-methods .pdf-download-link:hover {
+    background-color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-methods .pdf-download-link i {
+    margin-right: 8px;
+    color: #d32f2f;
+}
+
 /* モバイル向けの最適化 */
 @media (max-width: 767px) {
     .contact-methods {
@@ -998,7 +1022,8 @@
         align-items: center;
     }
     
-    .contact-methods span {
+    .contact-methods span,
+    .contact-methods .pdf-download-link {
         margin: 5px 0;
         width: 100%;
         max-width: 200px;
