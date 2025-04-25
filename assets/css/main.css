@@ -359,6 +359,44 @@ nav ul li a:hover {
     transition: 0s;
 }
 
+/* PDFダウンロードリンクスタイル */
+.pdf-download-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    background-color: rgba(74, 124, 89, 0.08);
+    margin-left: 10px;
+}
+
+.pdf-download-link:hover {
+    background-color: rgba(74, 124, 89, 0.15);
+    transform: translateY(-2px);
+}
+
+.pdf-download-link i {
+    margin-right: 8px;
+    color: #d32f2f;
+    font-size: 1.1em;
+}
+
+@media (max-width: 768px) {
+    .contact-methods {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .pdf-download-link {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
+
 /* Footer */
 footer {
     background-color: var(--primary-color);
