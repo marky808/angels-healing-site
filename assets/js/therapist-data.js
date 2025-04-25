@@ -9,7 +9,7 @@ const therapistData = {
         id: '1',
         name: '林 由美',
         gender: 'female',
-        categories: ['medical'],
+        categories: ['relaxation', 'medical'],
         specialities: ['relaxation', 'medical'],
         specialty: '鍼灸師',
         photo: '../assets/images/hayashi-yumi.jpg',
@@ -42,14 +42,8 @@ const therapistData = {
         id: '2',
         name: '佐藤南々子',
         gender: 'female',
-        categories: [
-            'relaxation',
-            'other'
-        ],
-        specialities: [
-            'relaxation',
-            'other'
-        ],
+        categories: ['relaxation'],
+        specialities: ['relaxation'],
         specialty: 'コンディショニングストレッチ',
         photo: '../assets/images/satonanako4.jpg',
         thumbnailPhoto: '../assets/images/satonanako4.jpg',
@@ -86,16 +80,8 @@ const therapistData = {
         id: '3',
         name: '佐川美江',
         gender: 'female',
-        categories: [
-            'relaxation',
-            'beauty',
-            'other'
-        ],
-        specialities: [
-            'relaxation',
-            'beauty',
-            'other'
-        ],
+        categories: ['relaxation'],
+        specialities: ['relaxation'],
         specialty: '温熱、腸もみセラピスト',
         photo: '../assets/images/sagawa-mie.jpg',
         thumbnailPhoto: '../assets/images/sagawa-mie.jpg',
@@ -124,16 +110,8 @@ const therapistData = {
         id: '4',
         name: '小岩祐子',
         gender: 'female',
-        categories: [
-            'relaxation',
-            'beauty',
-            'other'
-        ],
-        specialities: [
-            'relaxation',
-            'beauty',
-            'other'
-        ],
+        categories: ['relaxation'],
+        specialities: ['relaxation'],
         specialty: 'セラピスト',
         photo: '../assets/images/koiwa-yuko.jpg',
         thumbnailPhoto: '../assets/images/koiwa-yuko.jpg',
@@ -163,16 +141,8 @@ const therapistData = {
         id: '5',
         name: '渡部 恵美',
         gender: 'female',
-        categories: [
-            'relaxation',
-            'beauty',
-            'medical'
-        ],
-        specialities: [
-            'relaxation',
-            'beauty',
-            'medical'
-        ],
+        categories: ['relaxation'],
+        specialities: ['relaxation'],
         specialty: 'アロマタッチセラピスト',
         photo: '../assets/images/watabeemi1.jpg',
         thumbnailPhoto: '../assets/images/watabeemi1.jpg',
@@ -223,14 +193,8 @@ const therapistData = {
         id: '6',
         name: '高岡 久美子',
         gender: 'female',
-        categories: [
-            'beauty',
-            'other'
-        ],
-        specialities: [
-            'beauty',
-            'other'
-        ],
+        categories: ['relaxation', 'beauty'],
+        specialities: ['relaxation', 'beauty'],
         specialty: 'エステティシャン',
         photo: '../assets/images/takaokakumiko.jpg',
         thumbnailPhoto: '../assets/images/takaokakumiko.jpg',
