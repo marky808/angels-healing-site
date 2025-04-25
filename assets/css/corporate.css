@@ -88,6 +88,65 @@
     z-index: 2;
 }
 
+/* モバイル対応 */
+@media (max-width: 768px) {
+    .corporate-hero {
+        height: 400px;
+    }
+
+    .corporate-hero-overlay {
+        max-width: 90%;
+        padding: 1.5rem;
+        /* 中央に表示されるように調整 */
+        margin: 0 auto; /* 中央揃えのためのマージン設定 */
+    }
+
+    .corporate-hero-content {
+        bottom: 50px; /* 位置調整 */
+        width: 100%;
+        /* 中央揃えを確実にするための設定 */
+        justify-content: center;
+        align-items: center;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+
+    .corporate-hero-overlay h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .corporate-hero-overlay p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .corporate-hero {
+        height: 350px;
+    }
+
+    .corporate-hero-overlay {
+        padding: 1rem;
+        max-width: 95%; /* より幅広く */
+    }
+
+    .corporate-hero-overlay h1 {
+        font-size: 1.5rem;
+    }
+
+    .corporate-hero-content {
+        bottom: 40px; /* 小さい画面ではさらに調整 */
+        width: 100%; /* 幅を確保 */
+    }
+}
+
 /* Benefits Section */
 .benefits-section {
     padding: 80px 0;
@@ -133,23 +192,24 @@
     margin-bottom: 15px;
 }
 
-/* Challenges and Solutions Section */
+/* Challenges and Solutions Section - 完全に新しく作り直したスタイル */
 .challenges-solutions-section {
     background-color: #f9f9f9;
     padding: 80px 0;
 }
 
-.cs-grid {
+/* 企業の課題と解決策カード - 新しいクラス名で他ページへの影響を排除 */
+.corp-challenge-items {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
     margin-top: 40px;
 }
 
-.cs-item {
+.corp-challenge-card {
     background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     height: 100%;
@@ -157,62 +217,214 @@
     flex-direction: column;
 }
 
-.cs-item:hover {
+.corp-challenge-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 }
 
-.cs-header {
-    background: #5a78ac;
+.corp-card-header {
+    background: linear-gradient(135deg, #4a7c59, #5e996e);
     padding: 18px 25px;
-    color: white;
     text-align: center;
-    flex-shrink: 0;
 }
 
-.cs-header h3 {
+.corp-card-header h3 {
     margin: 0;
     font-size: 1.4rem;
     font-weight: 600;
+    color: white;
 }
 
-.cs-content {
+.corp-card-body {
     padding: 25px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    justify-content: space-between;
 }
 
-.cs-challenge, .cs-solution {
-    position: relative;
-    padding: 20px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-}
-
-/* 課題部分と解決策部分の高さを柔軟に調整 */
-.cs-challenge {
+/* 課題エリア */
+.corp-challenge {
     background-color: #fff5f5;
-    border-left: 4px solid #e06666;
-    margin-bottom: 20px;
-    flex: 1.2; /* 課題エリアを解決策より少し大きく */
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
 }
 
-.cs-solution {
-    background-color: #f5fff8;
-    border-left: 4px solid #5bb665;
-    flex: 1; /* 解決策エリア */
+.corp-challenge-head {
+    margin-bottom: 15px;
+    text-align: center;
 }
 
-.cs-label {
+.corp-label {
     display: inline-block;
-    font-weight: bold;
-    padding: 5px 12px;
+    padding: 5px 15px;
     border-radius: 20px;
     font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.corp-challenge .corp-label {
+    background-color: #ffebee;
+    color: #e57373;
+}
+
+.corp-challenge-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.corp-icon-container {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
     margin-bottom: 15px;
+}
+
+.corp-challenge .corp-icon-container {
+    background-color: #ffebee;
+    color: #e57373;
+}
+
+.corp-challenge-content p, 
+.corp-solution-content p {
+    text-align: center;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* 矢印 */
+.corp-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+/* 解決策エリア */
+.corp-solution {
+    background-color: #f5fff8;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.corp-solution-head {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.corp-solution .corp-label {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+.corp-solution-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.corp-solution .corp-icon-container {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+/* アップとダウンのアイコン向き調整 */
+.fa-chart-line.up {
+    transform: rotate(45deg);
+}
+
+.fa-chart-line.down {
+    transform: rotate(-45deg);
+}
+
+/* モバイル対応 - レスポンシブデザイン */
+@media (max-width: 992px) {
+    .corp-challenge-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .challenges-solutions-section {
+        padding: 50px 0;
+    }
+    
+    .corp-challenge-items {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .corp-card-header {
+        padding: 15px;
+    }
+    
+    .corp-card-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .corp-card-body {
+        padding: 15px;
+    }
+    
+    .corp-challenge, 
+    .corp-solution {
+        padding: 15px;
+    }
+    
+    .corp-icon-container {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+    }
+    
+    .corp-challenge-content p, 
+    .corp-solution-content p {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .corp-challenge-items {
+        gap: 15px;
+    }
+    
+    .corp-card-body {
+        padding: 12px;
+    }
+    
+    .corp-challenge, 
+    .corp-solution {
+        padding: 12px;
+    }
+    
+    .corp-icon-container {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    .corp-label {
+        padding: 4px 10px;
+        font-size: 0.85rem;
+    }
+    
+    .corp-arrow {
+        font-size: 1.2rem;
+        margin: 5px 0;
+    }
+    
+    .corp-challenge-head,
+    .corp-solution-head {
+        margin-bottom: 10px;
+    }
 }
 
 /* Case Studies Section (導入事例セクション) */
@@ -695,37 +907,6 @@
 
 /* モバイル対応 */
 @media (max-width: 768px) {
-    .corporate-hero {
-        height: 400px;
-    }
-
-    .corporate-hero-overlay {
-        max-width: 90%;
-        padding: 1.5rem;
-        /* オーバーレイが画面上部にのみかかるように調整 */
-        margin-top: -100px;
-    }
-
-    .corporate-hero-overlay h1 {
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .corporate-hero-overlay p {
-        font-size: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .hero-btn {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.9rem;
-    }
-
-    .hero-tag {
-        bottom: 60px;
-        font-size: 0.9rem;
-    }
-
     .cs-grid {
         grid-template-columns: 1fr;
     }
@@ -762,25 +943,6 @@
 }
 
 @media (max-width: 480px) {
-    .corporate-hero {
-        height: 350px;
-    }
-
-    .corporate-hero-overlay {
-        padding: 1rem;
-    }
-
-    .corporate-hero-overlay h1 {
-        font-size: 1.5rem;
-    }
-
-    .corporate-hero-overlay p {
-    }
-
-    .corporate-hero-content {
-        width: 80%;
-    }
-
     .cs-grid {
         grid-template-columns: repeat(2, 1fr);
     }
