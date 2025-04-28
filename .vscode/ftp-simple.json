@@ -1,0 +1,15 @@
+{
+    "configs": [
+        {
+            "name": "Angels Healing - Lolipop",
+            "host": "ftp.lolipop.jp",
+            "port": 21,
+            "type": "ftp",
+            "username": "frenchkiss.jp-angels-healing",
+            "password": "H8s76-9Ee2Z6",
+            "path": "/",
+            "autosave": true,
+            "confirm": false
+        }
+    ]
+}
