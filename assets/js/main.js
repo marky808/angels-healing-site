@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 「上に戻る」ボタンの追加
         createBackToTopButton();
+        
+        // ポータルリンクのパスワード認証を設定
+        setupPortalPasswordProtection();
     });
     
     // 個々のコンポーネント読み込み完了時の処理
@@ -27,6 +30,37 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`componentLoaded イベントを受信: ${e.detail.componentType} - main.js`);
     });
 });
+
+/**
+ * 利用者ポータルリンクのパスワード認証を設定
+ */
+function setupPortalPasswordProtection() {
+    console.log('ポータルリンクのパスワード認証を設定します');
+    // 利用者ポータルのパスワード認証
+    const portalLinks = document.querySelectorAll('.user-portal-link');
+    console.log('見つかったポータルリンク数:', portalLinks.length);
+    
+    portalLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('ポータルリンクがクリックされました');
+            
+            const password = prompt('パスワードを入力してください');
+            
+            if (password === '104184') {
+                // パスワードが正しい場合、ポータルページへ移動
+                console.log('パスワードが正しいため、ポータルページに移動します');
+                window.location.href = this.getAttribute('href');
+            } else if (password !== null) {
+                // パスワードが間違っている場合（キャンセルではない）
+                console.log('パスワードが間違っています');
+                alert('パスワードが正しくありません');
+            } else {
+                console.log('ログインがキャンセルされました');
+            }
+        });
+    });
+}
 
 /**
  * 新しいモバイルメニューのセットアップ
@@ -203,24 +237,7 @@ function setupCommonFeatures() {
         }
     });
 
-    // 利用者ポータルのパスワード認証
-    const portalLinks = document.querySelectorAll('.user-portal-link');
-    portalLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const password = prompt('パスワードを入力してください');
-            
-            if (password === '104184') {
-                // パスワードが正しい場合、ポータルページへ移動
-                window.location.href = this.getAttribute('href');
-            } else if (password !== null) {
-                // パスワードが間違っている場合（キャンセルではない）
-                alert('パスワードが正しくありません');
-            }
-            // キャンセルの場合は何もしない
-        });
-    });
+    // 注：利用者ポータルのパスワード認証はsetupPortalPasswordProtection関数に移動しました
     
     // スムーススクロール
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

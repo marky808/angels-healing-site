@@ -277,7 +277,7 @@ body {
 
 /* Booking process section */
 .booking-process {
-    padding: 50px 0;
+    display: none;
 }
 
 .process-steps {
