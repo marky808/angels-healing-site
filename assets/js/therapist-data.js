@@ -244,6 +244,56 @@ const therapistData = {
             '../assets/images/takaokakumiko2.png',
             '../assets/images/takaokakumiko3.jpg'
         ]
+    },
+    // セラピスト - 平川笑美
+    '7': {
+        id: '7',
+        name: '平川 笑美',
+        gender: 'female',
+        categories: ['relaxation', 'beauty'],
+        specialities: ['relaxation', 'beauty'],
+        specialty: 'セラピスト',
+        photo: '../assets/images/hirakawaemi.jpg',
+        thumbnailPhoto: '../assets/images/hirakawaemi.jpg',
+        description: [
+            '美容業歴23年。身体のメンテナンスはお任せください‼',
+            '自律神経を整えることができる世界で唯一の全身施術オールハンド手法を得意とする三姉妹の母でもあり、AGOメソッド認定講師として全国を駆け巡るセラピストです。趣味は旅行、カフェ巡り、映画鑑賞です。'
+        ],
+        qualifications: [
+            'AGOセラピスト(全国対応認定講師)',
+            'ドライヘッドスパニスト',
+            'リフレクソロジスト',
+            'ロミロミセラピスト',
+            'コルギセラピスト',
+            'エステティシャン',
+            'ネイリスト'
+        ],
+        courses: [
+            {
+                title: 'AGOメソッド',
+                description: '顎関節から脳にアプローチし、自律神経や骨格・内臓の歪みを根本から整えることを目的とした、世界で唯一とされる全身オールハンド施術法です。顔の歪み・小顔、自律神経失調症、うつ、頭痛、耳鳴り、睡眠障害、生理痛、姿勢不良、生活習慣病、慢性便秘にお悩みの方にオススメです。',
+                duration: '15分～'
+            },
+            {
+                title: '内臓整美',
+                description: '手技によって内臓の動きや位置を調整し、身体の不調を改善する施術法です。内臓がストレスや姿勢の影響で硬くなったり動きが悪くなると、消化不良・便秘・疲労感・自律神経の乱れなどを引き起こすことがあります。この施術では、内臓の緊張をほぐし、血流や神経の働きを整えることで自然治癒力を高めます。姿勢の歪みが正され、全身の調和や消化機能の向上、ストレス軽減などの効果が期待できます。特に、胃腸の不調や慢性的な疲れ、原因不明の不調、生理痛を感じる方におすすめされています。',
+                duration: '15分～'
+            },
+            {
+                title: '極上睡眠ドライヘッドスパ',
+                description: '水やオイルを使わずに手技で頭皮や頭、首、肩をもみほぐします。',
+                duration: '15分～'
+            }
+        ],
+        salon_info: {
+            name: 'Will Be',
+            url: 'https://www.instagram.com/therapist_yamanashi_emi',
+            photo: '../assets/images/hirakawaemi3.jpg'
+        },
+        treatment_photos: [
+            '../assets/images/hirakawaemi2.jpg',
+            '../assets/images/hirakawaemi4.jpg'
+        ]
     }
 };
 

@@ -94,8 +94,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             const therapistsGrid = document.querySelector('.therapists-grid');
             
-            // セラピストデータから先頭4名を表示
-            const featuredTherapists = getAllTherapists().slice(0, 4);
+            // セラピストデータから最大7名を表示（平川さんも含める）
+            const featuredTherapists = getAllTherapists().slice(0, 7);
             
             // セラピストカードを生成して追加
             therapistsGrid.innerHTML = '';
@@ -119,51 +119,6 @@
             });
         });
     </script>
-    </section>
-
-    <!-- Booking Process -->
-    <section id="booking" class="booking-process">
-        <div class="container">
-            <div class="section-title">
-                <h2>ご予約方法</h2>
-                <p>簡単4ステップでご予約いただけます</p>
-            </div>
-            
-            <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h3>セラピストを選ぶ</h3>
-                    <p>希望の施術やセラピストを選びます</p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h3>公式LINEに登録</h3>
-                    <p>下記QRコードから公式LINEに登録</p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h3>希望日時を連絡</h3>
-                    <p>希望の日時をLINEでお伝えください</p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h3>予約完了</h3>
-                    <p>予約確定のお知らせが届きます</p>
-                </div>
-            </div>
-            
-            <div class="booking-cta">
-                <p>公式LINEからのご予約がスムーズです</p>
-                <div class="line-qr">
-                    <img src="../assets/images/line-qr.png" alt="LINE QRコード">
-                </div>
-                <p>LINE ID: @angels-healing</p>
-                <a href="https://line.me/R/ti/p/@angels-healing" class="btn" target="_blank">LINE友だち追加</a>
-            </div>
-        </div>
     </section>
 
     <!-- Contact Section -->

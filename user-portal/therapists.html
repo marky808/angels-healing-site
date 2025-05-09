@@ -53,6 +53,15 @@
             const filterButton = document.getElementById('filter-button');
             const therapists = getAllTherapists();
             
+            // URLからカテゴリーパラメータを取得
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryFromUrl = urlParams.get('category');
+            
+            // URLパラメータがあれば、フィルターの初期値として設定
+            if(categoryFromUrl) {
+                specialtyFilter.value = categoryFromUrl;
+            }
+            
             // セラピストカードを作成する関数
             function createTherapistCard(therapist) {
                 const card = document.createElement('div');
@@ -91,13 +100,14 @@
                 // 専門分野でフィルタリング
                 if(filters.specialty && filters.specialty !== 'all') {
                     filteredTherapists = filteredTherapists.filter(t => 
-                        t.specialities && t.specialities.includes(filters.specialty)
+                        t.categories && t.categories.includes(filters.specialty)
                     );
                 }
                 
                 // デバッグログを追加
                 console.log('全セラピスト数:', therapists.length);
                 console.log('フィルター後のセラピスト数:', filteredTherapists.length);
+                console.log('フィルター条件:', filters.specialty);
                 console.log('フィルター後のセラピスト:', filteredTherapists);
                 
                 // 結果がなければメッセージを表示
@@ -113,8 +123,10 @@
                 });
             }
             
-            // 初期表示
-            displayTherapists();
+            // 初期表示 - URLからのカテゴリーパラメータがあればフィルタリングして表示
+            displayTherapists({
+                specialty: categoryFromUrl || 'all'
+            });
             
             // フィルターボタンのイベントリスナー
             filterButton.addEventListener('click', function() {

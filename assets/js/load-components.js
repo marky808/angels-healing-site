@@ -103,10 +103,11 @@ async function loadComponent(element, componentType) {
         let basePath = '';
         const currentPath = window.location.pathname;
         
-        // URLにuser-portalが含まれている場合（ユーザーポータル内のページ）
-        if (currentPath.includes('user-portal')) {
+        // より正確なパス検出 - ローカルサーバー対応
+        if (currentPath.includes('user-portal') || 
+            document.location.href.includes('user-portal')) {
             basePath = '../';
-            if (DEBUG_MODE) console.log('ユーザーポータル内のページを検出しました');
+            if (DEBUG_MODE) console.log('ユーザーポータル内のページを検出しました: ' + document.location.href);
         }
         
         // 最終的なコンポーネントのパス
