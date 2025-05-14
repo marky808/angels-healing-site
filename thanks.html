@@ -7,8 +7,20 @@
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">    <style>
+        /* ヘッダーロゴの横書き表示を強制 */
+        .logo {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+        }
+        
+        .logo h1 {
+            writing-mode: horizontal-tb !important;
+            text-orientation: mixed !important;
+            margin-left: 10px !important;
+        }
+        
         .thanks-container {
             text-align: center;
             padding: 100px 20px;
@@ -59,9 +71,8 @@
             送信完了いたしました。<br>
             内容を確認のうえ、担当者より折り返しご連絡いたします。<br>
             ご返信までしばらくお待ちください。
-        </p>
-        <p class="thanks-note" style="font-size: 14px; color: #666; margin-top: 20px;">
-            ※ 自動返信メールが届いていない場合は、<br>
+        </p>        <p class="thanks-note" style="font-size: 14px; color: #666; margin-top: 20px;">
+            ※ 返信が届かない場合は、<br>
             お手数ですが <a href="mailto:info@angels-healing.com" style="color: #4a6f8a;">info@angels-healing.com</a> まで<br>
             直接ご連絡ください。
         </p>
