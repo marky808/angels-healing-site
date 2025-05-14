@@ -259,10 +259,10 @@ function setupCommonFeatures() {
                 });
             }
         });
-    });
-
-    // 問い合わせフォームの検証
-    const contactForms = document.querySelectorAll('form');
+    });    // 問い合わせフォームの検証 - PHPで処理するフォームには適用しない
+    // 以下のコードはPHPフォーム送信を妨げるため無効化
+    /* 
+    const contactForms = document.querySelectorAll('form:not([action="contact.php"])');
     
     contactForms.forEach(form => {
         form.addEventListener('submit', function(e) {
@@ -288,6 +288,7 @@ function setupCommonFeatures() {
             }
         });
     });
+    */
     
     // モーダル機能
     window.showModal = function(id, title, content) {
