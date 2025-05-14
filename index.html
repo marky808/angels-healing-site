@@ -111,15 +111,15 @@
                 <h2>お問い合わせ</h2>
                 <p>天使たちの癒しの導入についてのご質問や詳細情報をお求めの方は、こちらからお問い合わせください。</p>
             </div>            <div class="contact-form">
-                <div class="form-notice" style="margin-bottom: 20px; padding: 10px; background-color: #f8f9fa; border-radius: 5px; border-left: 4px solid #4a6f8a;">
-                    <p style="margin: 0; font-size: 14px;">初めてのご利用の際は、FormSubmitの認証メールが <strong>info@angels-healing.com</strong> 宛に送信されます。<br>そのメール内の認証リンクをクリックしてから、フォームが完全に機能するようになります。</p>
-                </div>
-                <div id="formError" class="form-error" style="display: none; color: red; margin-bottom: 15px; padding: 10px; border: 1px solid red; border-radius: 5px;"></div><form id="contactForm" action="https://formsubmit.co/info@angels-healing.com" method="POST" target="_blank">
-                    <!-- FormSubmit用の設定 -->
+                <p style="margin-bottom: 15px; color: #4a6f8a; font-weight: bold;">
+                    フォーム送信に問題がある場合は、
+                    <a href="mailto:info@angels-healing.com" style="color: #4a6f8a;">info@angels-healing.com</a> までメールでお問い合わせいただくか、
+                    <a href="simple-contact.html" style="color: #4a6f8a;">シンプル版フォーム</a>をお試しください。
+                </p><!-- FormSubmitとPHPの両方のフォーム -->
+                <form action="contact.php" method="POST">
+                    <!-- FormSubmitにも送信できるようバックアップ設定を用意 -->
+                    <input type="hidden" name="_formsubmit_id" value="info@angels-healing.com">
                     <input type="hidden" name="_subject" value="【天使たちの癒し】お問い合わせがありました">
-                    <input type="hidden" name="_next" value="https://angels-healing.com/form-success.html">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="text" name="_honey" style="display:none">
                     <div class="form-group">
                         <label for="company">会社名/施設名</label>
                         <input type="text" id="company" name="company" required>
@@ -148,16 +148,12 @@
                             <option value="other">その他</option>
                         </select>
                     </div>
-                    
-                    <div class="form-group">
+                      <div class="form-group">
                         <label for="message">お問い合わせ内容</label>
                         <textarea id="message" name="message" required></textarea>
                     </div>
                     
                     <button type="submit" class="btn">送信する</button>
-                    <p style="margin-top: 20px; font-size: 14px; color: #666;">
-                        フォームが機能しない場合は、直接 <a href="mailto:info@angels-healing.com" style="color: #4a6f8a;">info@angels-healing.com</a> までメールでお問い合わせください。
-                    </p>
                 </form>
             </div>
         </div>

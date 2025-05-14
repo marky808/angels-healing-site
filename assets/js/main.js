@@ -8,12 +8,11 @@ console.log('main.js loaded');
 // DOMの読み込み完了時に実行
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded - main.js');
-    
-    // 基本機能のセットアップ
+      // 基本機能のセットアップ
     setupCommonFeatures();
     
-    // お問い合わせフォームの初期化
-    setupContactForm();
+    // お問い合わせフォームの初期化 - 一時的に無効化
+    // setupContactForm();
     
     // コンポーネント読み込み完了後にメニューを初期化
     document.addEventListener('componentsLoaded', function() {

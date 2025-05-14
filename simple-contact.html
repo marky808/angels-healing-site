@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シンプルお問い合わせフォーム - 天使たちの癒し</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .simple-form-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #4a6f8a;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: #4a6f8a;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #385369;
+        }
+        
+        .form-note {
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="simple-form-container">
+        <h1 class="form-title">お問い合わせフォーム（シンプル版）</h1>
+        <p style="text-align: center; margin-bottom: 20px;">こちらは簡易版のフォームです。<a href="index.html">メインページに戻る</a></p>
+        
+        <form action="contact.php" method="POST">
+            <div class="form-group">
+                <label for="company">会社名/施設名</label>
+                <input type="text" id="company" name="company" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="name">ご担当者名</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">メールアドレス</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">電話番号</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            
+            <div class="form-group">
+                <label for="interest">ご興味のある項目</label>
+                <select id="interest" name="interest">
+                    <option value="">選択してください</option>
+                    <option value="medical">医療機関向けプラン</option>
+                    <option value="corporate">企業向けプラン</option>
+                    <option value="trial">お試し施術</option>
+                    <option value="other">その他</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="message">お問い合わせ内容</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">送信する</button>
+        </form>
+        
+        <p class="form-note">
+            このフォームからの送信に問題がある場合は、<br>
+            直接 <a href="mailto:info@angels-healing.com">info@angels-healing.com</a> までメールでお問い合わせください。
+        </p>
+    </div>
+</body>
+</html>
