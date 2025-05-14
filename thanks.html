@@ -57,19 +57,32 @@
     <div class="thanks-container">
         <div class="logo">
             <img src="assets/images/logo.png" alt="天使たちの癒し" width="80" height="80">
-        </div>
-        <h1 class="thanks-title">お問い合わせありがとうございます</h1>
+        </div>        <h1 class="thanks-title">お問い合わせありがとうございます</h1>
         <p class="thanks-message">
             送信完了いたしました。<br>
+            内容を確認のうえ、担当者より折り返しご連絡いたします。<br>
             ご返信までしばらくお待ちください。
+        </p>
+        <p class="thanks-note" style="font-size: 14px; color: #666; margin-top: 20px;">
+            ※ 自動返信メールが届いていない場合は、<br>
+            お手数ですが <a href="mailto:info@angels-healing.com" style="color: #4a6f8a;">info@angels-healing.com</a> まで<br>
+            直接ご連絡ください。
         </p>
         <a href="index.html" class="back-button">トップページに戻る</a>
     </div>
 
     <!-- フッターコンポーネント -->
-    <div id="footer" data-component="common-footer"></div>
-
-    <script src="assets/js/load-components.js"></script>
+    <div id="footer" data-component="common-footer"></div>    <script src="assets/js/load-components.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('お問い合わせ完了ページが読み込まれました');
+            // URLパラメータがあれば記録（FormSubmitからの情報）
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.size > 0) {
+                console.log('URLパラメータを検出:', Object.fromEntries(urlParams));
+            }
+        });
+    </script>
 </body>
 </html>

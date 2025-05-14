@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせフォームテスト - 天使たちの癒し</title>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4a6f8a;
+            margin-bottom: 30px;
+        }
+        .instructions {
+            background-color: #f5f5f5;
+            border-left: 5px solid #4a6f8a;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+        .button-container {
+            margin: 30px 0;
+        }
+        .test-button {
+            display: inline-block;
+            background-color: #4a6f8a;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .test-button.green {
+            background-color: #4CAF50;
+        }
+        .instructions ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        .form-test-result {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border: 1px solid #b0e0e6;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>お問い合わせフォームテスト</h1>
+    
+    <div class="instructions">
+        <p>以下の手順でお問い合わせフォームのテストを行うことができます：</p>
+        <ul>
+            <li>「ローカルテスト」ボタンをクリックすると、フォームテスト用ページが開きます。このページでは送信内容を確認できますが、実際にメールは送信されません。</li>
+            <li>「本番テスト」ボタンをクリックすると、FormSubmitを使用した実際のフォーム送信テストができます。初回使用時には確認メールが送られ、認証後にフォームが機能するようになります。</li>
+        </ul>
+        <p><strong>注意:</strong> FormSubmitのAPIは、直接ファイルから開いたページ（file://プロトコル）では機能しない場合があります。本番環境や適切なローカルサーバーを使用することをお勧めします。</p>
+    </div>
+    
+    <div class="button-container">
+        <a href="index.html" class="test-button">ローカルテスト</a>
+        <a href="https://angels-healing.com" class="test-button green" target="_blank">本番テスト (公開サイト)</a>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 現在のプロトコルを確認
+            const isFileProtocol = window.location.protocol === 'file:';
+            
+            if (isFileProtocol) {
+                const resultElement = document.createElement('div');
+                resultElement.className = 'form-test-result';
+                resultElement.innerHTML = `
+                    <h3 style="margin-top: 0;">注意</h3>
+                    <p>現在、ファイルプロトコル (file://) でページを閲覧しています。</p>
+                    <p>FormSubmitのAPIは、セキュリティ上の理由でfileプロトコルでは正常に機能しない可能性があります。</p>
+                    <p>テストを行う場合は、ローカルサーバーを使用するか、本番環境で行ってください。</p>
+                `;
+                document.body.appendChild(resultElement);
+            }
+        });
+    </script>
+</body>
+</html>

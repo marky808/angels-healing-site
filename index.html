@@ -110,14 +110,15 @@
             <div class="section-title">
                 <h2>お問い合わせ</h2>
                 <p>天使たちの癒しの導入についてのご質問や詳細情報をお求めの方は、こちらからお問い合わせください。</p>
-            </div>
-            
-            <div class="contact-form">
-                <form action="https://formsubmit.co/info@angels-healing.com" method="POST">
+            </div>            <div class="contact-form">
+                <div id="formError" class="form-error" style="display: none; color: red; margin-bottom: 15px; padding: 10px; border: 1px solid red; border-radius: 5px;"></div>                <form id="contactForm" action="https://formsubmit.co/02a3cbdbfd969d338d6310ef84fa30cd" method="POST">
                     <!-- FormSubmit用の設定 -->
                     <input type="hidden" name="_subject" value="【天使たちの癒し】お問い合わせがありました">
                     <input type="hidden" name="_next" value="https://angels-healing.com/thanks.html">
-                    
+                    <input type="hidden" name="_captcha" value="true">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="text" name="_honey" style="display:none">
+                    <input type="checkbox" name="_bot" style="display:none !important">
                     <div class="form-group">
                         <label for="company">会社名/施設名</label>
                         <input type="text" id="company" name="company" required>
@@ -126,9 +127,7 @@
                     <div class="form-group">
                         <label for="name">ご担当者名</label>
                         <input type="text" id="name" name="name" required>
-                    </div>
-                    
-                    <div class="form-group">
+                    </div>                    <div class="form-group">
                         <label for="email">メールアドレス</label>
                         <input type="email" id="email" name="email" required>
                     </div>
@@ -161,9 +160,8 @@
     </section>
 
     <!-- フッターコンポーネント -->
-    <div id="footer" data-component="common-footer"></div>
-
-    <script src="assets/js/load-components.js"></script>
+    <div id="footer" data-component="common-footer"></div>    <script src="assets/js/load-components.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/form-test.js"></script>
 </body>
 </html>

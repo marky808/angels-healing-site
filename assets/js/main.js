@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 基本機能のセットアップ
     setupCommonFeatures();
     
+    // お問い合わせフォームの初期化
+    setupContactForm();
+    
     // コンポーネント読み込み完了後にメニューを初期化
     document.addEventListener('componentsLoaded', function() {
         console.log('componentsLoaded イベントを受信 - main.js');
@@ -336,4 +339,86 @@ function setupCommonFeatures() {
             }
         });
     };
+}
+
+/**
+ * お問い合わせフォームの初期化
+ */
+function setupContactForm() {
+    const contactForm = document.getElementById('contactForm');
+    if (!contactForm) return;
+    
+    console.log('お問い合わせフォームを初期化します');
+    
+    // エラー表示要素
+    const formError = document.getElementById('formError');
+    
+    contactForm.addEventListener('submit', function(e) {
+        console.log('フォームがサブミットされました');
+        
+        // エラー表示をクリア
+        formError.style.display = 'none';
+        formError.textContent = '';
+        
+        // 簡易バリデーション
+        const email = document.getElementById('email').value;
+        const name = document.getElementById('name').value;
+        const message = document.getElementById('message').value;
+        
+        if (!email || !name || !message) {
+            e.preventDefault();
+            formError.textContent = '必須項目をすべて入力してください';
+            formError.style.display = 'block';
+            return false;
+        }
+        
+        // メールアドレス形式チェック
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            e.preventDefault();
+            formError.textContent = '有効なメールアドレスを入力してください';
+            formError.style.display = 'block';
+            return false;
+        }
+          // FormSubmitに送信される前にログ出力
+        console.log('フォームデータを送信します:');
+        console.log('- メール:', email);
+        console.log('- 名前:', name);
+        console.log('- メッセージ長:', message.length);
+        
+        // 全ての項目をサーバーログに記録（開発環境のみ）
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            const formData = new FormData(contactForm);
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+            console.log('送信データ:', formDataObj);
+        }
+        
+        // 送信処理はFormSubmitに任せる
+        console.log('FormSubmitに送信開始します');
+        
+        // 送信状態の表示
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = '送信中...';
+        submitButton.disabled = true;
+        
+        // 送信中のUIフィードバック
+        formError.textContent = '送信中です。このままお待ちください...';
+        formError.style.display = 'block';
+        formError.style.color = '#4a6f8a';
+        formError.style.border = '1px solid #4a6f8a';
+        
+        // フォームデータ送信後の処理
+        setTimeout(() => {
+            // 8秒後に元に戻す（ネットワークエラー対策）
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+            formError.style.display = 'none';
+        }, 8000);
+        
+        return true;
+    });
 }
