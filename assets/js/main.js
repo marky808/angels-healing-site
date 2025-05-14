@@ -359,13 +359,13 @@ function setupContactForm() {
         // エラー表示をクリア
         formError.style.display = 'none';
         formError.textContent = '';
-        
-        // 簡易バリデーション
+          // 簡易バリデーション
         const email = document.getElementById('email').value;
         const name = document.getElementById('name').value;
-        const message = document.getElementById('message').value;
+        const message = document.getElementById('message');
+        const messageValue = message ? message.value : ''; // messageが存在する場合のみ値を取得
         
-        if (!email || !name || !message) {
+        if (!email || !name) {
             e.preventDefault();
             formError.textContent = '必須項目をすべて入力してください';
             formError.style.display = 'block';
@@ -379,12 +379,13 @@ function setupContactForm() {
             formError.textContent = '有効なメールアドレスを入力してください';
             formError.style.display = 'block';
             return false;
-        }
-          // FormSubmitに送信される前にログ出力
+        }        // FormSubmitに送信される前にログ出力
         console.log('フォームデータを送信します:');
         console.log('- メール:', email);
         console.log('- 名前:', name);
-        console.log('- メッセージ長:', message.length);
+        if (message) {
+            console.log('- メッセージ長:', messageValue.length);
+        }
         
         // 全ての項目をサーバーログに記録（開発環境のみ）
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
