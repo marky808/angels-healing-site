@@ -3,8 +3,11 @@
 
 // 送信元のリファラーを検証
 $referrer = $_SERVER['HTTP_REFERER'] ?? '';
+// ローカル環境用にlocalhost/127.0.0.1も許可
 if (strpos($referrer, 'angels-healing.com') === false && 
-    strpos($referrer, 'frenchkiss.jp-angels-healing') === false) {
+    strpos($referrer, 'frenchkiss.jp-angels-healing') === false &&
+    strpos($referrer, 'localhost') === false && 
+    strpos($referrer, '127.0.0.1') === false) {
     die('不正なリクエストです。');
 }
 
@@ -63,12 +66,18 @@ EOT;
 
 // 管理者へのメール送信
 $to = 'info@angels-healing.com';
-$headers = "From: {$email}\r\n";
-$headers .= "Reply-To: {$email}\r\n";
+// ロリポップでは送信元メールアドレスは自分のドメインに存在するものにする必要があります
+$from_email = 'info@angels-healing.com'; // ドメインのメールアドレスを使用
+$headers = "From: {$from_email}\r\n";
+$headers .= "Reply-To: {$email}\r\n"; // 返信先はユーザーのメールアドレス
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-// メール送信
-$mail_result = mb_send_mail($to, $subject, $mail_body, $headers);
+// メール送信（ロリポップ環境に最適化）
+if (function_exists('mb_send_mail')) {
+    $mail_result = mb_send_mail($to, $subject, $mail_body, $headers);
+} else {
+    $mail_result = mail($to, $subject, $mail_body, $headers);
+}
 
 // 自動返信メールの設定
 $auto_reply_subject = "【天使たちの癒し】お問い合わせありがとうございます";
@@ -101,14 +110,40 @@ $auto_headers = "From: info@angels-healing.com\r\n";
 $auto_headers .= "Reply-To: info@angels-healing.com\r\n";
 $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-$auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
+// 自動返信メールの送信（ロリポップ環境に最適化）
+if (function_exists('mb_send_mail')) {
+    $auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
+} else {
+    $auto_mail_result = mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
+}
 
 // 結果に応じたリダイレクト
 if ($mail_result && $auto_mail_result) {
     header('Location: thanks.html?status=success');
 } else {
-    // エラーログを残す
-    error_log('メール送信エラー: 送信先=' . $to . ', 送信元=' . $email);
+    // エラーメッセージを作成
+    $error_message = 'メール送信エラー: ';
+    if (!$mail_result) {
+        $error_message .= '管理者向けメール送信失敗。';
+    }
+    if (!$auto_mail_result) {
+        $error_message .= '自動返信メール送信失敗。';
+    }
+    $error_message .= ' 送信先=' . $to . ', 送信元=' . $from_email;
+    
+    // エラーをログに記録
+    error_log($error_message);
+    
+    // テスト環境またはデバッグモードの場合はエラーを表示
+    if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1' || isset($_GET['debug'])) {
+        echo "<h2>メール送信エラー</h2>";
+        echo "<p>メールの送信に失敗しました。サーバーの設定を確認してください。</p>";
+        echo "<p>エラー詳細：" . $error_message . "</p>";
+        echo "<p>ロリポップでは、送信元メールアドレスはドメインに紐づいたアドレスを使用する必要があります。</p>";
+        echo "<p><a href='index.html'>トップページに戻る</a></p>";
+        exit;
+    }
+    
     header('Location: form-error.html');
 }
 ?>
