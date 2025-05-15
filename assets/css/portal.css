@@ -254,14 +254,9 @@ body {
 
 .therapist-description {
     font-size: 0.9rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 4; /* 表示行数を3行から4行に増加 */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-height: 6em; /* 4行分の高さ (1.5em × 4) */
-    line-height: 1.5; /* 行間を明示的に指定 */
+    line-height: 1.5;
     margin-bottom: 0;
+    white-space: pre-line;
 }
 
 .therapist-content .btn {
