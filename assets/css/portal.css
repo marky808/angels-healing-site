@@ -252,8 +252,16 @@ body {
     margin-bottom: 15px;
 }
 
+/* --- therapist-description の省略を完全に無効化（サーバーでも強制）--- */
 .therapist-description {
     font-size: 0.9rem;
+    display: block !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    max-height: none !important;
+    -webkit-line-clamp: none !important;
+    line-clamp: none !important;
+    -webkit-box-orient: initial !important;
     line-height: 1.5;
     margin-bottom: 0;
     white-space: pre-line;
