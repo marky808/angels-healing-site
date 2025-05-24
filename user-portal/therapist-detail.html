@@ -144,8 +144,7 @@
                 // サロン情報の設定
                 const salonContainer = document.getElementById('therapist-salon');
                 salonContainer.innerHTML = '';
-                
-                if(therapist.salon_info) {
+                  if(therapist.salon_info) {
                     if(therapist.salon_info.name) {
                         const salonName = document.createElement('h4');
                         salonName.textContent = therapist.salon_info.name;
@@ -153,11 +152,13 @@
                         salonContainer.appendChild(salonName);
                     }
                     
-                    const salonLink = document.createElement('a');
-                    salonLink.href = therapist.salon_info.url;
-                    salonLink.textContent = 'サロンWEBサイト';
-                    salonLink.target = '_blank';
-                    salonContainer.appendChild(salonLink);
+                    if(therapist.salon_info.url && therapist.salon_info.url.trim() !== '') {
+                        const salonLink = document.createElement('a');
+                        salonLink.href = therapist.salon_info.url;
+                        salonLink.textContent = 'サロンWEBサイト';
+                        salonLink.target = '_blank';
+                        salonContainer.appendChild(salonLink);
+                    }
                     
                     // 写真の表示
                     const salonPhotosDiv = document.createElement('div');

@@ -318,11 +318,10 @@ const therapistData = {
                 title: 'ゆらゆらヒーリング',
                 description: '足首から肩、首、腕、手の平、足裏、ふくらはぎ等、各部をゆらゆら揺らして、擦ったり、揉んだりする施術です。血行が良くなり、体が温かく軽くなります',
                 duration: '施術時間: 60分'
-            }
-        ],
+            }        ],
         salon_info: {
             name: '',
-            url: 'https://www.angels-healing.com/',
+            url: '',
             photo: '../assets/images/shirakawa2.png'
         },
         treatment_photos: [
