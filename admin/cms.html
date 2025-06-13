@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>セラピスト管理CMS - 天使たちの癒し</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .cms-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .cms-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .cms-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+
+        .cms-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .cms-tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cms-tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .cms-tab.active {
+            background: #667eea;
+            color: white;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .cms-tab:hover:not(.active) {
+            background: #f1f3f4;
+        }
+
+        .cms-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* セラピスト一覧 */
+        .therapist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .therapist-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .therapist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+        }
+
+        .therapist-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            background-color: #f0f0f0;
+            margin: 0 auto 15px;
+        }
+
+        .therapist-name {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .therapist-specialty {
+            text-align: center;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .therapist-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-edit {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #218838;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        .btn-view {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #0056b3;
+        }
+
+        /* フォーム */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 画像アップロード */
+        .image-upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .image-upload-area:hover {
+            border-color: #667eea;
+            background-color: #f8f9ff;
+        }
+
+        .image-upload-area.dragover {
+            border-color: #667eea;
+            background-color: #f0f4ff;
+        }
+
+        .image-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .preview-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #dc3545;
+        }
+
+        /* 動的リスト */
+        .dynamic-list {
+            margin-top: 15px;
+        }
+
+        .list-item {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .list-item input {
+            flex: 1;
+        }
+
+        .list-item button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .add-item-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* コース管理 */
+        .course-item {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .course-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .remove-course-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        /* ボタン */
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        /* 成功・エラーメッセージ */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* 検索 */
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        /* 統計情報 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .cms-container {
+                padding: 10px;
+            }
+            
+            .cms-tabs {
+                flex-direction: column;
+            }
+            
+            .cms-tab {
+                margin-bottom: 5px;
+            }
+            
+            .therapist-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cms-container">
+        <!-- ヘッダー -->
+        <div class="cms-header">
+            <h1><i class="fas fa-spa"></i> セラピスト管理CMS</h1>
+            <p>セラピストの情報を簡単に管理できます</p>
+        </div>
+
+        <!-- アラート -->
+        <div id="alert-success" class="alert alert-success">
+            <i class="fas fa-check-circle"></i> <span id="success-message"></span>
+        </div>
+        <div id="alert-error" class="alert alert-error">
+            <i class="fas fa-exclamation-triangle"></i> <span id="error-message"></span>
+        </div>
+
+        <!-- タブ -->
+        <div class="cms-tabs">
+            <button class="cms-tab active" data-tab="list">
+                <i class="fas fa-list"></i> セラピスト一覧
+            </button>
+            <button class="cms-tab" data-tab="add">
+                <i class="fas fa-plus"></i> 新規追加
+            </button>
+            <button class="cms-tab" data-tab="edit">
+                <i class="fas fa-edit"></i> 編集
+            </button>
+            <button class="cms-tab" data-tab="backup">
+                <i class="fas fa-download"></i> バックアップ
+            </button>
+        </div>
+
+        <!-- コンテンツ -->
+        <div class="cms-content">
+            <!-- セラピスト一覧タブ -->
+            <div id="tab-list" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-therapists">0</div>
+                        <div class="stat-label">登録セラピスト数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="female-therapists">0</div>
+                        <div class="stat-label">女性セラピスト</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="male-therapists">0</div>
+                        <div class="stat-label">男性セラピスト</div>
+                    </div>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="セラピスト名で検索...">
+                    <i class="fas fa-search"></i>
+                </div>
+
+                <div id="therapist-list" class="therapist-grid">
+                    <!-- セラピスト一覧がここに表示されます -->
+                </div>
+            </div>
+
+            <!-- 新規追加タブ -->
+            <div id="tab-add" class="tab-content">
+                <h2><i class="fas fa-plus-circle"></i> 新しいセラピストを追加</h2>
+                <form id="add-therapist-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">セラピスト名 *</label>
+                            <input type="text" id="name" required placeholder="例: 山田 花子">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">性別 *</label>
+                            <select id="gender" required>
+                                <option value="">選択してください</option>
+                                <option value="female">女性</option>
+                                <option value="male">男性</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specialty">専門分野 *</label>
+                        <input type="text" id="specialty" required placeholder="例: アロマセラピスト">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categories">カテゴリー *</label>
+                        <div>
+                            <label class="form-check-label">
+                                <input type="checkbox" name="categories" value="relaxation"> リラクゼーション
+                            </label>
+                            <label class="form-check-label">
+                                <input type="checkbox" name="categories" value="medical"> 医療
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">自己紹介文</label>
+                        <textarea id="description" placeholder="セラピストの自己紹介文を入力してください"></textarea>
+                    </div>
+
+                    <!-- 資格 -->
+                    <div class="form-group">
+                        <label>資格・経歴</label>
+                        <div id="qualifications-list" class="dynamic-list">
+                            <div class="list-item">
+                                <input type="text" placeholder="資格名を入力">
+                                <button type="button" onclick="removeItem(this)">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="add-item-btn" onclick="addQualification()">
+                            <i class="fas fa-plus"></i> 資格を追加
+                        </button>
+                    </div>
+
+                    <!-- コース -->
+                    <div class="form-group">
+                        <label>コース情報</label>
+                        <div id="courses-list">
+                            <!-- コース項目がここに表示されます -->
+                        </div>
+                        <button type="button" class="add-item-btn" onclick="addCourse()">
+                            <i class="fas fa-plus"></i> コースを追加
+                        </button>
+                    </div>
+
+                    <!-- サロン情報 -->
+                    <div class="form-group">
+                        <label>サロン情報</label>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="salon-name">サロン名</label>
+                                <input type="text" id="salon-name" placeholder="サロン名">
+                            </div>
+                            <div class="form-group">
+                                <label for="salon-url">サロンURL</label>
+                                <input type="url" id="salon-url" placeholder="https://example.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="salon-description">サロン紹介文</label>
+                            <textarea id="salon-description" placeholder="サロンの紹介文を入力してください（300文字以内）" maxlength="300"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- 画像アップロード -->
+                    <div class="form-group">
+                        <label>画像アップロード</label>
+                        <div class="image-upload-area" onclick="document.getElementById('file-input').click()">
+                            <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #ddd; margin-bottom: 15px;"></i>
+                            <p>クリックして画像を選択、またはドラッグ&ドロップ</p>
+                            <p style="font-size: 14px; color: #666;">JPG, PNG, GIF (最大 5MB)</p>
+                        </div>
+                        <input type="file" id="file-input" accept="image/*" multiple style="display: none;">
+                        <div id="image-preview" class="image-preview">
+                            <!-- プレビュー画像がここに表示されます -->
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button type="button" class="btn-secondary" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> リセット
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> セラピストを登録
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 編集タブ -->
+            <div id="tab-edit" class="tab-content">
+                <h2><i class="fas fa-edit"></i> セラピスト情報を編集</h2>
+                <div class="form-group">
+                    <label for="edit-select">編集するセラピストを選択</label>
+                    <select id="edit-select">
+                        <option value="">セラピストを選択してください</option>
+                    </select>
+                </div>
+                <div id="edit-form-container" style="display: none;">
+                    <!-- 編集フォームがここに表示されます -->
+                </div>
+            </div>
+
+            <!-- バックアップタブ -->
+            <div id="tab-backup" class="tab-content">
+                <h2><i class="fas fa-database"></i> データのバックアップ・復元</h2>
+                <div style="margin-bottom: 30px;">
+                    <h3>バックアップ</h3>
+                    <p>現在のセラピストデータをJSONファイルとしてダウンロードできます。</p>
+                    <button class="btn-primary" onclick="downloadBackup()">
+                        <i class="fas fa-download"></i> バックアップをダウンロード
+                    </button>
+                </div>
+                <div>
+                    <h3>復元</h3>
+                    <p>バックアップファイルからデータを復元できます。</p>
+                    <input type="file" id="restore-file" accept=".json" style="margin-bottom: 15px;">
+                    <br>
+                    <button class="btn-secondary" onclick="restoreBackup()">
+                        <i class="fas fa-upload"></i> バックアップから復元
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/therapist-data.js"></script>
+    <script>
+        // CMS機能の実装
+        let currentEditingId = null;
+        let courseCounter = 0;
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCMS();
+            loadTherapistList();
+            loadEditOptions();
+            setupEventListeners();
+        });
+
+        // CMS初期化
+        function initializeCMS() {
+            // タブ切り替え
+            document.querySelectorAll('.cms-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+
+            // 画像アップロード
+            setupImageUpload();
+        }
+
+        // タブ切り替え
+        function switchTab(tabName) {
+            // すべてのタブとコンテンツを非アクティブに
+            document.querySelectorAll('.cms-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // 選択されたタブとコンテンツをアクティブに
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            // タブに応じて処理を実行
+            if (tabName === 'list') {
+                loadTherapistList();
+            } else if (tabName === 'edit') {
+                loadEditOptions();
+            }
+        }
+
+        // セラピスト一覧を読み込み
+        function loadTherapistList() {
+            const therapists = getAllTherapists();
+            const container = document.getElementById('therapist-list');
+            container.innerHTML = '';
+
+            // 統計更新
+            updateStats(therapists);
+
+            therapists.forEach(therapist => {
+                const card = createTherapistCard(therapist);
+                container.appendChild(card);
+            });
+        }
+
+        // 統計情報更新
+        function updateStats(therapists) {
+            document.getElementById('total-therapists').textContent = therapists.length;
+            document.getElementById('female-therapists').textContent = 
+                therapists.filter(t => t.gender === 'female').length;
+            document.getElementById('male-therapists').textContent = 
+                therapists.filter(t => t.gender === 'male').length;
+        }
+
+        // セラピストカード作成
+        function createTherapistCard(therapist) {
+            const card = document.createElement('div');
+            card.className = 'therapist-card';
+            card.innerHTML = `
+                <div class="therapist-photo" style="background-image: url('${therapist.photo}')"></div>
+                <div class="therapist-name">${therapist.name}</div>
+                <div class="therapist-specialty">${therapist.specialty}</div>
+                <div class="therapist-actions">
+                    <button class="btn btn-view" onclick="viewTherapist('${therapist.id}')">
+                        <i class="fas fa-eye"></i> 詳細
+                    </button>
+                    <button class="btn btn-edit" onclick="editTherapist('${therapist.id}')">
+                        <i class="fas fa-edit"></i> 編集
+                    </button>
+                    <button class="btn btn-delete" onclick="deleteTherapist('${therapist.id}')">
+                        <i class="fas fa-trash"></i> 削除
+                    </button>
+                </div>
+            `;
+            return card;
+        }
+
+        // セラピスト詳細表示
+        function viewTherapist(id) {
+            window.open(`../user-portal/therapist-detail.html?id=${id}`, '_blank');
+        }
+
+        // セラピスト編集
+        function editTherapist(id) {
+            switchTab('edit');
+            document.getElementById('edit-select').value = id;
+            loadEditForm(id);
+        }
+
+        // セラピスト削除
+        function deleteTherapist(id) {
+            const therapist = getTherapistById(id);
+            if (!therapist) return;
+
+            if (confirm(`「${therapist.name}」を削除してもよろしいですか？`)) {
+                // 実際のデータ削除処理
+                delete therapistData[id];
+                showAlert('success', `「${therapist.name}」を削除しました。`);
+                loadTherapistList();
+                loadEditOptions();
+            }
+        }
+
+        // 編集オプション読み込み
+        function loadEditOptions() {
+            const select = document.getElementById('edit-select');
+            const therapists = getAllTherapists();
+            
+            select.innerHTML = '<option value="">セラピストを選択してください</option>';
+            therapists.forEach(therapist => {
+                const option = document.createElement('option');
+                option.value = therapist.id;
+                option.textContent = therapist.name;
+                select.appendChild(option);
+            });
+
+            select.addEventListener('change', function() {
+                if (this.value) {
+                    loadEditForm(this.value);
+                } else {
+                    document.getElementById('edit-form-container').style.display = 'none';
+                }
+            });
+        }
+
+        // 編集フォーム読み込み
+        function loadEditForm(id) {
+            const therapist = getTherapistById(id);
+            if (!therapist) return;
+
+            currentEditingId = id;
+            const container = document.getElementById('edit-form-container');
+            container.style.display = 'block';
+            
+            // フォームHTML生成（簡略化）
+            container.innerHTML = `
+                <form id="edit-therapist-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>セラピスト名</label>
+                            <input type="text" id="edit-name" value="${therapist.name}">
+                        </div>
+                        <div class="form-group">
+                            <label>性別</label>
+                            <select id="edit-gender">
+                                <option value="female" ${therapist.gender === 'female' ? 'selected' : ''}>女性</option>
+                                <option value="male" ${therapist.gender === 'male' ? 'selected' : ''}>男性</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>専門分野</label>
+                        <input type="text" id="edit-specialty" value="${therapist.specialty}">
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button type="button" class="btn-secondary" onclick="cancelEdit()">キャンセル</button>
+                        <button type="submit" class="btn-primary">更新</button>
+                    </div>
+                </form>
+            `;
+
+            // 編集フォーム送信
+            document.getElementById('edit-therapist-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveEditedTherapist();
+            });
+        }
+
+        // 編集保存
+        function saveEditedTherapist() {
+            if (!currentEditingId) return;
+
+            const name = document.getElementById('edit-name').value;
+            const gender = document.getElementById('edit-gender').value;
+            const specialty = document.getElementById('edit-specialty').value;
+
+            if (!name || !gender || !specialty) {
+                showAlert('error', '必須項目を入力してください。');
+                return;
+            }
+
+            // データ更新
+            therapistData[currentEditingId].name = name;
+            therapistData[currentEditingId].gender = gender;
+            therapistData[currentEditingId].specialty = specialty;
+
+            showAlert('success', 'セラピスト情報を更新しました。');
+            loadTherapistList();
+            cancelEdit();
+        }
+
+        // 編集キャンセル
+        function cancelEdit() {
+            document.getElementById('edit-form-container').style.display = 'none';
+            document.getElementById('edit-select').value = '';
+            currentEditingId = null;
+        }
+
+        // 新規追加フォーム処理
+        function setupEventListeners() {
+            // フォーム送信
+            document.getElementById('add-therapist-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveNewTherapist();
+            });
+
+            // 検索
+            document.getElementById('search-input').addEventListener('input', function() {
+                filterTherapists(this.value);
+            });
+        }
+
+        // 新規セラピスト保存
+        function saveNewTherapist() {
+            const name = document.getElementById('name').value;
+            const gender = document.getElementById('gender').value;
+            const specialty = document.getElementById('specialty').value;
+
+            if (!name || !gender || !specialty) {
+                showAlert('error', '必須項目を入力してください。');
+                return;
+            }
+
+            // 新しいIDを生成
+            const newId = (Math.max(...Object.keys(therapistData).map(Number)) + 1).toString();
+
+            // 新しいセラピストデータ作成
+            const newTherapist = {
+                id: newId,
+                name: name,
+                gender: gender,
+                specialty: specialty,
+                categories: getSelectedCategories(),
+                specialities: getSelectedCategories(),
+                photo: '../assets/images/default-avatar.jpg',
+                thumbnailPhoto: '../assets/images/default-avatar.jpg',
+                description: [document.getElementById('description').value || ''],
+                qualifications: getQualifications(),
+                courses: getCourses(),
+                salon_info: {
+                    name: document.getElementById('salon-name').value || '',
+                    url: document.getElementById('salon-url').value || '',
+                    description: document.getElementById('salon-description').value || ''
+                }
+            };
+
+            // データに追加
+            therapistData[newId] = newTherapist;
+
+            showAlert('success', `「${name}」を登録しました。`);
+            resetForm();
+            loadTherapistList();
+            loadEditOptions();
+        }
+
+        // 選択されたカテゴリーを取得
+        function getSelectedCategories() {
+            const categories = [];
+            document.querySelectorAll('input[name="categories"]:checked').forEach(checkbox => {
+                categories.push(checkbox.value);
+            });
+            return categories;
+        }
+
+        // 資格リストを取得
+        function getQualifications() {
+            const qualifications = [];
+            document.querySelectorAll('#qualifications-list input').forEach(input => {
+                if (input.value.trim()) {
+                    qualifications.push(input.value.trim());
+                }
+            });
+            return qualifications;
+        }
+
+        // コースリストを取得
+        function getCourses() {
+            const courses = [];
+            document.querySelectorAll('#courses-list .course-item').forEach(courseItem => {
+                const title = courseItem.querySelector('.course-title').value;
+                const description = courseItem.querySelector('.course-description').value;
+                const duration = courseItem.querySelector('.course-duration').value;
+                
+                if (title.trim()) {
+                    courses.push({
+                        title: title,
+                        description: description || '',
+                        duration: duration || '未設定'
+                    });
+                }
+            });
+            return courses;
+        }
+
+        // 資格追加
+        function addQualification() {
+            const container = document.getElementById('qualifications-list');
+            const item = document.createElement('div');
+            item.className = 'list-item';
+            item.innerHTML = `
+                <input type="text" placeholder="資格名を入力">
+                <button type="button" onclick="removeItem(this)">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(item);
+        }
+
+        // コース追加
+        function addCourse() {
+            const container = document.getElementById('courses-list');
+            const courseItem = document.createElement('div');
+            courseItem.className = 'course-item';
+            courseItem.innerHTML = `
+                <div class="course-header">
+                    <span class="course-title">コース ${++courseCounter}</span>
+                    <button type="button" class="remove-course-btn" onclick="removeCourse(this)">
+                        <i class="fas fa-times"></i> 削除
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label>コース名</label>
+                    <input type="text" class="course-title" placeholder="コース名を入力">
+                </div>
+                <div class="form-group">
+                    <label>コース説明</label>
+                    <textarea class="course-description" placeholder="コースの説明を入力"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>施術時間</label>
+                    <input type="text" class="course-duration" placeholder="例: 60分">
+                </div>
+            `;
+            container.appendChild(courseItem);
+        }
+
+        // アイテム削除
+        function removeItem(button) {
+            button.parentElement.remove();
+        }
+
+        // コース削除
+        function removeCourse(button) {
+            button.closest('.course-item').remove();
+        }
+
+        // フォームリセット
+        function resetForm() {
+            document.getElementById('add-therapist-form').reset();
+            document.getElementById('qualifications-list').innerHTML = `
+                <div class="list-item">
+                    <input type="text" placeholder="資格名を入力">
+                    <button type="button" onclick="removeItem(this)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            document.getElementById('courses-list').innerHTML = '';
+            document.getElementById('image-preview').innerHTML = '';
+            courseCounter = 0;
+        }
+
+        // セラピストフィルタリング
+        function filterTherapists(searchTerm) {
+            const therapists = getAllTherapists();
+            const filtered = therapists.filter(therapist => 
+                therapist.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            const container = document.getElementById('therapist-list');
+            container.innerHTML = '';
+            
+            filtered.forEach(therapist => {
+                const card = createTherapistCard(therapist);
+                container.appendChild(card);
+            });
+        }
+
+        // 画像アップロード設定
+        function setupImageUpload() {
+            const uploadArea = document.querySelector('.image-upload-area');
+            const fileInput = document.getElementById('file-input');
+
+            // ドラッグ&ドロップ
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                handleFiles(files);
+            });
+
+            // ファイル選択
+            fileInput.addEventListener('change', function() {
+                handleFiles(this.files);
+            });
+        }
+
+        // ファイル処理
+        function handleFiles(files) {
+            const preview = document.getElementById('image-preview');
+            
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const previewItem = document.createElement('div');
+                        previewItem.className = 'preview-item';
+                        previewItem.innerHTML = `
+                            <div class="preview-image" style="background-image: url('${e.target.result}')"></div>
+                            <button class="preview-remove" onclick="removePreview(this)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        `;
+                        preview.appendChild(previewItem);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // プレビュー削除
+        function removePreview(button) {
+            button.parentElement.remove();
+        }
+
+        // バックアップダウンロード
+        function downloadBackup() {
+            const data = JSON.stringify(therapistData, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `therapist-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            
+            URL.revokeObjectURL(url);
+            showAlert('success', 'バックアップファイルをダウンロードしました。');
+        }
+
+        // バックアップ復元
+        function restoreBackup() {
+            const fileInput = document.getElementById('restore-file');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showAlert('error', 'ファイルを選択してください。');
+                return;
+            }
+
+            if (confirm('現在のデータが上書きされます。よろしいですか？')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        Object.assign(therapistData, data);
+                        showAlert('success', 'バックアップから復元しました。');
+                        loadTherapistList();
+                        loadEditOptions();
+                    } catch (error) {
+                        showAlert('error', 'ファイルの形式が正しくありません。');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        // アラート表示
+        function showAlert(type, message) {
+            const alertElement = document.getElementById(`alert-${type}`);
+            const messageElement = document.getElementById(`${type}-message`);
+            
+            messageElement.textContent = message;
+            alertElement.style.display = 'block';
+            
+            setTimeout(() => {
+                alertElement.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

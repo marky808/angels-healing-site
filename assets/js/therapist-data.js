@@ -323,10 +323,51 @@ const therapistData = {
             name: '',
             url: '',
             photo: '../assets/images/shirakawa2.png'
-        },
-        treatment_photos: [
+        },        treatment_photos: [
             '../assets/images/sirakawa3.jpg',
             '../assets/images/shirakawa4.jpg'
+        ]
+    },
+    // セラピスト - 矢口由紀子
+    '7': {
+        id: '7',
+        name: '矢口 由紀子',
+        gender: 'female',
+        categories: ['relaxation', 'medical'],
+        specialities: ['relaxation', 'medical'],
+        specialty: '整体ボディケアセラピスト（気功整体）',
+        photo: '../assets/images/yaguchi1.jpg',
+        thumbnailPhoto: '../assets/images/yaguchi1.jpg',
+        description: [
+            'an（アン）は、心と体を整える気功整体サロンです。',
+            '看護師時代に自身の身体の不調を改善してくれた気功整体で、社会で頑張る方々・地域の方々のストレス解消や健康増進のお役にたちたいと思い施術をしております。',
+            '趣味は散歩で、四季折々の草花をめでるのが好きです。どうぞ宜しくお願い致します。'
+        ],
+        qualifications: [
+            '民間資格：整体ボディケアセラピスト（一般財団法人日本能力開発推進協会/JADP）',
+            '民間資格：気功師（日本靜林気功協会認定）',
+            '国家資格：看護師免許'
+        ],
+        courses: [
+            {
+                title: '首肩こりケア',
+                description: '椅子におかけになられた状態で、首～肩周囲・ふくらはぎを揉みほぐします。',
+                duration: '施術時間: 15分～'
+            },
+            {
+                title: '全身気功整体',
+                description: '身体を揉んだり、トントンと軽くたたいたり、揺らしたりします。経絡（気の通りみち）を刺激し血行を良くし、身体の不調や痛み・歪みなどを改善していきます。施術の前後にカウンセリングをします。（健康状態の確認・アドバイスなど）',
+                duration: '施術時間: 30分～'
+            }
+        ],        salon_info: {
+            name: '癒しサロン気功＆整体an',
+            url: 'https://salonan.jimdofree.com',
+            photo: '../assets/images/yaguchi4.jpg',
+            description: 'anではバキバキしないやさしい気功整体で自立神経の乱れを正常に導き、自然治癒力を高め症状を改善していきます。疲れがとれない不眠・肩こり・腰痛・便秘・生理痛・更年期障害など お身体にお悩みがある方は、ぜひ一度ご相談ください。健康な生活を続けていくためには、ストレスをためすぎず、心と体のバランスを整えることが大切です。気功整体というヘルスケアもあることを体感し、知っていただければと思います。'
+        },
+        treatment_photos: [
+            '../assets/images/yaguchi2.jpg',
+            '../assets/images/yaguchi3.jpg'
         ]
     }
 };
