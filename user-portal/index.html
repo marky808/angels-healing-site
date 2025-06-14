@@ -89,13 +89,18 @@
             </div>
         </div>
 
-    <!-- セラピスト表示用のJavaScript -->
-    <script>
+    <!-- セラピスト表示用のJavaScript -->    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const therapistsGrid = document.querySelector('.therapists-grid');
             
-            // セラピストデータから最大7名を表示（平川さんも含める）
-            const featuredTherapists = getAllTherapists().slice(0, 7);
+            // セラピストデータから最大8名を表示
+            const allTherapists = getAllTherapists();
+            console.log('取得した全セラピスト数:', allTherapists.length);
+            console.log('セラピスト一覧:', allTherapists.map(t => t.name));
+            
+            const featuredTherapists = allTherapists.slice(0, 8);
+            console.log('表示するセラピスト数:', featuredTherapists.length);
+            console.log('表示するセラピスト:', featuredTherapists.map(t => t.name));
             
             // セラピストカードを生成して追加
             therapistsGrid.innerHTML = '';

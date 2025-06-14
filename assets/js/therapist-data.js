@@ -293,10 +293,10 @@ const therapistData = {
         treatment_photos: [
             '../assets/images/hirakawaemi2.jpg',
             '../assets/images/hirakawaemi4.jpg'
-        ]
-    },    // セラピスト - 白川雅央
-    '6': {
-        id: '6',
+        ]    },
+    // セラピスト - 白川雅央
+    '8': {
+        id: '8',
         name: '白川 雅央',
         gender: 'male',
         categories: ['relaxation'],
@@ -324,11 +324,10 @@ const therapistData = {
         treatment_photos: [
             '../assets/images/sirakawa3.jpg',
             '../assets/images/shirakawa4.jpg'
-        ]
-    },
+        ]    },
     // セラピスト - 矢口由紀子
-    '7': {
-        id: '7',
+    '9': {
+        id: '9',
         name: '矢口 由紀子',
         gender: 'female',
         categories: ['relaxation', 'medical'],
