@@ -423,3 +423,90 @@ function setupContactForm() {
         return true;
     });
 }
+
+/**
+ * Admin login functionality
+ */
+function showAdminLogin() {
+    console.log('Admin login modal showing');
+    const modal = document.getElementById('adminLoginModal');
+    if (modal) {
+        modal.style.display = 'block';
+        const passwordInput = document.getElementById('adminPassword');
+        if (passwordInput) {
+            passwordInput.focus();
+        }
+    }
+}
+
+function hideAdminLogin() {
+    console.log('Admin login modal hiding');
+    const modal = document.getElementById('adminLoginModal');
+    if (modal) {
+        modal.style.display = 'none';
+        const passwordInput = document.getElementById('adminPassword');
+        const errorDiv = document.getElementById('adminError');
+        
+        if (passwordInput) {
+            passwordInput.value = '';
+        }
+        if (errorDiv) {
+            errorDiv.style.display = 'none';
+        }
+    }
+}
+
+// Admin login form setup
+function setupAdminLogin() {
+    const adminForm = document.getElementById('adminLoginForm');
+    if (adminForm) {
+        adminForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            const errorDiv = document.getElementById('adminError');
+            
+            if (password === '104184') {
+                console.log('Admin login successful');
+                hideAdminLogin();
+                // CMS ページにリダイレクト
+                window.location.href = 'admin/cms.html';
+            } else {
+                console.log('Admin login failed');
+                if (errorDiv) {
+                    errorDiv.style.display = 'block';
+                }
+                const passwordInput = document.getElementById('adminPassword');
+                if (passwordInput) {
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            }
+        });
+    }
+
+    // Close modal when clicking outside
+    const modal = document.getElementById('adminLoginModal');
+    if (modal) {
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                hideAdminLogin();
+            }
+        });
+    }
+
+    // ESC key to close modal
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const modal = document.getElementById('adminLoginModal');
+            if (modal && modal.style.display === 'block') {
+                hideAdminLogin();
+            }
+        }
+    });
+}
+
+// Admin login setup after components are loaded
+document.addEventListener('componentsLoaded', function() {
+    console.log('Setting up admin login functionality');
+    setupAdminLogin();
+});

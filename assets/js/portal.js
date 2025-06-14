@@ -112,3 +112,88 @@ function setupPortalMobileMenu() {
 function setupPortalFeatures() {
     // ここにポータル特有の追加機能を実装
 }
+
+/**
+ * Portal Admin login functionality
+ */
+function showPortalAdminLogin() {
+    console.log('Portal Admin login modal showing');
+    const modal = document.getElementById('adminLoginModal');
+    if (modal) {
+        modal.style.display = 'block';
+        const passwordInput = document.getElementById('adminPassword');
+        if (passwordInput) {
+            passwordInput.focus();
+        }
+    }
+}
+
+function hidePortalAdminLogin() {
+    console.log('Portal Admin login modal hiding');
+    const modal = document.getElementById('adminLoginModal');
+    if (modal) {
+        modal.style.display = 'none';
+        const passwordInput = document.getElementById('adminPassword');
+        const errorDiv = document.getElementById('adminError');
+        
+        if (passwordInput) {
+            passwordInput.value = '';
+        }
+        if (errorDiv) {
+            errorDiv.style.display = 'none';
+        }
+    }
+}
+
+// Portal Admin login setup
+function setupPortalAdminLogin() {
+    const adminForm = document.getElementById('adminLoginForm');
+    if (adminForm) {
+        adminForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            const errorDiv = document.getElementById('adminError');
+              if (password === '104184') {
+                console.log('Portal Admin login successful');
+                hidePortalAdminLogin();
+                // CMS ページにリダイレクト（ポータルから相対パス）
+                window.location.href = '../admin/cms.html';
+            } else {
+                console.log('Portal Admin login failed');
+                if (errorDiv) {
+                    errorDiv.style.display = 'block';
+                }
+                const passwordInput = document.getElementById('adminPassword');
+                if (passwordInput) {
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            }
+        });
+    }
+
+    // Close modal when clicking outside
+    const modal = document.getElementById('adminLoginModal');
+    if (modal) {        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                hidePortalAdminLogin();
+            }
+        });
+    }
+
+    // ESC key to close modal
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const modal = document.getElementById('adminLoginModal');
+            if (modal && modal.style.display === 'block') {
+                hidePortalAdminLogin();
+            }
+        }
+    });
+}
+
+// Portal Admin login setup after components are loaded
+document.addEventListener('componentsLoaded', function() {
+    console.log('Setting up portal admin login functionality');
+    setupPortalAdminLogin();
+});

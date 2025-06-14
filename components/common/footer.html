@@ -30,9 +30,31 @@
             <p>URL: <a href="https://mcgiken.com/" target="_blank">mcgiken.com</a></p>
         </div>
     </div>
-    
-    <!-- コピーライト表記 -->
+      <!-- コピーライト表記 -->
     <div class="container copyright">
         <p>&copy; 2025 天使たちの癒し All Rights Reserved.</p>
+        <a href="#" onclick="showAdminLogin()" class="admin-link">admin</a>
     </div>
 </footer>
+
+<!-- Admin Login Modal -->
+<div id="adminLoginModal" class="admin-modal" style="display: none;">
+    <div class="admin-modal-content">
+        <div class="admin-modal-header">
+            <h3>管理者ログイン</h3>
+            <span class="admin-close" onclick="hideAdminLogin()">&times;</span>
+        </div>
+        <div class="admin-modal-body">
+            <form id="adminLoginForm">
+                <div class="admin-form-group">
+                    <label for="adminPassword">パスワード:</label>
+                    <input type="password" id="adminPassword" name="adminPassword" required>
+                </div>
+                <button type="submit" class="admin-btn">ログイン</button>
+                <div id="adminError" class="admin-error-msg" style="display: none;">
+                    パスワードが正しくありません
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

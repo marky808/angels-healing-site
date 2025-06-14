@@ -294,15 +294,13 @@ const therapistData = {
             '../assets/images/hirakawaemi2.jpg',
             '../assets/images/hirakawaemi4.jpg'
         ]
-    },
-    // セラピスト - 白川雅央
-    '8': {
-        id: '8',
+    },    // セラピスト - 白川雅央
+    '6': {
+        id: '6',
         name: '白川 雅央',
         gender: 'male',
         categories: ['relaxation'],
-        specialities: ['relaxation'],        specialty: 'ゆらゆらヒーリング',
-        photo: '../assets/images/sirakawa1.jpg',
+        specialities: ['relaxation'],        specialty: 'ゆらゆらヒーリング',        photo: '../assets/images/sirakawa1.jpg',
         thumbnailPhoto: '../assets/images/sirakawa1.jpg',
         description: [
             '八王子出身。アパレル等多様な仕事を経て、癒しの道へ。人を癒すプロのあなたに寄り添い、心と体に深く届くヒーリングをお届けします。',
@@ -318,12 +316,12 @@ const therapistData = {
                 title: 'ゆらゆらヒーリング',
                 description: '足首から肩、首、腕、手の平、足裏、ふくらはぎ等、各部をゆらゆら揺らして、擦ったり、揉んだりする施術です。血行が良くなり、体が温かく軽くなります',
                 duration: '施術時間: 60分'
-            }        ],
-        salon_info: {
+            }        ],        salon_info: {
             name: '',
             url: '',
-            photo: '../assets/images/shirakawa2.png'
-        },        treatment_photos: [
+            photo: '../assets/images/sirakawa3.jpg'
+        },
+        treatment_photos: [
             '../assets/images/sirakawa3.jpg',
             '../assets/images/shirakawa4.jpg'
         ]
