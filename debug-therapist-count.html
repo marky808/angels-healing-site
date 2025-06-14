@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>セラピスト数デバッグ - 天使たちの癒し</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .debug-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007acc;
+        }
+        .therapist-list {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .therapist-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .therapist-item:last-child {
+            border-bottom: none;
+        }
+        .count {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007acc;
+        }
+        .error {
+            color: #d32f2f;
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success {
+            color: #388e3c;
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+    <script src="assets/js/therapist-data.js"></script>
+</head>
+<body>
+    <h1>🔍 セラピスト数デバッグページ</h1>
+    <p>このページでは、セラピストデータの読み込み状況と実際の数を確認できます。</p>
+
+    <div class="debug-section">
+        <h2>📊 基本情報</h2>
+        <div id="basic-info">読み込み中...</div>
+    </div>
+
+    <div class="debug-section">
+        <h2>👥 セラピスト一覧</h2>
+        <div id="therapist-details">読み込み中...</div>
+    </div>
+
+    <div class="debug-section">
+        <h2>🔧 デバッグ情報</h2>
+        <div id="debug-info">読み込み中...</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                console.log('=== セラピストデータデバッグ開始 ===');
+                
+                // 基本情報の取得
+                const allTherapists = getAllTherapists();
+                const therapistDataKeys = Object.keys(therapistData);
+                
+                console.log('therapistData オブジェクトのキー:', therapistDataKeys);
+                console.log('getAllTherapists() の結果:', allTherapists);
+                console.log('セラピスト総数:', allTherapists.length);
+                
+                // 基本情報の表示
+                document.getElementById('basic-info').innerHTML = `
+                    <div class="count">セラピスト総数: ${allTherapists.length}名</div>
+                    <p><strong>therapistData オブジェクトのキー数:</strong> ${therapistDataKeys.length}</p>
+                    <p><strong>getAllTherapists() 関数の結果:</strong> ${allTherapists.length}名</p>
+                    <p><strong>ポータルページでの表示予定数:</strong> ${Math.min(allTherapists.length, 8)}名</p>
+                    ${allTherapists.length >= 8 ? 
+                        '<div class="success">✅ 8名以上のセラピストが登録されています</div>' : 
+                        '<div class="error">❌ セラピスト数が8名未満です</div>'
+                    }
+                `;
+
+                // セラピスト一覧の表示
+                let therapistListHtml = '<div class="therapist-list">';
+                allTherapists.forEach((therapist, index) => {
+                    therapistListHtml += `
+                        <div class="therapist-item">
+                            <strong>${index + 1}. ${therapist.name}</strong> 
+                            (ID: ${therapist.id}) - ${therapist.specialty}
+                        </div>
+                    `;
+                });
+                therapistListHtml += '</div>';
+                
+                document.getElementById('therapist-details').innerHTML = therapistListHtml;
+
+                // デバッグ情報の表示
+                document.getElementById('debug-info').innerHTML = `
+                    <p><strong>therapistData の型:</strong> ${typeof therapistData}</p>
+                    <p><strong>therapistData のキー:</strong> [${therapistDataKeys.join(', ')}]</p>
+                    <p><strong>getAllTherapists 関数の存在:</strong> ${typeof getAllTherapists === 'function' ? '✅ 存在' : '❌ 不存在'}</p>
+                    <p><strong>現在時刻:</strong> ${new Date().toLocaleString('ja-JP')}</p>
+                    <p><strong>User Agent:</strong> ${navigator.userAgent}</p>
+                    <p><strong>ページURL:</strong> ${window.location.href}</p>
+                `;
+
+                console.log('=== セラピストデータデバッグ完了 ===');
+                
+            } catch (error) {
+                console.error('デバッグ中にエラーが発生:', error);
+                document.getElementById('basic-info').innerHTML = 
+                    `<div class="error">❌ エラーが発生しました: ${error.message}</div>`;
+                document.getElementById('therapist-details').innerHTML = 
+                    `<div class="error">セラピストデータの読み込みに失敗しました</div>`;
+                document.getElementById('debug-info').innerHTML = 
+                    `<div class="error">デバッグ情報の取得に失敗しました</div>`;
+            }
+        });
+    </script>
+</body>
+</html>

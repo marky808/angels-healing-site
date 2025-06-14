@@ -87,20 +87,58 @@
             <div class="view-all-btn">
                 <a href="therapists.html" class="btn">すべてのセラピストを見る</a>
             </div>
-        </div>
-
-    <!-- セラピスト表示用のJavaScript -->    <script>
+        </div>    <!-- セラピスト表示用のJavaScript -->    
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const therapistsGrid = document.querySelector('.therapists-grid');
             
-            // セラピストデータから最大8名を表示
-            const allTherapists = getAllTherapists();
-            console.log('取得した全セラピスト数:', allTherapists.length);
-            console.log('セラピスト一覧:', allTherapists.map(t => t.name));
-            
-            const featuredTherapists = allTherapists.slice(0, 8);
-            console.log('表示するセラピスト数:', featuredTherapists.length);
-            console.log('表示するセラピスト:', featuredTherapists.map(t => t.name));
+            try {
+                // デバッグ情報の詳細出力
+                console.log('=== ポータルページ セラピストデータ デバッグ ===');
+                console.log('現在時刻:', new Date().toLocaleString('ja-JP'));
+                console.log('ページURL:', window.location.href);
+                console.log('therapistData オブジェクト:', therapistData);
+                console.log('therapistData のキー:', Object.keys(therapistData));
+                console.log('getAllTherapists 関数の存在:', typeof getAllTherapists === 'function');
+                
+                // セラピストデータから最大8名を表示
+                const allTherapists = getAllTherapists();
+                console.log('取得した全セラピスト数:', allTherapists.length);
+                console.log('セラピスト一覧:', allTherapists.map(t => `${t.name} (ID: ${t.id})`));
+                
+                const featuredTherapists = allTherapists.slice(0, 8);
+                console.log('表示するセラピスト数:', featuredTherapists.length);
+                console.log('表示するセラピスト:', featuredTherapists.map(t => `${t.name} (ID: ${t.id})`));
+                
+                // セラピストカードを生成して追加
+                therapistsGrid.innerHTML = '';
+                featuredTherapists.forEach(therapist => {
+                    const therapistCard = document.createElement('div');
+                    therapistCard.className = 'therapist-card';
+                    
+                    therapistCard.innerHTML = `
+                        <div class="therapist-image" style="background-image: url('${therapist.thumbnailPhoto || therapist.photo}');"></div>
+                        <div class="therapist-content">
+                            <div class="therapist-content-top">
+                                <h3 class="therapist-name">${therapist.name}</h3>
+                                <p class="therapist-specialty">${therapist.specialty}</p>
+                                <p class="therapist-description">${therapist.description[0]}</p>
+                            </div>
+                            <a href="therapist-detail.html?id=${therapist.id}" class="btn">詳細プロフィール</a>
+                        </div>
+                    `;
+                    
+                    therapistsGrid.appendChild(therapistCard);
+                });
+                
+                console.log('セラピストカードの生成完了');
+                
+            } catch (error) {
+                console.error('セラピストデータの読み込み中にエラーが発生:', error);
+                therapistsGrid.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;">セラピストデータの読み込みに失敗しました</div>';
+            }
+        });
+    </script>
             
             // セラピストカードを生成して追加
             therapistsGrid.innerHTML = '';

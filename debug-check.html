@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>デバッグ確認ページ</title>
+    <script src="assets/js/therapist-data.js"></script>
+</head>
+<body>
+    <h1>セラピストデータ確認</h1>
+    <div id="debug-info"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const debugDiv = document.getElementById('debug-info');
+            
+            try {
+                const therapists = getAllTherapists();
+                debugDiv.innerHTML = `
+                    <h2>セラピストデータ確認結果</h2>
+                    <p><strong>総セラピスト数:</strong> ${therapists.length}名</p>
+                    <h3>セラピスト一覧:</h3>
+                    <ul>
+                        ${therapists.map(t => `<li>ID: ${t.id} - ${t.name} (${t.specialty})</li>`).join('')}
+                    </ul>
+                    <h3>therapistDataオブジェクト:</h3>
+                    <pre>${JSON.stringify(Object.keys(therapistData), null, 2)}</pre>
+                `;
+            } catch (error) {
+                debugDiv.innerHTML = `
+                    <h2>エラーが発生しました</h2>
+                    <p style="color: red;">${error.message}</p>
+                    <p>therapist-data.jsファイルが正しく読み込まれていない可能性があります。</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
