@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- セラピストデータを読み込み -->
+    <script src="../assets/js/therapist-data.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -462,6 +464,62 @@
             opacity: 0.9;
         }
 
+        /* 画像アップロード */
+        .image-upload-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .image-upload-section {
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .image-upload-section h4 {
+            margin: 0 0 8px 0;
+            color: #495057;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .image-description {
+            margin: 0 0 15px 0;
+            font-size: 13px;
+            color: #6c757d;
+            line-height: 1.4;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .checkbox-label:hover {
+            background-color: #f1f3f4;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .checkmark {
+            margin-left: 5px;
+        }
+
         /* レスポンシブ */
         @media (max-width: 768px) {
             .cms-container {
@@ -569,12 +627,26 @@
 
                     <div class="form-group">
                         <label for="categories">カテゴリー *</label>
-                        <div>
-                            <label class="form-check-label">
-                                <input type="checkbox" name="categories" value="relaxation"> リラクゼーション
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="categories" value="relaxation"> 
+                                <span class="checkmark"></span>
+                                リラクゼーション系
                             </label>
-                            <label class="form-check-label">
-                                <input type="checkbox" name="categories" value="medical"> 医療
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="categories" value="beauty"> 
+                                <span class="checkmark"></span>
+                                美容系
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="categories" value="medical"> 
+                                <span class="checkmark"></span>
+                                医療系
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="categories" value="other"> 
+                                <span class="checkmark"></span>
+                                その他
                             </label>
                         </div>
                     </div>
@@ -633,14 +705,45 @@
                     <!-- 画像アップロード -->
                     <div class="form-group">
                         <label>画像アップロード</label>
-                        <div class="image-upload-area" onclick="document.getElementById('file-input').click()">
-                            <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #ddd; margin-bottom: 15px;"></i>
-                            <p>クリックして画像を選択、またはドラッグ&ドロップ</p>
-                            <p style="font-size: 14px; color: #666;">JPG, PNG, GIF (最大 5MB)</p>
-                        </div>
-                        <input type="file" id="file-input" accept="image/*" multiple style="display: none;">
-                        <div id="image-preview" class="image-preview">
-                            <!-- プレビュー画像がここに表示されます -->
+                        <div class="image-upload-sections">
+                            <!-- メイン写真 -->
+                            <div class="image-upload-section">
+                                <h4>📸 メイン写真（プロフィール画像）</h4>
+                                <p class="image-description">セラピスト一覧とプロフィール詳細で表示される写真</p>
+                                <div class="image-upload-area" id="main-photo-area" onclick="document.getElementById('main-photo-input').click()">
+                                    <i class="fas fa-camera"></i>
+                                    <p>メイン写真をアップロード</p>
+                                    <span>推奨サイズ: 300x300px</span>
+                                </div>
+                                <input type="file" id="main-photo-input" accept="image/*" style="display: none;">
+                                <input type="hidden" id="main-photo-path" name="mainPhoto">
+                            </div>
+
+                            <!-- サロン写真 -->
+                            <div class="image-upload-section">
+                                <h4>🏢 サロン写真</h4>
+                                <p class="image-description">サロン紹介で表示される写真</p>
+                                <div class="image-upload-area" id="salon-photo-area" onclick="document.getElementById('salon-photo-input').click()">
+                                    <i class="fas fa-building"></i>
+                                    <p>サロン写真をアップロード</p>
+                                    <span>推奨サイズ: 400x300px</span>
+                                </div>
+                                <input type="file" id="salon-photo-input" accept="image/*" style="display: none;">
+                                <input type="hidden" id="salon-photo-path" name="salonPhoto">
+                            </div>
+
+                            <!-- 施術写真 -->
+                            <div class="image-upload-section">
+                                <h4>💆‍♀️ 施術写真（複数可）</h4>
+                                <p class="image-description">施術風景やその他の写真</p>
+                                <div class="image-upload-area" id="treatment-photo-area" onclick="document.getElementById('treatment-photo-input').click()">
+                                    <i class="fas fa-images"></i>
+                                    <p>施術写真をアップロード</p>
+                                    <span>複数選択可能</span>
+                                </div>
+                                <input type="file" id="treatment-photo-input" accept="image/*" multiple style="display: none;">
+                                <div id="treatment-photos-list"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -692,7 +795,6 @@
         </div>
     </div>
 
-    <script src="../assets/js/therapist-data.js"></script>
     <script>
         // CMS機能の実装
         let currentEditingId = null;
@@ -700,10 +802,23 @@
 
         // 初期化
         document.addEventListener('DOMContentLoaded', function() {
-            initializeCMS();
-            loadTherapistList();
-            loadEditOptions();
-            setupEventListeners();
+            console.log('CMS初期化開始');
+            
+            // therapist-dataが読み込まれるまで待機
+            function waitForTherapistData() {
+                if (typeof therapistData !== 'undefined' && Object.keys(therapistData).length > 0) {
+                    console.log('therapist-dataが読み込まれました:', Object.keys(therapistData).length, '名');
+                    initializeCMS();
+                    loadTherapistList();
+                    loadEditOptions();
+                    setupEventListeners();
+                } else {
+                    console.log('therapist-dataを待機中...');
+                    setTimeout(waitForTherapistData, 100);
+                }
+            }
+            
+            waitForTherapistData();
         });
 
         // CMS初期化
@@ -922,45 +1037,109 @@
 
         // 新規セラピスト保存
         function saveNewTherapist() {
-            const name = document.getElementById('name').value;
+            console.log('saveNewTherapist関数が呼び出されました');
+            
+            // フォーム要素の取得
+            const name = document.getElementById('name').value.trim();
             const gender = document.getElementById('gender').value;
-            const specialty = document.getElementById('specialty').value;
+            const specialty = document.getElementById('specialty').value.trim();
+            const description = document.getElementById('description').value.trim();
+            
+            console.log('入力値:', { name, gender, specialty, description });
 
-            if (!name || !gender || !specialty) {
-                showAlert('error', '必須項目を入力してください。');
+            // バリデーション
+            if (!name) {
+                showAlert('error', 'セラピスト名は必須です。');
+                return;
+            }
+            if (!gender) {
+                showAlert('error', '性別を選択してください。');
+                return;
+            }
+            if (!specialty) {
+                showAlert('error', '専門分野は必須です。');
                 return;
             }
 
+            // 選択されたカテゴリーを取得
+            const selectedCategories = [];
+            document.querySelectorAll('input[name="categories"]:checked').forEach(checkbox => {
+                selectedCategories.push(checkbox.value);
+            });
+
+            if (selectedCategories.length === 0) {
+                showAlert('error', 'カテゴリーを少なくとも1つ選択してください。');
+                return;
+            }
+
+            console.log('選択されたカテゴリー:', selectedCategories);
+
             // 新しいIDを生成
-            const newId = (Math.max(...Object.keys(therapistData).map(Number)) + 1).toString();
+            const existingIds = Object.keys(therapistData).map(Number);
+            const newId = existingIds.length > 0 ? (Math.max(...existingIds) + 1).toString() : '1';
+
+            // 資格・経歴の取得
+            const qualifications = [];
+            document.querySelectorAll('#qualifications-list input').forEach(input => {
+                if (input.value.trim()) {
+                    qualifications.push(input.value.trim());
+                }
+            });
+
+            // コース情報の取得
+            const courses = [];
+            document.querySelectorAll('#courses-list .course-item').forEach(courseItem => {
+                const nameInput = courseItem.querySelector('input[placeholder*="コース名"]');
+                const descInput = courseItem.querySelector('textarea[placeholder*="コース説明"]');
+                if (nameInput && nameInput.value.trim()) {
+                    courses.push({
+                        title: nameInput.value.trim(),
+                        description: descInput ? descInput.value.trim() : '',
+                        duration: '施術時間: 15分' // デフォルト値
+                    });
+                }
+            });
+
+            // サロン情報の取得
+            const salonName = document.getElementById('salon-name')?.value.trim() || '';
+            const salonUrl = document.getElementById('salon-url')?.value.trim() || '';
 
             // 新しいセラピストデータ作成
             const newTherapist = {
                 id: newId,
                 name: name,
                 gender: gender,
+                categories: selectedCategories,
+                specialities: selectedCategories,
                 specialty: specialty,
-                categories: getSelectedCategories(),
-                specialities: getSelectedCategories(),
-                photo: '../assets/images/default-avatar.jpg',
+                photo: '../assets/images/default-avatar.jpg', // デフォルト画像
                 thumbnailPhoto: '../assets/images/default-avatar.jpg',
-                description: [document.getElementById('description').value || ''],
-                qualifications: getQualifications(),
-                courses: getCourses(),
+                description: description ? [description] : [''],
+                qualifications: qualifications.length > 0 ? qualifications : [''],
+                courses: courses,
                 salon_info: {
-                    name: document.getElementById('salon-name').value || '',
-                    url: document.getElementById('salon-url').value || '',
-                    description: document.getElementById('salon-description').value || ''
-                }
+                    name: salonName,
+                    url: salonUrl,
+                    photo: '../assets/images/default-salon.jpg',
+                    description: ''
+                },
+                treatment_photos: []
             };
+
+            console.log('新しいセラピストデータ:', newTherapist);
 
             // データに追加
             therapistData[newId] = newTherapist;
 
-            showAlert('success', `「${name}」を登録しました。`);
+            // 成功メッセージ
+            showAlert('success', `セラピスト「${name}」を登録しました！`);
+            
+            // フォームリセット
             resetForm();
+            
+            // 表示更新
             loadTherapistList();
-            loadEditOptions();
+            updateStats();
         }
 
         // 選択されたカテゴリーを取得
@@ -1056,18 +1235,90 @@
 
         // フォームリセット
         function resetForm() {
-            document.getElementById('add-therapist-form').reset();
-            document.getElementById('qualifications-list').innerHTML = `
-                <div class="list-item">
-                    <input type="text" placeholder="資格名を入力">
-                    <button type="button" onclick="removeItem(this)">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            `;
-            document.getElementById('courses-list').innerHTML = '';
-            document.getElementById('image-preview').innerHTML = '';
+            console.log('フォームをリセットします');
+            
+            // フォーム要素をリセット
+            const form = document.getElementById('add-therapist-form');
+            if (form) {
+                form.reset();
+            }
+            
+            // カテゴリーのチェックボックスをリセット
+            document.querySelectorAll('input[name="categories"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // 資格リストをリセット
+            const qualificationsList = document.getElementById('qualifications-list');
+            if (qualificationsList) {
+                qualificationsList.innerHTML = `
+                    <div class="list-item">
+                        <input type="text" placeholder="資格名を入力">
+                        <button type="button" onclick="removeItem(this)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            }
+            
+            // コースリストをリセット
+            const coursesList = document.getElementById('courses-list');
+            if (coursesList) {
+                coursesList.innerHTML = '';
+            }
+            
+            // 画像アップロードエリアをリセット
+            resetImageUploadAreas();
+            
             courseCounter = 0;
+        }
+
+        // 画像アップロードエリアをリセット
+        function resetImageUploadAreas() {
+            // メイン写真
+            const mainPhotoArea = document.getElementById('main-photo-area');
+            if (mainPhotoArea) {
+                mainPhotoArea.innerHTML = `
+                    <i class="fas fa-camera"></i>
+                    <p>メイン写真をアップロード</p>
+                    <span>推奨サイズ: 300x300px</span>
+                `;
+            }
+            
+            // サロン写真
+            const salonPhotoArea = document.getElementById('salon-photo-area');
+            if (salonPhotoArea) {
+                salonPhotoArea.innerHTML = `
+                    <i class="fas fa-building"></i>
+                    <p>サロン写真をアップロード</p>
+                    <span>推奨サイズ: 400x300px</span>
+                `;
+            }
+            
+            // 施術写真
+            const treatmentPhotoArea = document.getElementById('treatment-photo-area');
+            if (treatmentPhotoArea) {
+                treatmentPhotoArea.innerHTML = `
+                    <i class="fas fa-images"></i>
+                    <p>施術写真をアップロード</p>
+                    <span>複数選択可能</span>
+                `;
+            }
+            
+            // 施術写真リスト
+            const treatmentPhotosList = document.getElementById('treatment-photos-list');
+            if (treatmentPhotosList) {
+                treatmentPhotosList.innerHTML = '';
+            }
+            
+            // 隠しフィールドもリセット
+            const hiddenInputs = ['main-photo-path', 'salon-photo-path'];
+            hiddenInputs.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.value = '';
+                }
+            });
         }
 
         // セラピストフィルタリング
@@ -1088,31 +1339,93 @@
 
         // 画像アップロード設定
         function setupImageUpload() {
-            const uploadArea = document.querySelector('.image-upload-area');
-            const fileInput = document.getElementById('file-input');
+            // メイン写真アップロード
+            const mainPhotoInput = document.getElementById('main-photo-input');
+            const mainPhotoArea = document.getElementById('main-photo-area');
+            
+            if (mainPhotoInput && mainPhotoArea) {
+                mainPhotoInput.addEventListener('change', function() {
+                    handleSingleImageUpload(this, mainPhotoArea, 'main-photo-path');
+                });
+            }
 
-            // ドラッグ&ドロップ
-            uploadArea.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                this.classList.add('dragover');
-            });
+            // サロン写真アップロード
+            const salonPhotoInput = document.getElementById('salon-photo-input');
+            const salonPhotoArea = document.getElementById('salon-photo-area');
+            
+            if (salonPhotoInput && salonPhotoArea) {
+                salonPhotoInput.addEventListener('change', function() {
+                    handleSingleImageUpload(this, salonPhotoArea, 'salon-photo-path');
+                });
+            }
 
-            uploadArea.addEventListener('dragleave', function(e) {
-                e.preventDefault();
-                this.classList.remove('dragover');
-            });
+            // 施術写真アップロード（複数）
+            const treatmentPhotoInput = document.getElementById('treatment-photo-input');
+            const treatmentPhotoArea = document.getElementById('treatment-photo-area');
+            const treatmentPhotosList = document.getElementById('treatment-photos-list');
+            
+            if (treatmentPhotoInput && treatmentPhotoArea && treatmentPhotosList) {
+                treatmentPhotoInput.addEventListener('change', function() {
+                    handleMultipleImageUpload(this, treatmentPhotosList);
+                });
+            }
+        }
 
-            uploadArea.addEventListener('drop', function(e) {
-                e.preventDefault();
-                this.classList.remove('dragover');
-                const files = e.dataTransfer.files;
-                handleFiles(files);
-            });
+        // 単一画像アップロード処理
+        function handleSingleImageUpload(input, area, hiddenInputId) {
+            const file = input.files[0];
+            if (!file) return;
 
-            // ファイル選択
-            fileInput.addEventListener('change', function() {
-                handleFiles(this.files);
+            if (!file.type.startsWith('image/')) {
+                showAlert('error', '画像ファイルを選択してください。');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // プレビュー表示
+                area.innerHTML = `
+                    <div class="image-preview-single">
+                        <img src="${e.target.result}" style="max-width: 100%; max-height: 150px; border-radius: 6px;">
+                        <p style="margin-top: 8px; font-size: 12px; color: #28a745;">${file.name}</p>
+                    </div>
+                `;
+                
+                // 隠しフィールドにパスを設定（実際の実装では適切なパスを設定）
+                const hiddenInput = document.getElementById(hiddenInputId);
+                if (hiddenInput) {
+                    hiddenInput.value = `../assets/images/${file.name}`;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 複数画像アップロード処理
+        function handleMultipleImageUpload(input, container) {
+            Array.from(input.files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'treatment-photo-item';
+                    previewItem.style.cssText = 'display: flex; align-items: center; padding: 8px; background: #f8f9fa; border-radius: 6px; margin-bottom: 8px;';
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px; margin-right: 10px;">
+                        <span style="flex: 1; font-size: 14px;">${file.name}</span>
+                        <button type="button" onclick="removeTreatmentPhoto(this)" style="background: #dc3545; color: white; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    container.appendChild(previewItem);
+                };
+                reader.readAsDataURL(file);
             });
+        }
+
+        // 施術写真削除
+        function removeTreatmentPhoto(button) {
+            button.closest('.treatment-photo-item').remove();
         }
 
         // ファイル処理
