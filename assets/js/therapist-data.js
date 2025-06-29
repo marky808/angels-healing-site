@@ -366,6 +366,46 @@ const therapistData = {
             '../assets/images/yaguchi2.jpg',
             '../assets/images/yaguchi3.jpg'
         ]
+    },
+    // セラピスト - 荻野敦子
+    '10': {
+        id: '10',
+        name: '荻野 敦子',
+        gender: 'female',
+        categories: ['other'],
+        specialities: ['other'],
+        specialty: '足と靴の相談とインソール作製',
+        photo: '../assets/images/ogino1.jpg',
+        thumbnailPhoto: '../assets/images/ogino1.jpg',
+        description: [
+            'インソールの世界で25年。整形外科やペインクリニックでも作製しています。足元のお悩みご相談ください。',
+            '理学療法士としてクリニックや訪問リハビリ勤務を兼務しながらインソールと靴の工房をしています。足のトラブルでお困りの方はたくさんいますが、命に係わる程の症状や痛みではないため後回しにされがちです。',
+            'しかし、足は身体の土台です！足元を支える適切な靴とインソールでアーチのバランスをサポートし、身体も心も整えるお手伝いをいたします。'
+        ],
+        qualifications: [
+            '理学療法士',
+            'フットコントロールトレーナー',
+            'フォームソティックス認定メディカルアドバイザー資格',
+            'JPA認定インソール療法スペシャリスト資格'
+        ],
+        courses: [
+            {
+                title: '足や靴の困りごとに対するカウンセリングとインソール作製',
+                description: '必要に応じて足のサイズ計測とフットプリントを行います。',
+                duration: '施術時間: 30分'
+            }
+        ],
+        salon_info: {
+            name: 'Hyggelig（ヒュケリ）',
+            url: 'https://01-hyggelig.net',
+            photo: '../assets/images/ogino2.jpg',
+            description: 'オーダーメイドインソールとオーダー靴の工房です。一人一人の足の採寸からデータを木型に反映し、お気に入りの革やオリジナルデザインでの作製、脚長差のある靴や装具着用での靴など、お客様のご要望にできるだけ添えるように努めています。'
+        },
+        treatment_photos: [
+            '../assets/images/ogino3.JPG',
+            '../assets/images/ogino4.jpg',
+            '../assets/images/ogino5.jpg'
+        ]
     }
 };
 

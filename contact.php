@@ -23,24 +23,65 @@ $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
 $interest = filter_input(INPUT_POST, 'interest', FILTER_SANITIZE_STRING);
+$inquiry = filter_input(INPUT_POST, 'inquiry', FILTER_SANITIZE_STRING); // ポータル用
 $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
 
 // 必須項目のチェック
 if (empty($name) || empty($email) || empty($message)) {
-    header('Location: index.html?error=required');
+    // リファラーに基づいてリダイレクト先を決定
+    $referrer = $_SERVER['HTTP_REFERER'] ?? '';
+    if (strpos($referrer, 'user-portal') !== false) {
+        header('Location: user-portal/index.html?error=required');
+    } else {
+        header('Location: index.html?error=required');
+    }
     exit;
 }
 
 // メールアドレスの形式チェック
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header('Location: index.html?error=email');
+    // リファラーに基づいてリダイレクト先を決定
+    $referrer = $_SERVER['HTTP_REFERER'] ?? '';
+    if (strpos($referrer, 'user-portal') !== false) {
+        header('Location: user-portal/index.html?error=email');
+    } else {
+        header('Location: index.html?error=email');
+    }
     exit;
 }
 
 // メールの件名と本文を作成
 $subject = "【天使たちの癒し】お問い合わせがありました";
 
-$mail_body = <<<EOT
+// ポータルからのお問い合わせか企業からのお問い合わせかを判定
+$referrer = $_SERVER['HTTP_REFERER'] ?? '';
+$is_portal = strpos($referrer, 'user-portal') !== false;
+
+if ($is_portal) {
+    // ポータル用のメール本文
+    $mail_body = <<<EOT
+天使たちの癒し（ユーザーポータル）へのお問い合わせがありました。
+
+【お名前】
+{$name}
+
+【メールアドレス】
+{$email}
+
+【電話番号】
+{$phone}
+
+【お問い合わせ内容】
+{$inquiry}
+
+【メッセージ】
+{$message}
+
+※このメールは自動送信されています。
+EOT;
+} else {
+    // 企業用のメール本文
+    $mail_body = <<<EOT
 天使たちの癒しへのお問い合わせがありました。
 
 【会社名/施設名】
@@ -63,6 +104,7 @@ $mail_body = <<<EOT
 
 ※このメールは自動送信されています。
 EOT;
+}
 
 // 管理者へのメール送信
 $to = 'info@angels-healing.com';
@@ -82,7 +124,33 @@ if (function_exists('mb_send_mail')) {
 // 自動返信メールの設定
 $auto_reply_subject = "【天使たちの癒し】お問い合わせありがとうございます";
 
-$auto_reply_body = <<<EOT
+if ($is_portal) {
+    // ポータル用の自動返信メール
+    $auto_reply_body = <<<EOT
+{$name} 様
+
+天使たちの癒し（ユーザーポータル）へのお問い合わせありがとうございます。
+以下の内容でお問い合わせを受け付けました。
+
+【お問い合わせ内容】
+{$inquiry}
+
+【メッセージ】
+{$message}
+
+内容を確認のうえ、担当者より折り返しご連絡いたします。
+しばらくお待ちください。
+
+※このメールは自動送信されています。
+------------------------------
+天使たちの癒し
+info@angels-healing.com
+https://angels-healing.com/
+------------------------------
+EOT;
+} else {
+    // 企業用の自動返信メール
+    $auto_reply_body = <<<EOT
 {$name} 様
 
 天使たちの癒しへのお問い合わせありがとうございます。
@@ -104,6 +172,7 @@ info@angels-healing.com
 https://angels-healing.com/
 ------------------------------
 EOT;
+}
 
 // 自動返信メールの送信
 $auto_headers = "From: info@angels-healing.com\r\n";
@@ -119,7 +188,12 @@ if (function_exists('mb_send_mail')) {
 
 // 結果に応じたリダイレクト
 if ($mail_result && $auto_mail_result) {
-    header('Location: thanks.html?status=success');
+    // 送信元に応じてリダイレクト先を変更
+    if ($is_portal) {
+        header('Location: user-portal/thanks.html?status=success');
+    } else {
+        header('Location: thanks.html?status=success');
+    }
 } else {
     // エラーメッセージを作成
     $error_message = 'メール送信エラー: ';
@@ -144,6 +218,11 @@ if ($mail_result && $auto_mail_result) {
         exit;
     }
     
-    header('Location: form-error.html');
+    // エラー時も送信元に応じてリダイレクト
+    if ($is_portal) {
+        header('Location: user-portal/index.html?error=mail');
+    } else {
+        header('Location: form-error.html');
+    }
 }
 ?>
