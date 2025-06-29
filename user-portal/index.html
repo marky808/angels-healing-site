@@ -87,7 +87,10 @@
             <div class="view-all-btn">
                 <a href="therapists.html" class="btn">すべてのセラピストを見る</a>
             </div>
-        </div>    <!-- セラピスト表示用のJavaScript -->    
+        </div>
+    </section>
+
+    <!-- セラピスト表示用のJavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const therapistsGrid = document.querySelector('.therapists-grid');
@@ -139,30 +142,6 @@
             }
         });
     </script>
-            
-            // セラピストカードを生成して追加
-            therapistsGrid.innerHTML = '';
-            featuredTherapists.forEach(therapist => {
-                const therapistCard = document.createElement('div');
-                therapistCard.className = 'therapist-card';
-                
-                therapistCard.innerHTML = `
-                    <div class="therapist-image" style="background-image: url('${therapist.thumbnailPhoto || therapist.photo}');"></div>
-                    <div class="therapist-content">
-                        <div class="therapist-content-top">
-                            <h3 class="therapist-name">${therapist.name}</h3>
-                            <p class="therapist-specialty">${therapist.specialty}</p>
-                            <p class="therapist-description">${therapist.description[0]}</p>
-                        </div>
-                        <a href="therapist-detail.html?id=${therapist.id}" class="btn">詳細プロフィール</a>
-                    </div>
-                `;
-                
-                therapistsGrid.appendChild(therapistCard);
-            });
-        });
-    </script>
-    </section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
