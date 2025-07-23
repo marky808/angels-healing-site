@@ -413,6 +413,14 @@ footer {
     max-width: 30%;
 }
 
+.footer-links {
+    max-width: 30%;
+}
+
+.footer-company {
+    max-width: 30%;
+}
+
 .footer-logo {
     margin-bottom: 20px;
 }
@@ -631,7 +639,7 @@ footer {
         flex-direction: column;
     }
     
-    .footer-info, .footer-links, .footer-contact {
+    .footer-info, .footer-links, .footer-company {
         max-width: 100%;
         margin-bottom: 30px;
     }
