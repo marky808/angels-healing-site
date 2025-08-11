@@ -1,0 +1,16 @@
+# Ignore VS Code FTP credentials
+.vscode/ftp-simple.json
+.vscode/sftp.json
+
+# VS Code settings may be ignored if they contain secrets
+.vscode/*.code-snippets
+
+# Node modules (if added later)
+node_modules/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

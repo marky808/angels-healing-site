@@ -1062,7 +1062,6 @@ footer {
     margin-right: 40px;
     transition: var(--transition-normal);
     border: none; /* 左ボーダーを削除 */
-    transform: translateY(0);
 }
 
 /* テキストブロックのホバーエフェクト */
@@ -1535,18 +1534,70 @@ footer {
     font-size: 16px;
 }
 
-/* Responsive */
-@media (max-width: 480px) {
-    .admin-modal-content {
-        margin: 10% auto;
-        width: 95%;
-    }
-    
-    .admin-modal-body {
-        padding: 25px 20px;
-    }
-    
-    .admin-modal-header {
-        padding: 18px 20px;
-    }
+/* ===== 導入メリット画像セクション ===== */
+.benefits-image {
+    padding: 40px 0 60px;
+    background: #fff;
+}
+.benefits-image .container { max-width: 1200px; }
+.benefits-image-wrapper {
+    margin: 0;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+.benefits-image-wrapper img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* === Instagram 簡易紹介セクション === */
+.instagram-overview {
+    padding: 70px 0 60px;
+    background: #fff;
+}
+.instagram-overview .container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    max-width: 1000px;
+}
+.instagram-overview-icon {
+    width: 140px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12));
+    transition: transform .3s ease;
+}
+.instagram-overview-link:hover .instagram-overview-icon {
+    transform: scale(1.05) rotate(-3deg);
+}
+.instagram-overview-text p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #444;
+}
+.instagram-overview-text a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 2px solid rgba(74,124,89,.3);
+    padding-bottom: 2px;
+    transition: .25s;
+}
+.instagram-overview-text a:hover {
+    border-color: var(--primary-color);
+}
+/* 視覚的に不要な見出しを隠す */
+.visually-hidden {
+    position: absolute !important;
+    height: 1px; width: 1px; overflow: hidden; clip: rect(1px,1px,1px,1px); white-space: nowrap;
+}
+@media (max-width: 780px) {
+    .instagram-overview { padding: 60px 0 50px; }
+    .instagram-overview .container { flex-direction: column; text-align: center; gap: 25px; }
+    .instagram-overview-icon { width: 110px; }
+    .instagram-overview-text p { font-size: 1rem; }
 }
