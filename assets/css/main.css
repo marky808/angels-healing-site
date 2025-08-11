@@ -1590,6 +1590,24 @@ footer {
 .instagram-overview-text a:hover {
     border-color: var(--primary-color);
 }
+
+/* 調整: Instagram 簡易紹介セクションのアイコンサイズ制御を強化 */
+.instagram-overview-link {
+    display: inline-block;
+    max-width: 160px;
+    width: 100%;
+}
+.instagram-overview-icon {
+    width: 100% !important; /* 強制縮小 */
+    height: auto;
+}
+@media (min-width: 1200px) {
+    .instagram-overview-link { max-width: 150px; }
+}
+@media (max-width: 780px) {
+    .instagram-overview-link { max-width: 120px; }
+}
+
 /* 視覚的に不要な見出しを隠す */
 .visually-hidden {
     position: absolute !important;
