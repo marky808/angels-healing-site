@@ -406,6 +406,42 @@ const therapistData = {
             '../assets/images/ogino4.jpg',
             '../assets/images/ogino5.jpg'
         ]
+    },
+    // セラピスト - 桜沢 英永
+    '11': {
+        id: '11',
+        name: '桜沢 英永',
+        gender: 'male',
+        categories: ['relaxation'],
+        specialities: ['relaxation'],
+        specialty: 'ヘッドセラピスト',
+        photo: '../assets/images/sakurazawa1.jpg',
+        thumbnailPhoto: '../assets/images/sakurazawa1.jpg',
+        description: [
+            '平日は会社員、土日祝祭日はセラピストとして都内を中心に月2～3日程イベントに出店しております。',
+            'ヘッドマッサージとレイキヒーリングの相性の良さに着目し、両方を組合せた施術に致します。',
+            '趣味は神社仏閣巡り、スポーツ観戦、カフェめぐりです。'
+        ],
+        qualifications: [
+            'ヘッドセラピスト etプロ',
+            'REIKI Third Degree'
+        ],
+        courses: [
+            {
+                title: 'ヘッドセラピー',
+                description: '頭のこりをゆっくり、優しく緩め、頭皮マッサージ。首・肩、背中をほぐしたり、疲れを取りリラックスする施術です。',
+                duration: '施術時間: 15分～'
+            }
+        ],
+        salon_info: {
+            name: '頭のほぐし＆ヒーリング 桜河英永',
+            url: '',
+            description: '定店舗はございませんが、イベント出店の際、そちらの会場で施術しております。'
+        },
+        treatment_photos: [
+            '../assets/images/sakurazawa2.jpeg',
+            '../assets/images/sakurazawa3.jpeg'
+        ]
     }
 };
 
