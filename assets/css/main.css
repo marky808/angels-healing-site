@@ -1608,14 +1608,26 @@ footer {
     .instagram-overview-link { max-width: 120px; }
 }
 
+/* === Responsive adjustments for benefits image & Instagram icon (mobile) === */
+@media (max-width: 780px) {
+  .benefits-image { padding: 40px 0 50px; }
+  .benefits-image-wrapper { max-width: 520px; margin: 0 auto; }
+}
+@media (max-width: 600px) {
+  .benefits-image-wrapper { max-width: 380px; }
+  .benefits-image-wrapper img { width: 100%; height: auto; border-radius: 14px; }
+  .instagram-overview { padding: 50px 0 45px; }
+  .instagram-overview-link { max-width: 90px; }
+  .instagram-overview-icon { width: 100% !important; }
+  .instagram-overview-text p { font-size: 0.95rem; }
+}
+@media (max-width: 420px) {
+  .benefits-image-wrapper { max-width: 300px; }
+  .instagram-overview-link { max-width: 80px; }
+}
+
 /* 視覚的に不要な見出しを隠す */
 .visually-hidden {
     position: absolute !important;
     height: 1px; width: 1px; overflow: hidden; clip: rect(1px,1px,1px,1px); white-space: nowrap;
-}
-@media (max-width: 780px) {
-    .instagram-overview { padding: 60px 0 50px; }
-    .instagram-overview .container { flex-direction: column; text-align: center; gap: 25px; }
-    .instagram-overview-icon { width: 110px; }
-    .instagram-overview-text p { font-size: 1rem; }
 }
