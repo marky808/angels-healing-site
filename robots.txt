@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /user-portal/
+Disallow: /portal/
+
+# Allow all other pages
+Allow: /
+
+# Sitemap (if available)
+# Sitemap: https://angels-healing.com/sitemap.xml

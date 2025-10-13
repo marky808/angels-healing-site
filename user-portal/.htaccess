@@ -1,0 +1,40 @@
+# セキュリティ設定
+Options -Indexes
+
+# PHPセッション設定
+php_value session.cookie_httponly 1
+php_value session.use_strict_mode 1
+
+# 利用者ポータルのリダイレクト設定を一時無効化
+# RewriteEngine On
+
+# ディレクトリインデックス無効化
+DirectoryIndex login.php
+
+# 以下のルールを一時的にコメントアウト
+# PHPファイルへの直接アクセスを最優先で許可
+# RewriteCond %{REQUEST_FILENAME} -f
+# RewriteCond %{REQUEST_FILENAME} \.php$
+# RewriteRule ^.*$ - [L]
+
+# 古いHTMLファイルからPHPファイルへのリダイレクト
+# RewriteRule ^index\.html$ index.php [R=301,L]
+# RewriteRule ^therapists\.html$ therapists.php [R=301,L]
+# RewriteRule ^therapist-detail\.html$ therapist-detail.php [QSA,R=301,L]
+# RewriteRule ^thanks\.html$ thanks.php [R=301,L]
+
+# ディレクトリアクセス時の処理
+# RewriteCond %{REQUEST_FILENAME} -d
+# RewriteRule ^$ login.php [L]
+
+# 存在しないファイルのみリダイレクト
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^.*$ login.php [L]
+
+# キャッシュ無効化（セッション管理のため）
+<FilesMatch "\.(php)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+</FilesMatch>

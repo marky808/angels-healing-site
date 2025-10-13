@@ -31,7 +31,7 @@ if (empty($name) || empty($email) || empty($message)) {
     // リファラーに基づいてリダイレクト先を決定
     $referrer = $_SERVER['HTTP_REFERER'] ?? '';
     if (strpos($referrer, 'user-portal') !== false) {
-        header('Location: user-portal/index.html?error=required');
+        header('Location: user-portal/index.php?error=required');
     } else {
         header('Location: index.html?error=required');
     }
@@ -43,7 +43,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     // リファラーに基づいてリダイレクト先を決定
     $referrer = $_SERVER['HTTP_REFERER'] ?? '';
     if (strpos($referrer, 'user-portal') !== false) {
-        header('Location: user-portal/index.html?error=email');
+        header('Location: user-portal/index.php?error=email');
     } else {
         header('Location: index.html?error=email');
     }
@@ -190,7 +190,7 @@ if (function_exists('mb_send_mail')) {
 if ($mail_result && $auto_mail_result) {
     // 送信元に応じてリダイレクト先を変更
     if ($is_portal) {
-        header('Location: user-portal/thanks.html?status=success');
+        header('Location: user-portal/thanks.php?status=success');
     } else {
         header('Location: thanks.html?status=success');
     }
@@ -220,7 +220,7 @@ if ($mail_result && $auto_mail_result) {
     
     // エラー時も送信元に応じてリダイレクト
     if ($is_portal) {
-        header('Location: user-portal/index.html?error=mail');
+        header('Location: user-portal/index.php?error=mail');
     } else {
         header('Location: form-error.html');
     }
