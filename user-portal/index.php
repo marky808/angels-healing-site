@@ -182,14 +182,14 @@ requireAuth('index.php');
                 const card = document.createElement('div');
                 card.className = 'therapist-card';
                 card.innerHTML = `
-                    <div class="therapist-image">
-                        <img src="${therapist.thumbnailPhoto}" alt="${therapist.name}" loading="lazy">
-                    </div>
-                    <div class="therapist-info">
-                        <h3>${therapist.name}</h3>
-                        <p class="therapist-specialty">${therapist.specialty}</p>
-                        <p class="therapist-description">${therapist.description[0]}</p>
-                        <a href="therapist-detail.php?id=${therapist.id}" class="btn btn-sm">詳細を見る</a>
+                    <div class="therapist-image" style="background-image: url('${therapist.thumbnailPhoto || therapist.photo}')"></div>
+                    <div class="therapist-content">
+                        <div class="therapist-content-top">
+                            <h3 class="therapist-name">${therapist.name}</h3>
+                            <p class="therapist-specialty">${therapist.specialty}</p>
+                            <p class="therapist-description">${therapist.description ? therapist.description[0] : ''}</p>
+                        </div>
+                        <a href="therapist-detail.php?id=${therapist.id}" class="btn btn-outline">詳細を見る</a>
                     </div>
                 `;
                 container.appendChild(card);

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>天使たちの癒し - 利用者ポータル</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/portal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="../assets/js/therapist-data.js"></script>
+</head>
+<body>
+    <!-- ヘッダーコンポーネント -->
+    <div id="header" data-component="portal-header"></div>
+
+    <!-- Hero Section -->
+    <section class="portal-hero">
+        <div class="container">
+            <h2>天使たちの癒しへようこそ</h2>
+            <p>プロフェッショナルによる癒しの時間をお届けします。ご所属の企業や医療機関の福利厚生として、リラックスのひとときをお楽しみください。</p>
+            <a href="#therapists" class="btn">セラピストを見る</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>施術カテゴリー</h2>
+                <p>お悩みや目的に合わせた様々な施術をご用意しています</p>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card category-1">
+                    <div class="category-icon">
+                        <span>🌿</span>
+                    </div>
+                    <h3>リラクゼーション系</h3>
+                    <p>お客様の悩みや疲れに寄り添い、内面からのケアを提供します</p>
+                    <a href="therapists.html?category=relaxation" class="btn">詳細を見る</a>
+                </div>
+                
+                <div class="category-card category-2">
+                    <div class="category-icon">
+                        <span>✨</span>
+                    </div>
+                    <h3>美容系</h3>
+                    <p>お肌や身体の悩みに具体的にアプローチします</p>
+                    <a href="therapists.html?category=beauty" class="btn">詳細を見る</a>
+                </div>
+                
+                <div class="category-card category-3">
+                    <div class="category-icon">
+                        <span>🩺</span>
+                    </div>
+                    <h3>医療系</h3>
+                    <p>国家資格保有者による施術</p>
+                    <a href="therapists.html?category=medical" class="btn">詳細を見る</a>
+                </div>
+                
+                <div class="category-card category-4">
+                    <div class="category-icon">
+                        <span>🔍</span>
+                    </div>
+                    <h3>その他</h3>
+                    <p>その他のカテゴリー</p>
+                    <a href="therapists.html?category=other" class="btn">詳細を見る</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Therapists Section -->
+    <section id="therapists" class="therapists">
+        <div class="container">
+            <div class="section-title">
+                <h2>セラピスト紹介</h2>
+                <p>経験豊富な専門家たちがあなたの癒しをサポートします</p>
+            </div>
+            
+            <div class="therapists-grid">
+                <!-- セラピスト情報は動的に生成されます -->
+            </div>
+            
+            <div class="view-all-btn">
+                <a href="therapists.html" class="btn">すべてのセラピストを見る</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- セラピスト表示用のJavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const therapistsGrid = document.querySelector('.therapists-grid');
+            
+            try {
+                // デバッグ情報の詳細出力
+                console.log('=== ポータルページ セラピストデータ デバッグ ===');
+                console.log('現在時刻:', new Date().toLocaleString('ja-JP'));
+                console.log('ページURL:', window.location.href);
+                console.log('therapistData オブジェクト:', therapistData);
+                console.log('therapistData のキー:', Object.keys(therapistData));
+                console.log('getAllTherapists 関数の存在:', typeof getAllTherapists === 'function');
+                
+                // セラピストデータから最大8名を表示
+                const allTherapists = getAllTherapists();
+                console.log('取得した全セラピスト数:', allTherapists.length);
+                console.log('セラピスト一覧:', allTherapists.map(t => `${t.name} (ID: ${t.id})`));
+                
+                const featuredTherapists = allTherapists.slice(0, 8);
+                console.log('表示するセラピスト数:', featuredTherapists.length);
+                console.log('表示するセラピスト:', featuredTherapists.map(t => `${t.name} (ID: ${t.id})`));
+                
+                // セラピストカードを生成して追加
+                therapistsGrid.innerHTML = '';
+                featuredTherapists.forEach(therapist => {
+                    const therapistCard = document.createElement('div');
+                    therapistCard.className = 'therapist-card';
+                    
+                    therapistCard.innerHTML = `
+                        <div class="therapist-image" style="background-image: url('${therapist.thumbnailPhoto || therapist.photo}');"></div>
+                        <div class="therapist-content">
+                            <div class="therapist-content-top">
+                                <h3 class="therapist-name">${therapist.name}</h3>
+                                <p class="therapist-specialty">${therapist.specialty}</p>
+                                <p class="therapist-description">${therapist.description[0]}</p>
+                            </div>
+                            <a href="therapist-detail.html?id=${therapist.id}" class="btn">詳細プロフィール</a>
+                        </div>
+                    `;
+                    
+                    therapistsGrid.appendChild(therapistCard);
+                });
+                
+                console.log('セラピストカードの生成完了');
+                
+            } catch (error) {
+                console.error('セラピストデータの読み込み中にエラーが発生:', error);
+                therapistsGrid.innerHTML = '<div style="text-align: center; padding: 40px; color: #999;">セラピストデータの読み込みに失敗しました</div>';
+            }
+        });
+    </script>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>お問い合わせ</h2>
+                <p>ご質問やご不明点がありましたら、お気軽にお問い合わせください</p>
+            </div>
+            
+            <div class="contact-form">
+                <form action="../contact.php" method="POST">
+                    <!-- お問い合わせフォーム用の設定 -->
+                    <input type="hidden" name="_subject" value="【天使たちの癒し - ユーザーポータル】お問い合わせがありました">
+                    
+                    <div class="form-group">
+                        <label for="name">お名前</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">メールアドレス</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">電話番号</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="inquiry">お問い合わせ内容</label>
+                        <select id="inquiry" name="inquiry">
+                            <option value="">選択してください</option>
+                            <option value="reservation">予約について</option>
+                            <option value="therapist">セラピストについて</option>
+                            <option value="treatment">施術内容について</option>
+                            <option value="other">その他</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">メッセージ</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">送信する</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッターコンポーネント -->
+    <div id="footer" data-component="portal-footer"></div>
+
+    <script src="../assets/js/load-components.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/portal.js"></script>
+</body>
+</html>
