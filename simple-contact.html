@@ -135,8 +135,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('form');
+            let isRecaptchaProcessing = false; // reCAPTCHA処理中フラグ
             
             form.addEventListener('submit', function(event) {
+                // reCAPTCHA処理済みの場合は通常送信
+                if (isRecaptchaProcessing) {
+                    console.log('reCAPTCHAトークン設定済み。フォームを送信します。');
+                    return true;
+                }
+                
+                // reCAPTCHA処理前の場合は一旦停止
                 event.preventDefault();
                 
                 console.log('reCAPTCHA検証を実行中...');
@@ -153,10 +161,17 @@
                         }
                         recaptchaInput.value = token;
                         
-                        console.log('reCAPTCHAトークン取得完了。フォームを送信します。');
+                        console.log('reCAPTCHAトークン取得完了: ' + token.substring(0, 20) + '...');
                         
-                        // フォームを送信
-                        form.submit();
+                        // フラグを立てて再送信
+                        isRecaptchaProcessing = true;
+                        
+                        // HTMLFormElement.submit()ではなく、submitイベントを再トリガー
+                        const submitEvent = new Event('submit', {
+                            bubbles: true,
+                            cancelable: true
+                        });
+                        form.dispatchEvent(submitEvent);
                     });
                 });
             });
