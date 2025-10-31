@@ -5,9 +5,6 @@ if (isset($_GET['test'])) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     
-    // SimpleMailerクラスを読み込み
-    require_once __DIR__ . '/PHPMailer-simple.php';
-    
     echo "<h3>PHP Mail設定確認</h3>";
     echo "PHP Version: " . phpversion() . "<br>";
     echo "sendmail_path: " . ini_get('sendmail_path') . "<br>";
@@ -22,37 +19,21 @@ if (isset($_GET['test'])) {
     
     echo "<h3>メール送信テスト実行中...</h3>";
     
-    // 方法1: SimpleMailerクラス（推奨）
-    try {
-        $mailer = new SimpleMailer();
-        $mailer->setFrom('info@angels-healing.com', '天使たちの癒し')
-               ->addAddress($to)
-               ->setSubject($subject)
-               ->setBody($message);
-        
-        $result1 = $mailer->send();
-        echo "SimpleMailer結果: " . ($result1 ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
-    } catch (Exception $e) {
-        echo "SimpleMailerエラー: ❌ " . htmlspecialchars($e->getMessage()) . "<br><br>";
-        $result1 = false;
-    }
-    
-    // 方法2: 標準mail()関数
+    // mail()関数でテスト
     $additional_params = '-f info@angels-healing.com';
-    $headers = "From: info@angels-healing.com\r\n";
+    $encoded_subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
+    
+    $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    $headers .= "Content-Transfer-Encoding: 8bit\r\n";
+    $headers .= "From: info@angels-healing.com\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
     
-    $result2 = mail(
-        $to,
-        "=?UTF-8?B?" . base64_encode($subject) . "?=",
-        $message,
-        $headers,
-        $additional_params
-    );
+    $result = mail($to, $encoded_subject, $message, $headers, $additional_params);
     
-    echo "標準mail()結果: " . ($result2 ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
+    echo "mail()関数結果: " . ($result ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
     
-    if ($result1 || $result2) {
+    if ($result) {
         echo "<div style='background:#d4edda;padding:15px;border:1px solid #c3e6cb;'>";
         echo "✅ <b>メール送信成功</b><br>";
         echo "info@angels-healing.com の受信トレイとスパムフォルダを確認してください。";
@@ -75,8 +56,9 @@ if (isset($_GET['test'])) {
 
 // PHPによるお問い合わせフォーム処理
 
-// SimpleMailerクラスを読み込み
-require_once __DIR__ . '/PHPMailer-simple.php';
+// エラー表示を一時的に有効化（デバッグ用）
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // 1. POSTメソッドのチェック
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -212,26 +194,28 @@ $from_email = 'info@angels-healing.com';
 // メール送信前にログを記録
 error_log("メール送信試行: To={$to}, From={$from_email}, Subject={$subject}");
 
-// SimpleMailerを使ってメール送信
-try {
-    $mailer = new SimpleMailer();
-    $mailer->setFrom($from_email, '天使たちの癒し')
-           ->addReplyTo($email)
-           ->addAddress($to)
-           ->setSubject($subject)
-           ->setBody($mail_body);
-    
-    $mail_result = $mailer->send();
-    
-    // 送信結果をログに記録
-    if ($mail_result) {
-        error_log("管理者向けメール送信成功");
-    } else {
-        error_log("管理者向けメール送信失敗");
-    }
-} catch (Exception $e) {
-    error_log("メール送信エラー: " . $e->getMessage());
-    $mail_result = false;
+// 件名を日本語対応にエンコード
+$encoded_subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
+
+// ヘッダー構築
+$headers = "MIME-Version: 1.0\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+$headers .= "Content-Transfer-Encoding: 8bit\r\n";
+$headers .= "From: =?UTF-8?B?" . base64_encode('天使たちの癒し') . "?= <{$from_email}>\r\n";
+$headers .= "Reply-To: {$email}\r\n";
+$headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+
+// 追加パラメータ（エンベロープFrom）
+$additional_params = "-f info@angels-healing.com";
+
+// mail()関数で送信
+$mail_result = mail($to, $encoded_subject, $mail_body, $headers, $additional_params);
+
+// 送信結果をログに記録
+if ($mail_result) {
+    error_log("管理者向けメール送信成功");
+} else {
+    error_log("管理者向けメール送信失敗");
 }
 
 // 自動返信メールの設定
@@ -295,26 +279,25 @@ $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 // 自動返信メール送信前にログを記録
 error_log("自動返信メール送信試行: To={$email}, From=info@angels-healing.com");
 
-// 自動返信メールの送信（SimpleMailerを使用）
-try {
-    $auto_mailer = new SimpleMailer();
-    $auto_mailer->setFrom('info@angels-healing.com', '天使たちの癒し')
-                ->addReplyTo('info@angels-healing.com')
-                ->addAddress($email)
-                ->setSubject($auto_reply_subject)
-                ->setBody($auto_reply_body);
-    
-    $auto_mail_result = $auto_mailer->send();
-    
-    // 送信結果をログに記録
-    if ($auto_mail_result) {
-        error_log("自動返信メール送信成功");
-    } else {
-        error_log("自動返信メール送信失敗: To={$email}");
-    }
-} catch (Exception $e) {
-    error_log("自動返信メール送信エラー: " . $e->getMessage());
-    $auto_mail_result = false;
+// 自動返信の件名をエンコード
+$encoded_auto_subject = "=?UTF-8?B?" . base64_encode($auto_reply_subject) . "?=";
+
+// 自動返信のヘッダー
+$auto_headers = "MIME-Version: 1.0\r\n";
+$auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+$auto_headers .= "Content-Transfer-Encoding: 8bit\r\n";
+$auto_headers .= "From: =?UTF-8?B?" . base64_encode('天使たちの癒し') . "?= <info@angels-healing.com>\r\n";
+$auto_headers .= "Reply-To: info@angels-healing.com\r\n";
+$auto_headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+
+// 自動返信メール送信
+$auto_mail_result = mail($email, $encoded_auto_subject, $auto_reply_body, $auto_headers, $additional_params);
+
+// 送信結果をログに記録
+if ($auto_mail_result) {
+    error_log("自動返信メール送信成功");
+} else {
+    error_log("自動返信メール送信失敗: To={$email}");
 }
 
 // 結果に応じたリダイレクト
