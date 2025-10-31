@@ -5,15 +5,14 @@ if (isset($_GET['test'])) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     
+    // SimpleMailerクラスを読み込み
+    require_once __DIR__ . '/PHPMailer-simple.php';
+    
     echo "<h3>PHP Mail設定確認</h3>";
     echo "PHP Version: " . phpversion() . "<br>";
     echo "sendmail_path: " . ini_get('sendmail_path') . "<br>";
     echo "SMTP: " . ini_get('SMTP') . "<br>";
     echo "smtp_port: " . ini_get('smtp_port') . "<br><br>";
-    
-    // ロリポップ推奨設定
-    mb_language("Japanese");
-    mb_internal_encoding("UTF-8");
     
     $to = 'info@angels-healing.com';
     $subject = 'テスト送信 - ' . date('Y-m-d H:i:s');
@@ -21,34 +20,37 @@ if (isset($_GET['test'])) {
     $message .= 'サーバー: ' . $_SERVER['SERVER_NAME'] . "\n";
     $message .= '送信時刻: ' . date('Y-m-d H:i:s');
     
-    // ロリポップ推奨：第5引数でエンベロープFromを指定
-    $additional_params = '-f info@angels-healing.com';
-    
     echo "<h3>メール送信テスト実行中...</h3>";
     
-    // 方法1: mb_send_mail（ロリポップ推奨）
-    $result1 = mb_send_mail(
-        $to,
-        $subject,
-        $message,
-        "From: info@angels-healing.com\r\n" .
-        "Content-Type: text/plain; charset=UTF-8\r\n",
-        $additional_params
-    );
+    // 方法1: SimpleMailerクラス（推奨）
+    try {
+        $mailer = new SimpleMailer();
+        $mailer->setFrom('info@angels-healing.com', '天使たちの癒し')
+               ->addAddress($to)
+               ->setSubject($subject)
+               ->setBody($message);
+        
+        $result1 = $mailer->send();
+        echo "SimpleMailer結果: " . ($result1 ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
+    } catch (Exception $e) {
+        echo "SimpleMailerエラー: ❌ " . htmlspecialchars($e->getMessage()) . "<br><br>";
+        $result1 = false;
+    }
     
-    echo "mb_send_mail結果: " . ($result1 ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
+    // 方法2: 標準mail()関数
+    $additional_params = '-f info@angels-healing.com';
+    $headers = "From: info@angels-healing.com\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
     
-    // 方法2: 標準mail()関数でも試す
     $result2 = mail(
         $to,
-        $subject,
+        "=?UTF-8?B?" . base64_encode($subject) . "?=",
         $message,
-        "From: info@angels-healing.com\r\n" .
-        "Content-Type: text/plain; charset=UTF-8\r\n",
+        $headers,
         $additional_params
     );
     
-    echo "mail()結果: " . ($result2 ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
+    echo "標準mail()結果: " . ($result2 ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
     
     if ($result1 || $result2) {
         echo "<div style='background:#d4edda;padding:15px;border:1px solid #c3e6cb;'>";
@@ -72,6 +74,9 @@ if (isset($_GET['test'])) {
 }
 
 // PHPによるお問い合わせフォーム処理
+
+// SimpleMailerクラスを読み込み
+require_once __DIR__ . '/PHPMailer-simple.php';
 
 // 1. POSTメソッドのチェック
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -202,30 +207,31 @@ EOT;
 
 // 管理者へのメール送信
 $to = 'info@angels-healing.com';
-// ロリポップでは送信元メールアドレスは自分のドメインに存在するものにする必要があります
-$from_email = 'info@angels-healing.com'; // ドメインのメールアドレスを使用
-$headers = "From: {$from_email}\r\n";
-$headers .= "Reply-To: {$email}\r\n"; // 返信先はユーザーのメールアドレス
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+$from_email = 'info@angels-healing.com';
 
 // メール送信前にログを記録
 error_log("メール送信試行: To={$to}, From={$from_email}, Subject={$subject}");
 
-// 日本語メール送信の設定
-mb_language("Japanese");
-mb_internal_encoding("UTF-8");
-
-// ロリポップ推奨：第5引数でエンベロープFromを指定
-$additional_params = '-f info@angels-healing.com';
-
-// メール送信（mb_send_mailを使用）
-$mail_result = mb_send_mail($to, $subject, $mail_body, $headers, $additional_params);
-
-// 送信結果をログに記録
-if ($mail_result) {
-    error_log("管理者向けメール送信成功");
-} else {
-    error_log("管理者向けメール送信失敗");
+// SimpleMailerを使ってメール送信
+try {
+    $mailer = new SimpleMailer();
+    $mailer->setFrom($from_email, '天使たちの癒し')
+           ->addReplyTo($email)
+           ->addAddress($to)
+           ->setSubject($subject)
+           ->setBody($mail_body);
+    
+    $mail_result = $mailer->send();
+    
+    // 送信結果をログに記録
+    if ($mail_result) {
+        error_log("管理者向けメール送信成功");
+    } else {
+        error_log("管理者向けメール送信失敗");
+    }
+} catch (Exception $e) {
+    error_log("メール送信エラー: " . $e->getMessage());
+    $mail_result = false;
 }
 
 // 自動返信メールの設定
@@ -289,14 +295,26 @@ $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 // 自動返信メール送信前にログを記録
 error_log("自動返信メール送信試行: To={$email}, From=info@angels-healing.com");
 
-// 自動返信メールの送信（mb_send_mailを使用、第5引数追加）
-$auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers, $additional_params);
-
-// 送信結果をログに記録
-if ($auto_mail_result) {
-    error_log("自動返信メール送信成功");
-} else {
-    error_log("自動返信メール送信失敗: To={$email}");
+// 自動返信メールの送信（SimpleMailerを使用）
+try {
+    $auto_mailer = new SimpleMailer();
+    $auto_mailer->setFrom('info@angels-healing.com', '天使たちの癒し')
+                ->addReplyTo('info@angels-healing.com')
+                ->addAddress($email)
+                ->setSubject($auto_reply_subject)
+                ->setBody($auto_reply_body);
+    
+    $auto_mail_result = $auto_mailer->send();
+    
+    // 送信結果をログに記録
+    if ($auto_mail_result) {
+        error_log("自動返信メール送信成功");
+    } else {
+        error_log("自動返信メール送信失敗: To={$email}");
+    }
+} catch (Exception $e) {
+    error_log("自動返信メール送信エラー: " . $e->getMessage());
+    $auto_mail_result = false;
 }
 
 // 結果に応じたリダイレクト
