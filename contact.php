@@ -1,28 +1,73 @@
 <?php
 // 【デバッグ用】直接メール送信テスト
 if (isset($_GET['test'])) {
-    // ロリポップのsendmailパスを設定
-    ini_set('sendmail_path', '/usr/sbin/sendmail -t -i');
+    // エラー表示を有効化
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
     
+    echo "<h3>PHP Mail設定確認</h3>";
+    echo "PHP Version: " . phpversion() . "<br>";
+    echo "sendmail_path: " . ini_get('sendmail_path') . "<br>";
+    echo "SMTP: " . ini_get('SMTP') . "<br>";
+    echo "smtp_port: " . ini_get('smtp_port') . "<br><br>";
+    
+    // ロリポップ推奨設定
     mb_language("Japanese");
     mb_internal_encoding("UTF-8");
     
-    $test_result = mb_send_mail(
-        'info@angels-healing.com',
-        'テスト送信',
-        'これはPHPからのテストメールです。',
-        "From: info@angels-healing.com\r\n"
+    $to = 'info@angels-healing.com';
+    $subject = 'テスト送信 - ' . date('Y-m-d H:i:s');
+    $message = 'これはPHPからのテストメールです。' . "\n\n";
+    $message .= 'サーバー: ' . $_SERVER['SERVER_NAME'] . "\n";
+    $message .= '送信時刻: ' . date('Y-m-d H:i:s');
+    
+    // ロリポップ推奨：第5引数でエンベロープFromを指定
+    $additional_params = '-f info@angels-healing.com';
+    
+    echo "<h3>メール送信テスト実行中...</h3>";
+    
+    // 方法1: mb_send_mail（ロリポップ推奨）
+    $result1 = mb_send_mail(
+        $to,
+        $subject,
+        $message,
+        "From: info@angels-healing.com\r\n" .
+        "Content-Type: text/plain; charset=UTF-8\r\n",
+        $additional_params
     );
     
-    if ($test_result) {
-        echo "✅ メール送信成功（mb_send_mail returned true）<br>";
-        echo "info@angels-healing.com を確認してください。<br>";
-        echo "届いていない場合は、サーバーのメール設定に問題があります。";
+    echo "mb_send_mail結果: " . ($result1 ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
+    
+    // 方法2: 標準mail()関数でも試す
+    $result2 = mail(
+        $to,
+        $subject,
+        $message,
+        "From: info@angels-healing.com\r\n" .
+        "Content-Type: text/plain; charset=UTF-8\r\n",
+        $additional_params
+    );
+    
+    echo "mail()結果: " . ($result2 ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
+    
+    if ($result1 || $result2) {
+        echo "<div style='background:#d4edda;padding:15px;border:1px solid #c3e6cb;'>";
+        echo "✅ <b>メール送信成功</b><br>";
+        echo "info@angels-healing.com の受信トレイとスパムフォルダを確認してください。";
+        echo "</div>";
     } else {
-        echo "❌ メール送信失敗（mb_send_mail returned false）<br>";
-        echo "PHPのmail()関数が動作していません。<br>";
-        echo "sendmail_path: " . ini_get('sendmail_path');
+        echo "<div style='background:#f8d7da;padding:15px;border:1px solid #f5c6cb;'>";
+        echo "❌ <b>メール送信失敗</b><br><br>";
+        echo "<b>考えられる原因：</b><br>";
+        echo "1. ロリポップでinfo@angels-healing.comのメールアドレスが作成されていない<br>";
+        echo "2. PHPのmail()関数が無効化されている<br>";
+        echo "3. サーバーのsendmail設定に問題がある<br>";
+        echo "4. ファイアウォールやセキュリティ設定でブロックされている<br><br>";
+        echo "<b>対処方法：</b><br>";
+        echo "ロリポップのユーザー専用ページ → メール設定を確認してください。";
+        echo "</div>";
     }
+    
     exit;
 }
 
@@ -170,11 +215,11 @@ error_log("メール送信試行: To={$to}, From={$from_email}, Subject={$subjec
 mb_language("Japanese");
 mb_internal_encoding("UTF-8");
 
-// ロリポップのsendmailパスを設定
-ini_set('sendmail_path', '/usr/sbin/sendmail -t -i');
+// ロリポップ推奨：第5引数でエンベロープFromを指定
+$additional_params = '-f info@angels-healing.com';
 
 // メール送信（mb_send_mailを使用）
-$mail_result = mb_send_mail($to, $subject, $mail_body, $headers);
+$mail_result = mb_send_mail($to, $subject, $mail_body, $headers, $additional_params);
 
 // 送信結果をログに記録
 if ($mail_result) {
@@ -244,8 +289,8 @@ $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 // 自動返信メール送信前にログを記録
 error_log("自動返信メール送信試行: To={$email}, From=info@angels-healing.com");
 
-// 自動返信メールの送信（mb_send_mailを使用）
-$auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
+// 自動返信メールの送信（mb_send_mailを使用、第5引数追加）
+$auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers, $additional_params);
 
 // 送信結果をログに記録
 if ($auto_mail_result) {
