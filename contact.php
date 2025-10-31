@@ -118,9 +118,6 @@ $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 mb_language("Japanese");
 mb_internal_encoding("UTF-8");
 
-// メール送信パラメータ
-$additional_params = "-f info@angels-healing.com";
-
 // デバッグ：送信前の情報をログに記録
 error_log("=== メール送信開始 ===");
 error_log("To: " . $to);
@@ -128,11 +125,10 @@ error_log("From: " . $from_email);
 error_log("Subject: " . $subject);
 error_log("Reply-To: " . $email);
 error_log("Headers: " . str_replace("\r\n", " | ", $headers));
-error_log("Additional Params: " . $additional_params);
 error_log("Body length: " . strlen($mail_body));
 
-// ロリポップではmb_send_mail()を推奨（件名のエンコード不要）
-$mail_result = mb_send_mail($to, $subject, $mail_body, $headers, $additional_params);
+// 最もシンプルな形式で送信（第5引数なし）
+$mail_result = mb_send_mail($to, $subject, $mail_body, $headers);
 
 // デバッグ：送信結果をログに記録
 error_log("mb_send_mail() result: " . ($mail_result ? "TRUE" : "FALSE"));
@@ -221,22 +217,30 @@ if ($mail_result) {
     echo "<html><head><meta charset='UTF-8'><title>メール送信エラー</title></head><body>";
     echo "<h2>❌ メール送信失敗</h2>";
     echo "<div style='background:#f8d7da;padding:20px;border:1px solid #f5c6cb;margin:20px;'>";
-    echo "<p><strong>mail()関数がFALSEを返しました</strong></p>";
+    echo "<p><strong>mb_send_mail()関数がFALSEを返しました</strong></p>";
     echo "<p>送信先: " . htmlspecialchars($to) . "</p>";
     echo "<p>送信元: " . htmlspecialchars($from_email) . "</p>";
     echo "<p>PHPバージョン: " . phpversion() . "</p>";
     echo "<p>sendmail_path: " . ini_get('sendmail_path') . "</p>";
+    echo "<p>mb_send_mail利用可能: " . (function_exists('mb_send_mail') ? 'はい' : 'いいえ') . "</p>";
+    echo "<p>ファイル更新時刻: " . date('Y-m-d H:i:s', filemtime(__FILE__)) . "</p>";
     if ($last_error) {
         echo "<p>最後のエラー: " . htmlspecialchars($last_error['message']) . "</p>";
     }
     echo "<hr>";
     echo "<h3>考えられる原因：</h3>";
     echo "<ul>";
-    echo "<li><strong>ロリポップでmail()関数の使用が制限されている</strong></li>";
-    echo "<li>sendmailの設定に問題がある</li>";
-    echo "<li>セーフモードやopen_basedir制限でブロックされている</li>";
+    echo "<li><strong>ロリポップでメール送信が制限されている</strong></li>";
+    echo "<li>info@angels-healing.comのメールアカウント設定に問題がある</li>";
+    echo "<li>sendmailの実行権限がない</li>";
+    echo "<li>セキュリティ設定でブロックされている</li>";
     echo "</ul>";
-    echo "<p>ロリポップのサポートに連絡して、PHPのmail()関数が使用可能か確認してください。</p>";
+    echo "<h3>次のステップ：</h3>";
+    echo "<ol>";
+    echo "<li>ロリポップのユーザー専用ページ → エラーログを確認</li>";
+    echo "<li>ロリポップのサポートに連絡してmail/mb_send_mail関数の使用可否を確認</li>";
+    echo "<li>メール設定でinfo@angels-healing.comが有効か確認</li>";
+    echo "</ol>";
     echo "<p><a href='index.html' style='display:inline-block;padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;margin-top:20px;'>トップページに戻る</a></p>";
     echo "</div>";
     echo "</body></html>";
