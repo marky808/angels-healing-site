@@ -118,12 +118,12 @@ $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 mb_language("Japanese");
 mb_internal_encoding("UTF-8");
 
-// メール送信（ロリポップ環境に最適化）
-if (function_exists('mb_send_mail')) {
-    $mail_result = mb_send_mail($to, $subject, $mail_body, $headers);
-} else {
-    $mail_result = mail($to, $subject, $mail_body, $headers);
-}
+// 件名と本文をUTF-8でエンコード
+$encoded_subject = mb_encode_mimeheader($subject, "UTF-8", "B");
+
+// メール送信（標準mail()関数を使用）
+$additional_params = "-f info@angels-healing.com";
+$mail_result = mail($to, $encoded_subject, $mail_body, $headers, $additional_params);
 
 // 自動返信メールの設定
 $auto_reply_subject = "【天使たちの癒し】お問い合わせありがとうございます";
@@ -183,12 +183,11 @@ $auto_headers = "From: info@angels-healing.com\r\n";
 $auto_headers .= "Reply-To: info@angels-healing.com\r\n";
 $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-// 自動返信メールの送信（ロリポップ環境に最適化）
-if (function_exists('mb_send_mail')) {
-    $auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
-} else {
-    $auto_mail_result = mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
-}
+// 自動返信の件名をエンコード
+$encoded_auto_subject = mb_encode_mimeheader($auto_reply_subject, "UTF-8", "B");
+
+// 自動返信メールの送信（標準mail()関数を使用）
+$auto_mail_result = mail($email, $encoded_auto_subject, $auto_reply_body, $auto_headers, $additional_params);
 
 // 結果に応じたリダイレクト
 if ($mail_result && $auto_mail_result) {
