@@ -1,6 +1,9 @@
 <?php
 // 【デバッグ用】直接メール送信テスト
 if (isset($_GET['test'])) {
+    // ロリポップのsendmailパスを設定
+    ini_set('sendmail_path', '/usr/sbin/sendmail -t -i');
+    
     mb_language("Japanese");
     mb_internal_encoding("UTF-8");
     
@@ -17,7 +20,8 @@ if (isset($_GET['test'])) {
         echo "届いていない場合は、サーバーのメール設定に問題があります。";
     } else {
         echo "❌ メール送信失敗（mb_send_mail returned false）<br>";
-        echo "PHPのmail()関数が動作していません。";
+        echo "PHPのmail()関数が動作していません。<br>";
+        echo "sendmail_path: " . ini_get('sendmail_path');
     }
     exit;
 }
@@ -165,6 +169,9 @@ error_log("メール送信試行: To={$to}, From={$from_email}, Subject={$subjec
 // 日本語メール送信の設定
 mb_language("Japanese");
 mb_internal_encoding("UTF-8");
+
+// ロリポップのsendmailパスを設定
+ini_set('sendmail_path', '/usr/sbin/sendmail -t -i');
 
 // メール送信（mb_send_mailを使用）
 $mail_result = mb_send_mail($to, $subject, $mail_body, $headers);
