@@ -18,13 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // フォームデータの取得と検証
-$company = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING);
-$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-$phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
-$interest = filter_input(INPUT_POST, 'interest', FILTER_SANITIZE_STRING);
-$inquiry = filter_input(INPUT_POST, 'inquiry', FILTER_SANITIZE_STRING); // ポータル用
-$message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+$company = isset($_POST['company']) ? htmlspecialchars($_POST['company'], ENT_QUOTES, 'UTF-8') : '';
+$name = isset($_POST['name']) ? htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8') : '';
+$email = isset($_POST['email']) ? filter_var($_POST['email'], FILTER_SANITIZE_EMAIL) : '';
+$phone = isset($_POST['phone']) ? htmlspecialchars($_POST['phone'], ENT_QUOTES, 'UTF-8') : '';
+$interest = isset($_POST['interest']) ? htmlspecialchars($_POST['interest'], ENT_QUOTES, 'UTF-8') : '';
+$inquiry = isset($_POST['inquiry']) ? htmlspecialchars($_POST['inquiry'], ENT_QUOTES, 'UTF-8') : ''; // ポータル用
+$message = isset($_POST['message']) ? htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8') : '';
 
 // 必須項目のチェック
 if (empty($name) || empty($email) || empty($message)) {
@@ -195,34 +195,43 @@ if ($mail_result && $auto_mail_result) {
         header('Location: thanks.html?status=success');
     }
 } else {
-    // エラーメッセージを作成
-    $error_message = 'メール送信エラー: ';
-    if (!$mail_result) {
-        $error_message .= '管理者向けメール送信失敗。';
-    }
-    if (!$auto_mail_result) {
-        $error_message .= '自動返信メール送信失敗。';
-    }
-    $error_message .= ' 送信先=' . $to . ', 送信元=' . $from_email;
+    // 詳細なエラー情報を表示
+    echo "<!DOCTYPE html>";
+    echo "<html><head><meta charset='UTF-8'><title>デバッグ情報</title></head><body>";
+    echo "<h2>メール送信デバッグ情報</h2>";
+    echo "<div style='background:#fff3cd;padding:20px;border:1px solid #ffc107;margin:20px;'>";
     
-    // エラーをログに記録
-    error_log($error_message);
+    echo "<h3>送信結果：</h3>";
+    echo "<p>管理者メール送信: " . ($mail_result ? '✅ 成功' : '❌ 失敗') . "</p>";
+    echo "<p>自動返信メール送信: " . ($auto_mail_result ? '✅ 成功' : '❌ 失敗') . "</p>";
     
-    // テスト環境またはデバッグモードの場合はエラーを表示
-    if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1' || isset($_GET['debug'])) {
-        echo "<h2>メール送信エラー</h2>";
-        echo "<p>メールの送信に失敗しました。サーバーの設定を確認してください。</p>";
-        echo "<p>エラー詳細：" . $error_message . "</p>";
-        echo "<p>ロリポップでは、送信元メールアドレスはドメインに紐づいたアドレスを使用する必要があります。</p>";
-        echo "<p><a href='index.html'>トップページに戻る</a></p>";
-        exit;
-    }
+    echo "<h3>送信パラメータ：</h3>";
+    echo "<p>送信先: " . htmlspecialchars($to) . "</p>";
+    echo "<p>送信元: " . htmlspecialchars($from_email) . "</p>";
+    echo "<p>件名: " . htmlspecialchars($subject) . "</p>";
+    echo "<p>Reply-To: " . htmlspecialchars($email) . "</p>";
     
-    // エラー時も送信元に応じてリダイレクト
-    if ($is_portal) {
-        header('Location: user-portal/index.php?error=mail');
-    } else {
-        header('Location: form-error.html');
-    }
+    echo "<h3>PHP環境：</h3>";
+    echo "<p>mb_send_mail関数: " . (function_exists('mb_send_mail') ? '✅ 利用可能' : '❌ 利用不可') . "</p>";
+    echo "<p>PHP Version: " . phpversion() . "</p>";
+    echo "<p>sendmail_path: " . ini_get('sendmail_path') . "</p>";
+    
+    echo "<h3>サーバー情報：</h3>";
+    echo "<p>SERVER_NAME: " . $_SERVER['SERVER_NAME'] . "</p>";
+    echo "<p>HTTP_REFERER: " . htmlspecialchars($referrer) . "</p>";
+    
+    echo "<hr>";
+    echo "<p><strong>考えられる原因：</strong></p>";
+    echo "<ul>";
+    echo "<li>ロリポップのメールサーバー設定に問題がある</li>";
+    echo "<li>info@angels-healing.comのメールボックスが満杯</li>";
+    echo "<li>ロリポップ側で一時的なメール送信制限がかかっている</li>";
+    echo "<li>SPF/DKIMレコードの問題</li>";
+    echo "</ul>";
+    
+    echo "<p><a href='index.html' style='display:inline-block;padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;margin-top:20px;'>トップページに戻る</a></p>";
+    echo "</div>";
+    echo "</body></html>";
+    exit;
 }
 ?>
