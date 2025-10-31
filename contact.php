@@ -114,6 +114,10 @@ $headers = "From: {$from_email}\r\n";
 $headers .= "Reply-To: {$email}\r\n"; // 返信先はユーザーのメールアドレス
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
+// ロリポップ用の日本語メール設定（必須）
+mb_language("Japanese");
+mb_internal_encoding("UTF-8");
+
 // メール送信（ロリポップ環境に最適化）
 if (function_exists('mb_send_mail')) {
     $mail_result = mb_send_mail($to, $subject, $mail_body, $headers);
