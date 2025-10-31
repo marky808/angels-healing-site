@@ -118,9 +118,6 @@ $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 mb_language("Japanese");
 mb_internal_encoding("UTF-8");
 
-// 件名と本文をUTF-8でエンコード
-$encoded_subject = mb_encode_mimeheader($subject, "UTF-8", "B");
-
 // メール送信パラメータ
 $additional_params = "-f info@angels-healing.com";
 
@@ -129,17 +126,16 @@ error_log("=== メール送信開始 ===");
 error_log("To: " . $to);
 error_log("From: " . $from_email);
 error_log("Subject: " . $subject);
-error_log("Encoded Subject: " . $encoded_subject);
 error_log("Reply-To: " . $email);
 error_log("Headers: " . str_replace("\r\n", " | ", $headers));
 error_log("Additional Params: " . $additional_params);
 error_log("Body length: " . strlen($mail_body));
 
-// メール送信（標準mail()関数を使用）
-$mail_result = mail($to, $encoded_subject, $mail_body, $headers, $additional_params);
+// ロリポップではmb_send_mail()を推奨（件名のエンコード不要）
+$mail_result = mb_send_mail($to, $subject, $mail_body, $headers, $additional_params);
 
 // デバッグ：送信結果をログに記録
-error_log("mail() result: " . ($mail_result ? "TRUE" : "FALSE"));
+error_log("mb_send_mail() result: " . ($mail_result ? "TRUE" : "FALSE"));
 error_log("=== メール送信終了 ===");
 
 // 自動返信メールの設定
@@ -200,11 +196,8 @@ $auto_headers = "From: info@angels-healing.com\r\n";
 $auto_headers .= "Reply-To: info@angels-healing.com\r\n";
 $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-// 自動返信の件名をエンコード
-$encoded_auto_subject = mb_encode_mimeheader($auto_reply_subject, "UTF-8", "B");
-
-// 自動返信メールの送信（標準mail()関数を使用）
-$auto_mail_result = mail($email, $encoded_auto_subject, $auto_reply_body, $auto_headers, $additional_params);
+// 自動返信メールの送信（mb_send_mail()を使用）
+$auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers, $additional_params);
 
 // 結果に応じたリダイレクト
 if ($mail_result) {
@@ -218,7 +211,10 @@ if ($mail_result) {
 } else {
     // エラーをログに記録
     error_log('FAILED: メール送信失敗: To=' . $to . ', From=' . $from_email);
-    error_log('FAILED: PHPエラー: ' . error_get_last()['message']);
+    $last_error = error_get_last();
+    if ($last_error) {
+        error_log('FAILED: PHPエラー: ' . $last_error['message']);
+    }
     
     // 詳細なエラー情報を表示
     echo "<!DOCTYPE html>";
@@ -230,10 +226,17 @@ if ($mail_result) {
     echo "<p>送信元: " . htmlspecialchars($from_email) . "</p>";
     echo "<p>PHPバージョン: " . phpversion() . "</p>";
     echo "<p>sendmail_path: " . ini_get('sendmail_path') . "</p>";
-    $last_error = error_get_last();
     if ($last_error) {
         echo "<p>最後のエラー: " . htmlspecialchars($last_error['message']) . "</p>";
     }
+    echo "<hr>";
+    echo "<h3>考えられる原因：</h3>";
+    echo "<ul>";
+    echo "<li><strong>ロリポップでmail()関数の使用が制限されている</strong></li>";
+    echo "<li>sendmailの設定に問題がある</li>";
+    echo "<li>セーフモードやopen_basedir制限でブロックされている</li>";
+    echo "</ul>";
+    echo "<p>ロリポップのサポートに連絡して、PHPのmail()関数が使用可能か確認してください。</p>";
     echo "<p><a href='index.html' style='display:inline-block;padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;margin-top:20px;'>トップページに戻る</a></p>";
     echo "</div>";
     echo "</body></html>";
