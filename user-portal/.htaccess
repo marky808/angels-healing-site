@@ -1,0 +1,26 @@
+# セキュリティ設定
+Options -Indexes
+
+# PHPセッション設定
+php_value session.cookie_httponly 1
+php_value session.use_strict_mode 1
+
+# 利用者ポータルのリダイレクト設定
+RewriteEngine On
+
+# ディレクトリインデックス（ログインページを最優先）
+DirectoryIndex login.php
+
+# index.htmlへのアクセスをindex.phpにリダイレクト
+RewriteRule ^index\.html$ index.php [R=301,L]
+
+# therapists.htmlなど他のHTMLファイルもPHPにリダイレクト
+RewriteRule ^therapists\.html$ therapists.php [QSA,R=301,L]
+RewriteRule ^therapist-detail\.html$ therapist-detail.php [QSA,R=301,L]
+
+# キャッシュ無効化（セッション管理のため）
+<FilesMatch "\.(php)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+</FilesMatch>

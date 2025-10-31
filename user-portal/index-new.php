@@ -1,3 +1,7 @@
+<?php
+require_once 'auth.php';
+requireAuth('index.php');
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -40,7 +44,7 @@
                     </div>
                     <h3>リラクゼーション系</h3>
                     <p>お客様の悩みや疲れに寄り添い、内面からのケアを提供します</p>
-                    <a href="therapists.html?category=relaxation" class="btn">詳細を見る</a>
+                    <a href="therapists.php?category=relaxation" class="btn">詳細を見る</a>
                 </div>
                 
                 <div class="category-card category-2">
@@ -49,7 +53,7 @@
                     </div>
                     <h3>美容系</h3>
                     <p>お肌や身体の悩みに具体的にアプローチします</p>
-                    <a href="therapists.html?category=beauty" class="btn">詳細を見る</a>
+                    <a href="therapists.php?category=beauty" class="btn">詳細を見る</a>
                 </div>
                 
                 <div class="category-card category-3">
@@ -58,7 +62,7 @@
                     </div>
                     <h3>医療系</h3>
                     <p>国家資格保有者による施術</p>
-                    <a href="therapists.html?category=medical" class="btn">詳細を見る</a>
+                    <a href="therapists.php?category=medical" class="btn">詳細を見る</a>
                 </div>
                 
                 <div class="category-card category-4">
@@ -67,7 +71,7 @@
                     </div>
                     <h3>その他</h3>
                     <p>その他のカテゴリー</p>
-                    <a href="therapists.html?category=other" class="btn">詳細を見る</a>
+                    <a href="therapists.php?category=other" class="btn">詳細を見る</a>
                 </div>
             </div>
         </div>
@@ -86,7 +90,7 @@
             </div>
             
             <div class="view-all-btn">
-                <a href="therapists.html" class="btn">すべてのセラピストを見る</a>
+                <a href="therapists.php" class="btn">すべてのセラピストを見る</a>
             </div>
         </div>
     </section>
@@ -97,22 +101,9 @@
             const therapistsGrid = document.querySelector('.therapists-grid');
             
             try {
-                // デバッグ情報の詳細出力
-                console.log('=== ポータルページ セラピストデータ デバッグ ===');
-                console.log('現在時刻:', new Date().toLocaleString('ja-JP'));
-                console.log('ページURL:', window.location.href);
-                console.log('therapistData オブジェクト:', therapistData);
-                console.log('therapistData のキー:', Object.keys(therapistData));
-                console.log('getAllTherapists 関数の存在:', typeof getAllTherapists === 'function');
-                
                 // セラピストデータから最大8名を表示
                 const allTherapists = getAllTherapists();
-                console.log('取得した全セラピスト数:', allTherapists.length);
-                console.log('セラピスト一覧:', allTherapists.map(t => `${t.name} (ID: ${t.id})`));
-                
                 const featuredTherapists = allTherapists.slice(0, 8);
-                console.log('表示するセラピスト数:', featuredTherapists.length);
-                console.log('表示するセラピスト:', featuredTherapists.map(t => `${t.name} (ID: ${t.id})`));
                 
                 // セラピストカードを生成して追加
                 therapistsGrid.innerHTML = '';
@@ -128,14 +119,12 @@
                                 <p class="therapist-specialty">${therapist.specialty}</p>
                                 <p class="therapist-description">${therapist.description[0]}</p>
                             </div>
-                            <a href="therapist-detail.html?id=${therapist.id}" class="btn">詳細プロフィール</a>
+                            <a href="therapist-detail.php?id=${therapist.id}" class="btn">詳細プロフィール</a>
                         </div>
                     `;
                     
                     therapistsGrid.appendChild(therapistCard);
                 });
-                
-                console.log('セラピストカードの生成完了');
                 
             } catch (error) {
                 console.error('セラピストデータの読み込み中にエラーが発生:', error);
@@ -153,42 +142,8 @@
             </div>
             
             <div class="contact-form">
-                <form action="../contact.php" method="POST">
-                    <!-- お問い合わせフォーム用の設定 -->
-                    <input type="hidden" name="_subject" value="【天使たちの癒し - ユーザーポータル】お問い合わせがありました">
-                    
-                    <div class="form-group">
-                        <label for="name">お名前</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">メールアドレス</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">電話番号</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="inquiry">お問い合わせ内容</label>
-                        <select id="inquiry" name="inquiry">
-                            <option value="">選択してください</option>
-                            <option value="reservation">予約について</option>
-                            <option value="therapist">セラピストについて</option>
-                            <option value="treatment">施術内容について</option>
-                            <option value="other">その他</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">メッセージ</label>
-                        <textarea id="message" name="message" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn">送信する</button>
+                <form action="contact-form.php" method="GET">
+                    <button type="submit" class="btn">お問い合わせフォームへ</button>
                 </form>
             </div>
         </div>
@@ -196,6 +151,11 @@
 
     <!-- フッターコンポーネント -->
     <div id="footer" data-component="portal-footer"></div>
+
+    <!-- ログアウト用のリンク -->
+    <div style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+        <a href="?logout=1" style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; color: #666; text-decoration: none; font-size: 12px;">ログアウト</a>
+    </div>
 
     <script src="../assets/js/load-components.js"></script>
     <script src="../assets/js/main.js"></script>

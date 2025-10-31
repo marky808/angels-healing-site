@@ -123,6 +123,7 @@ body {
     padding: 50px 0;
 }
 
+.category-grid,
 .categories-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -631,5 +632,169 @@ body.portal-menu-open {
     
     .portal-header .nav-menu {
         display: none;
+    }
+}
+
+/* Portal Therapists Section */
+.portal-therapists {
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+.portal-therapists .section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.more-therapists {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Portal Features Section */
+.portal-features {
+    padding: 60px 0;
+    background-color: var(--light-bg);
+}
+
+.portal-features .section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.feature-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #666;
+}
+
+/* Portal CTA Section */
+.portal-cta {
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #3d6a4b 100%);
+    color: white;
+    text-align: center;
+}
+
+.portal-cta h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.portal-cta p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    opacity: 0.95;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-buttons .btn {
+    min-width: 180px;
+}
+
+.cta-buttons .btn-outline {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+}
+
+.cta-buttons .btn-outline:hover {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+/* Category Count */
+.category-count {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* Section Title */
+.section-title h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    font-size: 1.05rem;
+    color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .category-grid,
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .portal-hero h2 {
+        font-size: 1.5rem;
+    }
+    
+    .portal-cta h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-grid,
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-buttons .btn {
+        width: 100%;
+        max-width: 250px;
     }
 }

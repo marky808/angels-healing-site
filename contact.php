@@ -1,20 +1,95 @@
 <?php
 // PHPによるお問い合わせフォーム処理
 
-// 送信元のリファラーを検証
-$referrer = $_SERVER['HTTP_REFERER'] ?? '';
-// ローカル環境用にlocalhost/127.0.0.1も許可
-if (strpos($referrer, 'angels-healing.com') === false && 
-    strpos($referrer, 'frenchkiss.jp-angels-healing') === false &&
-    strpos($referrer, 'localhost') === false && 
-    strpos($referrer, '127.0.0.1') === false) {
-    die('不正なリクエストです。');
-}
-
-// POSTデータの取得と検証
+// 1. POSTメソッドのチェック
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.html');
     exit;
+}
+
+// 2. リファラーの厳密な検証
+$referrer = $_SERVER['HTTP_REFERER'] ?? '';
+$allowed_referrers = [
+    'https://angels-healing.com/',
+    'https://www.angels-healing.com/',
+    'https://frenchkiss.jp-angels-healing/',
+    'http://localhost/',
+    'http://127.0.0.1/'
+];
+
+$is_valid_referrer = false;
+foreach ($allowed_referrers as $allowed) {
+    if (strpos($referrer, $allowed) === 0) {
+        $is_valid_referrer = true;
+        break;
+    }
+}
+
+if (!$is_valid_referrer && !empty($referrer)) {
+    error_log('Invalid referrer blocked: ' . $referrer . ' from IP: ' . $_SERVER['REMOTE_ADDR']);
+    die('不正なリクエストです。');
+}
+
+// 3. ユーザーポータルからのリクエストかを厳密に判定
+$is_portal = false;
+foreach ($allowed_referrers as $allowed) {
+    if (strpos($referrer, $allowed . 'user-portal/') === 0) {
+        $is_portal = true;
+        break;
+    }
+}
+
+// 4. reCAPTCHA v3の必須検証（ポータル以外）
+if (!$is_portal) {
+    // reCAPTCHA v3トークンの取得
+    $recaptcha_token = filter_input(INPUT_POST, 'g-recaptcha-response', FILTER_SANITIZE_STRING);
+    
+    if (empty($recaptcha_token)) {
+        error_log('reCAPTCHA token missing. Referrer: ' . $referrer . ', IP: ' . $_SERVER['REMOTE_ADDR']);
+        header('Location: form-error.html');
+        exit;
+    }
+    
+    // reCAPTCHA v3シークレットキー
+    $recaptcha_secret = '6LeocfwrAAAAAG8PCr97naTbztmkv32BQTga8kCp';
+    
+    // Google reCAPTCHA APIに検証リクエストを送信
+    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    $recaptcha_data = array(
+        'secret' => $recaptcha_secret,
+        'response' => $recaptcha_token,
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    );
+    
+    $options = array(
+        'http' => array(
+            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
+            'content' => http_build_query($recaptcha_data),
+            'timeout' => 10
+        )
+    );
+    
+    $context = stream_context_create($options);
+    $verify_response = @file_get_contents($recaptcha_url, false, $context);
+    
+    if ($verify_response === false) {
+        error_log('reCAPTCHA API connection failed. IP: ' . $_SERVER['REMOTE_ADDR']);
+        header('Location: form-error.html');
+        exit;
+    }
+    
+    $response_data = json_decode($verify_response);
+    
+    // reCAPTCHA検証結果のチェック（スコア0.5未満は拒否）
+    if (!$response_data->success || $response_data->score < 0.5) {
+        error_log('reCAPTCHA verification failed. Score: ' . ($response_data->score ?? 'N/A') . ', IP: ' . $_SERVER['REMOTE_ADDR'] . ', Referrer: ' . $referrer);
+        header('Location: form-error.html');
+        exit;
+    }
+    
+    // スコアをログに記録
+    error_log('reCAPTCHA passed. Score: ' . $response_data->score . ', IP: ' . $_SERVER['REMOTE_ADDR']);
 }
 
 // フォームデータの取得と検証
@@ -31,7 +106,7 @@ if (empty($name) || empty($email) || empty($message)) {
     // リファラーに基づいてリダイレクト先を決定
     $referrer = $_SERVER['HTTP_REFERER'] ?? '';
     if (strpos($referrer, 'user-portal') !== false) {
-        header('Location: user-portal/index.html?error=required');
+        header('Location: user-portal/index.php?error=required');
     } else {
         header('Location: index.html?error=required');
     }
@@ -43,7 +118,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     // リファラーに基づいてリダイレクト先を決定
     $referrer = $_SERVER['HTTP_REFERER'] ?? '';
     if (strpos($referrer, 'user-portal') !== false) {
-        header('Location: user-portal/index.html?error=email');
+        header('Location: user-portal/index.php?error=email');
     } else {
         header('Location: index.html?error=email');
     }
@@ -202,7 +277,7 @@ if ($auto_mail_result) {
 if ($mail_result) {
     // 管理者向けメールが送信できればOK（自動返信は失敗してもエラーにしない）
     if ($is_portal) {
-        header('Location: user-portal/thanks.html?status=success');
+        header('Location: user-portal/thanks.php?status=success');
     } else {
         header('Location: thanks.html?status=success');
     }
@@ -220,7 +295,7 @@ if ($mail_result) {
     
     // エラー時のリダイレクト
     if ($is_portal) {
-        header('Location: user-portal/index.html?error=mail');
+        header('Location: user-portal/index.php?error=mail');
     } else {
         header('Location: form-error.html');
     }

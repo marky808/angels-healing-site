@@ -1,3 +1,7 @@
+<?php
+require_once 'auth.php';
+requireAuth('therapists.php');
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -47,6 +51,11 @@
     <!-- フッターコンポーネント -->
     <div id="footer" data-component="portal-footer"></div>
 
+    <!-- ログアウト用のリンク -->
+    <div style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+        <a href="?logout=1" style="background: rgba(0,0,0,0.1); padding: 5px 10px; border-radius: 5px; color: #666; text-decoration: none; font-size: 12px;">ログアウト</a>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const therapistsGrid = document.getElementById('therapists-grid');
@@ -75,7 +84,7 @@
                             <p class="therapist-specialty">${therapist.specialty}</p>
                             <p class="therapist-description">${therapist.description ? therapist.description[0] : ''}</p>
                         </div>
-                        <a href="therapist-detail.html?id=${therapist.id}" class="btn btn-outline">詳細を見る</a>
+                        <a href="therapist-detail.php?id=${therapist.id}" class="btn btn-outline">詳細を見る</a>
                     </div>
                 `;
                 return card;
