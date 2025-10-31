@@ -84,7 +84,10 @@
             <p style="margin: 0; color: #2a662a; font-weight: bold;">このフォームからのお問い合わせは正常に動作しています</p>
         </div>
         
-        <form action="contact.php" method="POST">
+        <form action="contact.php" method="POST" id="simpleContactForm">
+            <!-- reCAPTCHA v3トークン用の隠しフィールド -->
+            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response-input">
+            
             <div class="form-group">
                 <label for="company">会社名/施設名</label>
                 <input type="text" id="company" name="company" required>
@@ -128,54 +131,89 @@
             このフォームからの送信に問題がある場合は、<br>
             直接 <a href="mailto:info@angels-healing.com">info@angels-healing.com</a> までメールでお問い合わせください。
         </p>
+        
+        <p style="font-size: 12px; color: #999; margin-top: 10px; text-align: center;">
+            このサイトはreCAPTCHAによって保護されており、Googleの
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">プライバシーポリシー</a>と
+            <a href="https://policies.google.com/terms" target="_blank" rel="noopener">利用規約</a>が適用されます。
+        </p>
     </div>
 
     <!-- Google reCAPTCHA v3 -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC"></script>
     <script>
+        console.log('=== Simple Contact Form - reCAPTCHA読み込み開始 ===');
+        
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            let isRecaptchaProcessing = false; // reCAPTCHA処理中フラグ
+            const form = document.getElementById('simpleContactForm');
+            if (!form) {
+                console.error('❌ フォームが見つかりません');
+                return;
+            }
+            
+            console.log('✅ フォームを発見しました');
+            
+            const submitButton = form.querySelector('button[type="submit"]');
             
             form.addEventListener('submit', function(event) {
-                // reCAPTCHA処理済みの場合は通常送信
-                if (isRecaptchaProcessing) {
-                    console.log('reCAPTCHAトークン設定済み。フォームを送信します。');
-                    return true;
+                console.log('🚀 フォーム送信イベント発火');
+                
+                event.preventDefault();
+                event.stopPropagation();
+                
+                console.log('⏸️  フォーム送信を一時停止 - reCAPTCHA検証を実行中...');
+                
+                // grecaptchaが読み込まれているか確認
+                if (typeof grecaptcha === 'undefined') {
+                    console.error('❌ reCAPTCHAが読み込まれていません');
+                    alert('セキュリティ検証の読み込みに失敗しました。ページを再読み込みしてください。');
+                    return;
                 }
                 
-                // reCAPTCHA処理前の場合は一旦停止
-                event.preventDefault();
+                console.log('✅ grecaptchaオブジェクトが存在します');
                 
-                console.log('reCAPTCHA検証を実行中...');
+                // 送信ボタンを無効化
+                const originalText = submitButton.textContent;
+                submitButton.disabled = true;
+                submitButton.textContent = '送信中...';
                 
+                // reCAPTCHA v3トークンを取得
                 grecaptcha.ready(function() {
-                    grecaptcha.execute('6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC', {action: 'submit'}).then(function(token) {
-                        // トークンを隠しフィールドに設定
-                        let recaptchaInput = form.querySelector('input[name="g-recaptcha-response"]');
-                        if (!recaptchaInput) {
-                            recaptchaInput = document.createElement('input');
-                            recaptchaInput.type = 'hidden';
-                            recaptchaInput.name = 'g-recaptcha-response';
-                            form.appendChild(recaptchaInput);
-                        }
-                        recaptchaInput.value = token;
-                        
-                        console.log('reCAPTCHAトークン取得完了: ' + token.substring(0, 20) + '...');
-                        
-                        // フラグを立てて再送信
-                        isRecaptchaProcessing = true;
-                        
-                        // HTMLFormElement.submit()ではなく、submitイベントを再トリガー
-                        const submitEvent = new Event('submit', {
-                            bubbles: true,
-                            cancelable: true
+                    console.log('📡 grecaptcha.ready - トークン取得開始');
+                    
+                    grecaptcha.execute('6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC', {action: 'contact_form'})
+                        .then(function(token) {
+                            console.log('✅ reCAPTCHAトークン取得成功: ' + token.substring(0, 30) + '...');
+                            
+                            // 隠しフィールドにトークンをセット
+                            const tokenInput = document.getElementById('g-recaptcha-response-input');
+                            if (tokenInput) {
+                                tokenInput.value = token;
+                                console.log('✅ トークンを隠しフィールドにセットしました');
+                            } else {
+                                console.error('❌ 隠しフィールドが見つかりません');
+                            }
+                            
+                            console.log('📤 フォームをPHPに送信します...');
+                            
+                            // フォームを送信
+                            form.submit();
+                            
+                            console.log('✅ form.submit() 実行完了');
+                        })
+                        .catch(function(error) {
+                            console.error('❌ reCAPTCHAエラー:', error);
+                            alert('セキュリティ検証に失敗しました。もう一度お試しください。');
+                            
+                            // ボタンを再度有効化
+                            submitButton.disabled = false;
+                            submitButton.textContent = originalText;
                         });
-                        form.dispatchEvent(submitEvent);
-                    });
                 });
-            });
+            }, false);
         });
+        
+        console.log('=== Simple Contact Form - スクリプト読み込み完了 ===');
     </script>
 </body>
 </html>
