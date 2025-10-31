@@ -19,13 +19,15 @@ if (isset($_GET['test'])) {
     
     echo "<h3>メール送信テスト実行中...</h3>";
     
-    // mail()関数でテスト（シンプルな形式）
-    $additional_params = '-f info@angels-healing.com';
+    // 日本語メール送信の設定
+    mb_language("Japanese");
+    mb_internal_encoding("UTF-8");
     
+    // mb_send_mail()でテスト（元の動作していた方法）
     $headers = "From: info@angels-healing.com\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
     
-    $result = mail($to, $subject, $message, $headers, $additional_params);
+    $result = mb_send_mail($to, $subject, $message, $headers);
     
     echo "mail()関数結果: " . ($result ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
     
@@ -190,16 +192,17 @@ $from_email = 'info@angels-healing.com';
 // メール送信前にログを記録
 error_log("メール送信試行: To={$to}, From={$from_email}, Subject={$subject}");
 
-// シンプルなヘッダー（元の動作していた形式）
+// 日本語メール送信の設定
+mb_language("Japanese");
+mb_internal_encoding("UTF-8");
+
+// シンプルなヘッダー
 $headers = "From: {$from_email}\r\n";
 $headers .= "Reply-To: {$email}\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-// 追加パラメータ（エンベロープFrom）
-$additional_params = "-f info@angels-healing.com";
-
-// mail()関数で送信
-$mail_result = mail($to, $subject, $mail_body, $headers, $additional_params);
+// メール送信（mb_send_mailを使用、第5引数なし）
+$mail_result = mb_send_mail($to, $subject, $mail_body, $headers);
 
 // 送信結果をログに記録
 if ($mail_result) {
@@ -269,13 +272,13 @@ $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 // 自動返信メール送信前にログを記録
 error_log("自動返信メール送信試行: To={$email}, From=info@angels-healing.com");
 
-// 自動返信のヘッダー（シンプルな形式）
+// 自動返信のヘッダー
 $auto_headers = "From: info@angels-healing.com\r\n";
 $auto_headers .= "Reply-To: info@angels-healing.com\r\n";
 $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-// 自動返信メール送信
-$auto_mail_result = mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers, $additional_params);
+// 自動返信メール送信（mb_send_mailを使用）
+$auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
 
 // 送信結果をログに記録
 if ($auto_mail_result) {
@@ -302,11 +305,10 @@ if ($mail_result) {
     echo "<h2>❌ メール送信エラー</h2>";
     echo "<div style='background:#f8d7da;padding:20px;border:1px solid #f5c6cb;margin:20px;'>";
     echo "<h3>エラー詳細：</h3>";
-    echo "<p><b>mail()関数がFALSEを返しました（標準mail()使用中）</b></p>";
+    echo "<p><b>mb_send_mail()がFALSEを返しました</b></p>";
     echo "<p>送信先: " . htmlspecialchars($to) . "</p>";
     echo "<p>送信元: " . htmlspecialchars($from_email) . "</p>";
     echo "<p>件名: " . htmlspecialchars($subject) . "</p>";
-    echo "<p>追加パラメータ: " . htmlspecialchars($additional_params) . "</p>";
     echo "<hr>";
     echo "<h3>PHP設定：</h3>";
     echo "<p>PHP Version: " . phpversion() . "</p>";
@@ -318,21 +320,9 @@ if ($mail_result) {
     echo "<p>このファイルの最終更新: " . date('Y-m-d H:i:s', filemtime(__FILE__)) . "</p>";
     echo "<p>現在時刻: " . date('Y-m-d H:i:s') . "</p>";
     echo "<hr>";
-    echo "<h3>考えられる原因：</h3>";
-    echo "<ul>";
-    echo "<li><strong>最も可能性が高い：</strong>ロリポップでinfo@angels-healing.comのメールアドレスが作成されていない</li>";
-    echo "<li>PHPのmail()関数がサーバー側で無効化されている</li>";
-    echo "<li>sendmail設定に問題がある</li>";
-    echo "<li>SPFレコードやDKIM設定が不正</li>";
-    echo "</ul>";
-    echo "<hr>";
     echo "<h3>対処方法：</h3>";
-    echo "<ol>";
-    echo "<li><strong>ロリポップのユーザー専用ページにログイン</strong></li>";
-    echo "<li><strong>メール → メール設定・ロリポップ！Webメーラー</strong></li>";
-    echo "<li><strong>info@angels-healing.com が存在するか確認</strong></li>";
-    echo "<li>存在しない場合は「新規作成」で作成してください</li>";
-    echo "</ol>";
+    echo "<p>今朝まで動作していたmb_send_mail()に戻しました。</p>";
+    echo "<p>まだ失敗する場合は、ロリポップのサーバー設定が変更された可能性があります。</p>";
     echo "<p><a href='index.html' style='display:inline-block;padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;margin-top:20px;'>トップページに戻る</a></p>";
     echo "</div>";
     echo "</body></html>";
