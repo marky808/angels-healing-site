@@ -121,9 +121,24 @@ mb_internal_encoding("UTF-8");
 // 件名と本文をUTF-8でエンコード
 $encoded_subject = mb_encode_mimeheader($subject, "UTF-8", "B");
 
+// デバッグ：送信前の情報をログに記録
+error_log("=== メール送信開始 ===");
+error_log("To: " . $to);
+error_log("From: " . $from_email);
+error_log("Subject: " . $subject);
+error_log("Encoded Subject: " . $encoded_subject);
+error_log("Reply-To: " . $email);
+error_log("Headers: " . str_replace("\r\n", " | ", $headers));
+error_log("Additional Params: " . $additional_params);
+error_log("Body length: " . strlen($mail_body));
+
 // メール送信（標準mail()関数を使用）
 $additional_params = "-f info@angels-healing.com";
 $mail_result = mail($to, $encoded_subject, $mail_body, $headers, $additional_params);
+
+// デバッグ：送信結果をログに記録
+error_log("mail() result: " . ($mail_result ? "TRUE" : "FALSE"));
+error_log("=== メール送信終了 ===");
 
 // 自動返信メールの設定
 $auto_reply_subject = "【天使たちの癒し】お問い合わせありがとうございます";
@@ -190,48 +205,33 @@ $encoded_auto_subject = mb_encode_mimeheader($auto_reply_subject, "UTF-8", "B");
 $auto_mail_result = mail($email, $encoded_auto_subject, $auto_reply_body, $auto_headers, $additional_params);
 
 // 結果に応じたリダイレクト
-if ($mail_result && $auto_mail_result) {
-    // 送信元に応じてリダイレクト先を変更
+if ($mail_result) {
+    // 管理者向けメールが送信できればOK（自動返信は相手のメールサーバー次第）
+    error_log("SUCCESS: メール送信成功、thanks.htmlにリダイレクト");
     if ($is_portal) {
         header('Location: user-portal/thanks.php?status=success');
     } else {
         header('Location: thanks.html?status=success');
     }
 } else {
+    // エラーをログに記録
+    error_log('FAILED: メール送信失敗: To=' . $to . ', From=' . $from_email);
+    error_log('FAILED: PHPエラー: ' . error_get_last()['message']);
+    
     // 詳細なエラー情報を表示
     echo "<!DOCTYPE html>";
-    echo "<html><head><meta charset='UTF-8'><title>デバッグ情報</title></head><body>";
-    echo "<h2>メール送信デバッグ情報</h2>";
-    echo "<div style='background:#fff3cd;padding:20px;border:1px solid #ffc107;margin:20px;'>";
-    
-    echo "<h3>送信結果：</h3>";
-    echo "<p>管理者メール送信: " . ($mail_result ? '✅ 成功' : '❌ 失敗') . "</p>";
-    echo "<p>自動返信メール送信: " . ($auto_mail_result ? '✅ 成功' : '❌ 失敗') . "</p>";
-    
-    echo "<h3>送信パラメータ：</h3>";
+    echo "<html><head><meta charset='UTF-8'><title>メール送信エラー</title></head><body>";
+    echo "<h2>❌ メール送信失敗</h2>";
+    echo "<div style='background:#f8d7da;padding:20px;border:1px solid #f5c6cb;margin:20px;'>";
+    echo "<p><strong>mail()関数がFALSEを返しました</strong></p>";
     echo "<p>送信先: " . htmlspecialchars($to) . "</p>";
     echo "<p>送信元: " . htmlspecialchars($from_email) . "</p>";
-    echo "<p>件名: " . htmlspecialchars($subject) . "</p>";
-    echo "<p>Reply-To: " . htmlspecialchars($email) . "</p>";
-    
-    echo "<h3>PHP環境：</h3>";
-    echo "<p>mb_send_mail関数: " . (function_exists('mb_send_mail') ? '✅ 利用可能' : '❌ 利用不可') . "</p>";
-    echo "<p>PHP Version: " . phpversion() . "</p>";
+    echo "<p>PHPバージョン: " . phpversion() . "</p>";
     echo "<p>sendmail_path: " . ini_get('sendmail_path') . "</p>";
-    
-    echo "<h3>サーバー情報：</h3>";
-    echo "<p>SERVER_NAME: " . $_SERVER['SERVER_NAME'] . "</p>";
-    echo "<p>HTTP_REFERER: " . htmlspecialchars($referrer) . "</p>";
-    
-    echo "<hr>";
-    echo "<p><strong>考えられる原因：</strong></p>";
-    echo "<ul>";
-    echo "<li>ロリポップのメールサーバー設定に問題がある</li>";
-    echo "<li>info@angels-healing.comのメールボックスが満杯</li>";
-    echo "<li>ロリポップ側で一時的なメール送信制限がかかっている</li>";
-    echo "<li>SPF/DKIMレコードの問題</li>";
-    echo "</ul>";
-    
+    $last_error = error_get_last();
+    if ($last_error) {
+        echo "<p>最後のエラー: " . htmlspecialchars($last_error['message']) . "</p>";
+    }
     echo "<p><a href='index.html' style='display:inline-block;padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;margin-top:20px;'>トップページに戻る</a></p>";
     echo "</div>";
     echo "</body></html>";
