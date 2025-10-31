@@ -121,6 +121,9 @@ mb_internal_encoding("UTF-8");
 // 件名と本文をUTF-8でエンコード
 $encoded_subject = mb_encode_mimeheader($subject, "UTF-8", "B");
 
+// メール送信パラメータ
+$additional_params = "-f info@angels-healing.com";
+
 // デバッグ：送信前の情報をログに記録
 error_log("=== メール送信開始 ===");
 error_log("To: " . $to);
@@ -133,7 +136,6 @@ error_log("Additional Params: " . $additional_params);
 error_log("Body length: " . strlen($mail_body));
 
 // メール送信（標準mail()関数を使用）
-$additional_params = "-f info@angels-healing.com";
 $mail_result = mail($to, $encoded_subject, $mail_body, $headers, $additional_params);
 
 // デバッグ：送信結果をログに記録
