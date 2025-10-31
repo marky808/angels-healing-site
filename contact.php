@@ -19,17 +19,13 @@ if (isset($_GET['test'])) {
     
     echo "<h3>メール送信テスト実行中...</h3>";
     
-    // mail()関数でテスト
+    // mail()関数でテスト（シンプルな形式）
     $additional_params = '-f info@angels-healing.com';
-    $encoded_subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
     
-    $headers = "MIME-Version: 1.0\r\n";
+    $headers = "From: info@angels-healing.com\r\n";
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-    $headers .= "Content-Transfer-Encoding: 8bit\r\n";
-    $headers .= "From: info@angels-healing.com\r\n";
-    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
     
-    $result = mail($to, $encoded_subject, $message, $headers, $additional_params);
+    $result = mail($to, $subject, $message, $headers, $additional_params);
     
     echo "mail()関数結果: " . ($result ? '✅ TRUE' : '❌ FALSE') . "<br><br>";
     
@@ -194,22 +190,16 @@ $from_email = 'info@angels-healing.com';
 // メール送信前にログを記録
 error_log("メール送信試行: To={$to}, From={$from_email}, Subject={$subject}");
 
-// 件名を日本語対応にエンコード
-$encoded_subject = "=?UTF-8?B?" . base64_encode($subject) . "?=";
-
-// ヘッダー構築
-$headers = "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-$headers .= "Content-Transfer-Encoding: 8bit\r\n";
-$headers .= "From: =?UTF-8?B?" . base64_encode('天使たちの癒し') . "?= <{$from_email}>\r\n";
+// シンプルなヘッダー（元の動作していた形式）
+$headers = "From: {$from_email}\r\n";
 $headers .= "Reply-To: {$email}\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
 // 追加パラメータ（エンベロープFrom）
 $additional_params = "-f info@angels-healing.com";
 
 // mail()関数で送信
-$mail_result = mail($to, $encoded_subject, $mail_body, $headers, $additional_params);
+$mail_result = mail($to, $subject, $mail_body, $headers, $additional_params);
 
 // 送信結果をログに記録
 if ($mail_result) {
@@ -279,19 +269,13 @@ $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 // 自動返信メール送信前にログを記録
 error_log("自動返信メール送信試行: To={$email}, From=info@angels-healing.com");
 
-// 自動返信の件名をエンコード
-$encoded_auto_subject = "=?UTF-8?B?" . base64_encode($auto_reply_subject) . "?=";
-
-// 自動返信のヘッダー
-$auto_headers = "MIME-Version: 1.0\r\n";
-$auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-$auto_headers .= "Content-Transfer-Encoding: 8bit\r\n";
-$auto_headers .= "From: =?UTF-8?B?" . base64_encode('天使たちの癒し') . "?= <info@angels-healing.com>\r\n";
+// 自動返信のヘッダー（シンプルな形式）
+$auto_headers = "From: info@angels-healing.com\r\n";
 $auto_headers .= "Reply-To: info@angels-healing.com\r\n";
-$auto_headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+$auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
 // 自動返信メール送信
-$auto_mail_result = mail($email, $encoded_auto_subject, $auto_reply_body, $auto_headers, $additional_params);
+$auto_mail_result = mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers, $additional_params);
 
 // 送信結果をログに記録
 if ($auto_mail_result) {
