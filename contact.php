@@ -1,4 +1,27 @@
 <?php
+// 【デバッグ用】直接メール送信テスト
+if (isset($_GET['test'])) {
+    mb_language("Japanese");
+    mb_internal_encoding("UTF-8");
+    
+    $test_result = mb_send_mail(
+        'info@angels-healing.com',
+        'テスト送信',
+        'これはPHPからのテストメールです。',
+        "From: info@angels-healing.com\r\n"
+    );
+    
+    if ($test_result) {
+        echo "✅ メール送信成功（mb_send_mail returned true）<br>";
+        echo "info@angels-healing.com を確認してください。<br>";
+        echo "届いていない場合は、サーバーのメール設定に問題があります。";
+    } else {
+        echo "❌ メール送信失敗（mb_send_mail returned false）<br>";
+        echo "PHPのmail()関数が動作していません。";
+    }
+    exit;
+}
+
 // PHPによるお問い合わせフォーム処理
 
 // 1. POSTメソッドのチェック
@@ -139,8 +162,12 @@ $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 // メール送信前にログを記録
 error_log("メール送信試行: To={$to}, From={$from_email}, Subject={$subject}");
 
-// メール送信（シンプルなmail関数を使用）
-$mail_result = mail($to, $subject, $mail_body, $headers);
+// 日本語メール送信の設定
+mb_language("Japanese");
+mb_internal_encoding("UTF-8");
+
+// メール送信（mb_send_mailを使用）
+$mail_result = mb_send_mail($to, $subject, $mail_body, $headers);
 
 // 送信結果をログに記録
 if ($mail_result) {
@@ -210,8 +237,8 @@ $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 // 自動返信メール送信前にログを記録
 error_log("自動返信メール送信試行: To={$email}, From=info@angels-healing.com");
 
-// 自動返信メールの送信（シンプルなmail関数を使用）
-$auto_mail_result = mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
+// 自動返信メールの送信（mb_send_mailを使用）
+$auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
 
 // 送信結果をログに記録
 if ($auto_mail_result) {
