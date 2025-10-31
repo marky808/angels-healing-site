@@ -18,13 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // フォームデータの取得と検証
-$company = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING);
-$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-$phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
-$interest = filter_input(INPUT_POST, 'interest', FILTER_SANITIZE_STRING);
-$inquiry = filter_input(INPUT_POST, 'inquiry', FILTER_SANITIZE_STRING); // ポータル用
-$message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
+$company = isset($_POST['company']) ? htmlspecialchars($_POST['company'], ENT_QUOTES, 'UTF-8') : '';
+$name = isset($_POST['name']) ? htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8') : '';
+$email = isset($_POST['email']) ? filter_var($_POST['email'], FILTER_SANITIZE_EMAIL) : '';
+$phone = isset($_POST['phone']) ? htmlspecialchars($_POST['phone'], ENT_QUOTES, 'UTF-8') : '';
+$interest = isset($_POST['interest']) ? htmlspecialchars($_POST['interest'], ENT_QUOTES, 'UTF-8') : '';
+$inquiry = isset($_POST['inquiry']) ? htmlspecialchars($_POST['inquiry'], ENT_QUOTES, 'UTF-8') : ''; // ポータル用
+$message = isset($_POST['message']) ? htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8') : '';
 
 // 必須項目のチェック
 if (empty($name) || empty($email) || empty($message)) {
@@ -114,11 +114,17 @@ $headers = "From: {$from_email}\r\n";
 $headers .= "Reply-To: {$email}\r\n"; // 返信先はユーザーのメールアドレス
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-// メール送信（ロリポップ環境に最適化）
-if (function_exists('mb_send_mail')) {
-    $mail_result = mb_send_mail($to, $subject, $mail_body, $headers);
+// メール送信前にログを記録
+error_log("メール送信試行: To={$to}, From={$from_email}, Subject={$subject}");
+
+// メール送信（シンプルなmail関数を使用）
+$mail_result = mail($to, $subject, $mail_body, $headers);
+
+// 送信結果をログに記録
+if ($mail_result) {
+    error_log("管理者向けメール送信成功");
 } else {
-    $mail_result = mail($to, $subject, $mail_body, $headers);
+    error_log("管理者向けメール送信失敗");
 }
 
 // 自動返信メールの設定
@@ -179,46 +185,40 @@ $auto_headers = "From: info@angels-healing.com\r\n";
 $auto_headers .= "Reply-To: info@angels-healing.com\r\n";
 $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-// 自動返信メールの送信（ロリポップ環境に最適化）
-if (function_exists('mb_send_mail')) {
-    $auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
+// 自動返信メール送信前にログを記録
+error_log("自動返信メール送信試行: To={$email}, From=info@angels-healing.com");
+
+// 自動返信メールの送信（シンプルなmail関数を使用）
+$auto_mail_result = mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
+
+// 送信結果をログに記録
+if ($auto_mail_result) {
+    error_log("自動返信メール送信成功");
 } else {
-    $auto_mail_result = mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers);
+    error_log("自動返信メール送信失敗: To={$email}");
 }
 
 // 結果に応じたリダイレクト
-if ($mail_result && $auto_mail_result) {
-    // 送信元に応じてリダイレクト先を変更
+if ($mail_result) {
+    // 管理者向けメールが送信できればOK（自動返信は失敗してもエラーにしない）
     if ($is_portal) {
         header('Location: user-portal/thanks.html?status=success');
     } else {
         header('Location: thanks.html?status=success');
     }
 } else {
-    // エラーメッセージを作成
-    $error_message = 'メール送信エラー: ';
-    if (!$mail_result) {
-        $error_message .= '管理者向けメール送信失敗。';
-    }
-    if (!$auto_mail_result) {
-        $error_message .= '自動返信メール送信失敗。';
-    }
-    $error_message .= ' 送信先=' . $to . ', 送信元=' . $from_email;
-    
-    // エラーをログに記録
-    error_log($error_message);
+    // 管理者向けメール送信失敗時のみエラー
+    error_log('管理者向けメール送信失敗: To=' . $to . ', From=' . $from_email);
     
     // テスト環境またはデバッグモードの場合はエラーを表示
     if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1' || isset($_GET['debug'])) {
         echo "<h2>メール送信エラー</h2>";
-        echo "<p>メールの送信に失敗しました。サーバーの設定を確認してください。</p>";
-        echo "<p>エラー詳細：" . $error_message . "</p>";
-        echo "<p>ロリポップでは、送信元メールアドレスはドメインに紐づいたアドレスを使用する必要があります。</p>";
+        echo "<p>メールの送信に失敗しました。</p>";
         echo "<p><a href='index.html'>トップページに戻る</a></p>";
         exit;
     }
     
-    // エラー時も送信元に応じてリダイレクト
+    // エラー時のリダイレクト
     if ($is_portal) {
         header('Location: user-portal/index.html?error=mail');
     } else {
