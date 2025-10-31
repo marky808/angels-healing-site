@@ -221,9 +221,19 @@
             // 送信ボタンを取得
             const submitButton = form.querySelector('button[type="submit"]');
             
+            // 処理中フラグ
+            let isSubmitting = false;
+            
             // reCAPTCHA v3の準備
             form.addEventListener('submit', function(event) {
                 console.log('🚀 SUBMIT イベント発火！');
+                
+                // 既に処理中の場合はスキップ
+                if (isSubmitting) {
+                    console.log('⚠️  既に送信処理中です');
+                    event.preventDefault();
+                    return;
+                }
                 
                 // デフォルトの送信を一旦停止
                 event.preventDefault();
@@ -244,6 +254,7 @@
                 const originalText = submitButton.textContent;
                 submitButton.disabled = true;
                 submitButton.textContent = '送信中...';
+                isSubmitting = true;
                 console.log('🔒 送信ボタンを無効化しました');
                 
                 // reCAPTCHA v3トークンを取得
@@ -262,6 +273,7 @@
                                 console.log('✅ トークンを隠しフィールドにセットしました');
                             } else {
                                 console.error('❌ 隠しフィールド(#g-recaptcha-response-input)が見つかりません');
+                                // フィールドがなくても続行
                             }
                             
                             // フォームデータを確認
@@ -277,19 +289,28 @@
                             
                             console.log('📤 フォームをPHPに送信します...');
                             console.log('送信先:', form.action);
+                            console.log('送信方法: HTMLFormElement.prototype.submit.call()');
                             
-                            // フォームを送信
-                            form.submit();
-                            
-                            console.log('✅ form.submit() 実行完了');
+                            // ネイティブのsubmit()メソッドを直接呼び出し（イベントリスナーをバイパス）
+                            try {
+                                HTMLFormElement.prototype.submit.call(form);
+                                console.log('✅ HTMLFormElement.prototype.submit.call(form) 実行完了');
+                            } catch (error) {
+                                console.error('❌ フォーム送信エラー:', error);
+                                alert('フォームの送信に失敗しました。もう一度お試しください。');
+                                submitButton.disabled = false;
+                                submitButton.textContent = originalText;
+                                isSubmitting = false;
+                            }
                         })
                         .catch(function(error) {
                             console.error('❌ reCAPTCHAトークン取得エラー:', error);
-                            alert('エラーが発生しました。もう一度お試しください。');
+                            alert('セキュリティ検証に失敗しました。もう一度お試しください。');
                             
                             // ボタンを再度有効化
                             submitButton.disabled = false;
                             submitButton.textContent = originalText;
+                            isSubmitting = false;
                         });
                 });
             }, false);
