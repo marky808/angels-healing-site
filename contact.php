@@ -308,22 +308,37 @@ if ($mail_result) {
         header('Location: thanks.html?status=success');
     }
 } else {
-    // 管理者向けメール送信失敗時のみエラー
+    // 管理者向けメール送信失敗時のエラー詳細を表示
     error_log('管理者向けメール送信失敗: To=' . $to . ', From=' . $from_email);
     
-    // テスト環境またはデバッグモードの場合はエラーを表示
-    if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1' || isset($_GET['debug'])) {
-        echo "<h2>メール送信エラー</h2>";
-        echo "<p>メールの送信に失敗しました。</p>";
-        echo "<p><a href='index.html'>トップページに戻る</a></p>";
-        exit;
-    }
-    
-    // エラー時のリダイレクト
-    if ($is_portal) {
-        header('Location: user-portal/index.php?error=mail');
-    } else {
-        header('Location: form-error.html');
-    }
+    // エラー詳細を表示（デバッグ用）
+    echo "<!DOCTYPE html>";
+    echo "<html><head><meta charset='UTF-8'><title>メール送信エラー</title></head><body>";
+    echo "<h2>❌ メール送信エラー</h2>";
+    echo "<div style='background:#f8d7da;padding:20px;border:1px solid #f5c6cb;margin:20px;'>";
+    echo "<h3>エラー詳細：</h3>";
+    echo "<p><b>mb_send_mail()がFALSEを返しました</b></p>";
+    echo "<p>送信先: " . htmlspecialchars($to) . "</p>";
+    echo "<p>送信元: " . htmlspecialchars($from_email) . "</p>";
+    echo "<p>件名: " . htmlspecialchars($subject) . "</p>";
+    echo "<p>追加パラメータ: " . htmlspecialchars($additional_params) . "</p>";
+    echo "<hr>";
+    echo "<h3>PHP設定：</h3>";
+    echo "<p>PHP Version: " . phpversion() . "</p>";
+    echo "<p>sendmail_path: " . ini_get('sendmail_path') . "</p>";
+    echo "<p>SMTP: " . ini_get('SMTP') . "</p>";
+    echo "<p>smtp_port: " . ini_get('smtp_port') . "</p>";
+    echo "<hr>";
+    echo "<h3>考えられる原因：</h3>";
+    echo "<ul>";
+    echo "<li>ロリポップでinfo@angels-healing.comのメールアドレスが作成されていない</li>";
+    echo "<li>PHPのmail()関数が無効化されている</li>";
+    echo "<li>sendmail設定に問題がある</li>";
+    echo "<li>ファイアウォールやセキュリティ設定でブロックされている</li>";
+    echo "</ul>";
+    echo "<p><a href='index.html' style='display:inline-block;padding:10px 20px;background:#007bff;color:white;text-decoration:none;border-radius:5px;margin-top:20px;'>トップページに戻る</a></p>";
+    echo "</div>";
+    echo "</body></html>";
+    exit;
 }
 ?>
