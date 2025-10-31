@@ -129,5 +129,38 @@
             直接 <a href="mailto:info@angels-healing.com">info@angels-healing.com</a> までメールでお問い合わせください。
         </p>
     </div>
+
+    <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                console.log('reCAPTCHA検証を実行中...');
+                
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC', {action: 'submit'}).then(function(token) {
+                        // トークンを隠しフィールドに設定
+                        let recaptchaInput = form.querySelector('input[name="g-recaptcha-response"]');
+                        if (!recaptchaInput) {
+                            recaptchaInput = document.createElement('input');
+                            recaptchaInput.type = 'hidden';
+                            recaptchaInput.name = 'g-recaptcha-response';
+                            form.appendChild(recaptchaInput);
+                        }
+                        recaptchaInput.value = token;
+                        
+                        console.log('reCAPTCHAトークン取得完了。フォームを送信します。');
+                        
+                        // フォームを送信
+                        form.submit();
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

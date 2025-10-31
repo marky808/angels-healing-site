@@ -17,6 +17,54 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// reCAPTCHA v3の検証（ユーザーポータルからのリクエストは除外）
+$is_portal = strpos($referrer, 'user-portal') !== false;
+
+if (!$is_portal) {
+    // reCAPTCHA v3トークンの取得
+    $recaptcha_token = filter_input(INPUT_POST, 'g-recaptcha-response', FILTER_SANITIZE_STRING);
+    
+    if (empty($recaptcha_token)) {
+        error_log('reCAPTCHA token is missing');
+        header('Location: form-error.html');
+        exit;
+    }
+    
+    // reCAPTCHA v3シークレットキー
+    $recaptcha_secret = '6LeocfwrAAAAAG8PCr97naTbztmkv32BQTga8kCp';
+    
+    // Google reCAPTCHA APIに検証リクエストを送信
+    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    $recaptcha_data = array(
+        'secret' => $recaptcha_secret,
+        'response' => $recaptcha_token,
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    );
+    
+    $options = array(
+        'http' => array(
+            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
+            'content' => http_build_query($recaptcha_data)
+        )
+    );
+    
+    $context = stream_context_create($options);
+    $verify_response = file_get_contents($recaptcha_url, false, $context);
+    $response_data = json_decode($verify_response);
+    
+    // reCAPTCHA検証結果のチェック
+    if (!$response_data->success || $response_data->score < 0.5) {
+        // スパムと判定された場合はログに記録してエラーページへ
+        error_log('reCAPTCHA verification failed. Score: ' . ($response_data->score ?? 'N/A') . ', IP: ' . $_SERVER['REMOTE_ADDR']);
+        header('Location: form-error.html');
+        exit;
+    }
+    
+    // スコアをログに記録（デバッグ用）
+    error_log('reCAPTCHA passed. Score: ' . $response_data->score . ', IP: ' . $_SERVER['REMOTE_ADDR']);
+}
+
 // フォームデータの取得と検証
 $company = filter_input(INPUT_POST, 'company', FILTER_SANITIZE_STRING);
 $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);

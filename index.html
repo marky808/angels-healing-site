@@ -54,7 +54,6 @@
                 <h2 id="instagram-overview-title" class="visually-hidden">Instagram</h2>
                 <p>Instagramで施術の様子を発信しております。<br>
                 <a href="https://www.instagram.com/angels.healing.tokyo/" target="_blank" rel="noopener">公式アカウントを見る</a></p>
-                <p><a class="btn video-btn" href="https://www.instagram.com/reel/DN4loPpEocg/?utm_source=ig_web_copy_link&igsh=c2dhNTJlZHh0cnI0" target="_blank" rel="noopener">施術動画はこちら</a></p>
             </div>
         </div>
     </section>
@@ -184,7 +183,12 @@
             </div>
         </div>
     </section>    <!-- フッターコンポーネント -->
-    <div id="footer" data-component="common-footer"></div>    <script src="assets/js/load-components.js"></script>
+    <div id="footer" data-component="common-footer"></div>
+
+    <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC"></script>
+
+    <script src="assets/js/load-components.js"></script>
     <script src="assets/js/main.js"></script>
     
     <!-- お問い合わせフォーム用のスクリプト -->
@@ -195,16 +199,34 @@
             if (form) {
                 console.log('お問い合わせフォームを発見しました');
                 
-                // フォーム送信時に確認する
+                // reCAPTCHA v3の準備
                 form.addEventListener('submit', function(event) {
-                    // デフォルトの動作を妨げないようにする（他のスクリプトでのpreventDefaultを上書き）
-                    // この関数はイベントバブリングの最初の段階で実行されるようにする
+                    event.preventDefault(); // デフォルト送信を一旦停止
                     event.stopImmediatePropagation();
                     
-                    console.log('フォームを送信します: action=' + form.getAttribute('action'));
+                    console.log('reCAPTCHA検証を実行中...');
                     
-                    // フォームを通常通り送信（他のイベントハンドラを無視）
-                    return true;
+                    // reCAPTCHA v3トークンを取得して送信
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC', {action: 'submit'}).then(function(token) {
+                            // トークンを隠しフィールドに設定
+                            let recaptchaInput = form.querySelector('input[name="g-recaptcha-response"]');
+                            if (!recaptchaInput) {
+                                recaptchaInput = document.createElement('input');
+                                recaptchaInput.type = 'hidden';
+                                recaptchaInput.name = 'g-recaptcha-response';
+                                form.appendChild(recaptchaInput);
+                            }
+                            recaptchaInput.value = token;
+                            
+                            console.log('reCAPTCHAトークン取得完了。フォームを送信します。');
+                            
+                            // フォームを送信
+                            form.submit();
+                        });
+                    });
+                    
+                    return false;
                 }, true); // useCapture=true でイベントキャプチャフェーズで処理
             }
         });
