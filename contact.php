@@ -27,6 +27,61 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// reCAPTCHA 検証（ユーザーポータルからのリクエストは除外）
+$referrer = $_SERVER['HTTP_REFERER'] ?? '';
+if (strpos($referrer, 'user-portal') === false) {
+    $recaptcha_secret = '6LePAP4rAAAAAIoOXMPR8iqF12bAOeo053vSsHsQ'; // シークレットキー
+    $recaptcha_response = $_POST['recaptcha_response'] ?? '';
+
+    if (empty($recaptcha_response)) {
+        error_log('reCAPTCHAエラー: トークンが空です');
+        header('Location: form-error.html');
+        exit;
+    }
+
+    // reCAPTCHA検証リクエスト
+    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    $recaptcha_data = [
+        'secret' => $recaptcha_secret,
+        'response' => $recaptcha_response,
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    ];
+
+    $options = [
+        'http' => [
+            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
+            'content' => http_build_query($recaptcha_data)
+        ]
+    ];
+
+    $context = stream_context_create($options);
+    $recaptcha_result = file_get_contents($recaptcha_url, false, $context);
+    $recaptcha_result = json_decode($recaptcha_result, true);
+
+    // 検証結果をログに記録
+    $score = $recaptcha_result['score'] ?? 0;
+    $action = $recaptcha_result['action'] ?? '';
+    $hostname = $recaptcha_result['hostname'] ?? '';
+    $error_codes = isset($recaptcha_result['error-codes']) ? implode(', ', $recaptcha_result['error-codes']) : 'none';
+
+    error_log(sprintf(
+        'reCAPTCHA検証結果 - スコア: %.2f, アクション: %s, ホスト: %s, エラー: %s, IP: %s',
+        $score,
+        $action,
+        $hostname,
+        $error_codes,
+        $_SERVER['REMOTE_ADDR']
+    ));
+
+    // スコアが0.5未満の場合はボットとみなす
+    if (!isset($recaptcha_result['success']) || $recaptcha_result['success'] !== true || $score < 0.5) {
+        error_log('reCAPTCHA検証失敗: ボットと判定されました');
+        header('Location: form-error.html');
+        exit;
+    }
+}
+
 // フォームデータの取得と検証
 $company = isset($_POST['company']) ? htmlspecialchars($_POST['company'], ENT_QUOTES, 'UTF-8') : '';
 $name = isset($_POST['name']) ? htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8') : '';
@@ -269,7 +324,7 @@ if ($mail_result) {
     if ($last_error) {
         error_log('FAILED: PHPエラー: ' . $last_error['message']);
     }
-    
+
     // 詳細なエラー情報を表示
     echo "<!DOCTYPE html>";
     echo "<html><head><meta charset='UTF-8'><title>メール送信エラー</title></head><body>";
@@ -304,4 +359,3 @@ if ($mail_result) {
     echo "</body></html>";
     exit;
 }
-?>
