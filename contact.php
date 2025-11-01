@@ -75,7 +75,7 @@ if (strpos($referrer, 'user-portal') === false) {
         $_SERVER['REMOTE_ADDR']
     ));
 
-    echo "RecaptchaScore: $score";
+    // echo "RecaptchaScore: $score";
 
     // スコアが0.5未満の場合はボットとみなす
     if (!isset($recaptcha_result['success']) || $recaptcha_result['success'] !== true || $score < 0.5) {
