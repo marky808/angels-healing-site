@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Google reCAPTCHA v3 -->
-    <script src="https://www.google.com/recaptcha/api.js?render=6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdGFv4rAAAAAKrqL6sPlmcSMhlYDiAKJYmBsyTx" async defer></script>
 </head>
 <body>
     <!-- ヘッダーコンポーネント -->
@@ -208,7 +208,7 @@
                 }
                 
                 grecaptcha.ready(function() {
-                    grecaptcha.execute('6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC', {action: 'submit'})
+                    grecaptcha.execute('6LdGFv4rAAAAAKrqL6sPlmcSMhlYDiAKJYmBsyTx', {action: 'submit'})
                         .then(function(token) {
                             // console.log('reCAPTCHAトークン取得完了。フォームを送信します。');
                             document.getElementById('recaptchaResponse').value = token;
