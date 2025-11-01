@@ -117,12 +117,12 @@ EOT;
 }
 
 // 管理者へのメール送信
-$to = 'info@angels-healing.com';
+$to = $_ENV['SMTP_USERNAME'];
 // ロリポップでは送信元メールアドレスは自分のドメインに存在するものにする必要があります
-$from_email = 'info@angels-healing.com'; // ドメインのメールアドレスを使用
+$from_email = $_ENV['SMTP_USERNAME']; // ドメインのメールアドレスを使用
 $headers = "From: {$from_email}\r\n";
 // $headers .= "Reply-To: {$email}\r\n"; // 返信先はユーザーのメールアドレス
-$headers .= "Reply-To: info@angels-healing.com\r\n"; // 返信先はユーザーのメールアドレス
+$headers .= "Reply-To:" . $_ENV['SMTP_USERNAME'] . "\r\n"; // 返信先はユーザーのメールアドレス
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
 // ロリポップ用の日本語メール設定（必須）
@@ -223,8 +223,8 @@ EOT;
 }
 
 // 自動返信メールの送信
-$auto_headers = "From: info@angels-healing.com\r\n";
-$auto_headers .= "Reply-To: info@angels-healing.com\r\n";
+$auto_headers = "From: " . $_ENV['SMTP_USERNAME'] . "\r\n";
+$auto_headers .= "Reply-To: " . $_ENV['SMTP_USERNAME'] . "\r\n";
 $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
 // $auto_mail_result = mb_send_mail($email, $auto_reply_subject, $auto_reply_body, $auto_headers, $additional_params);
@@ -269,7 +269,7 @@ if ($mail_result) {
     if ($last_error) {
         error_log('FAILED: PHPエラー: ' . $last_error['message']);
     }
-    
+
     // 詳細なエラー情報を表示
     echo "<!DOCTYPE html>";
     echo "<html><head><meta charset='UTF-8'><title>メール送信エラー</title></head><body>";
@@ -304,4 +304,3 @@ if ($mail_result) {
     echo "</body></html>";
     exit;
 }
-?>
