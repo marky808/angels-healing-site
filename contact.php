@@ -2,6 +2,11 @@
 // PHPによるお問い合わせフォーム処理
 
 require 'vendor/autoload.php';
+
+// Load environment variables
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
@@ -143,12 +148,12 @@ error_log("Body length: " . strlen($mail_body));
 $mail = new PHPMailer(true);
 try {
     $mail->isSMTP();
-    $mail->Host = 'smtp.lolipop.jp';
+    $mail->Host = $_ENV['SMTP_HOST'];
     $mail->SMTPAuth = true;
-    $mail->Username = 'info@angels-healing.com';
-    $mail->Password = 'ZvC_qD724f_J4X1U';
+    $mail->Username = $_ENV['SMTP_USERNAME'];
+    $mail->Password = $_ENV['SMTP_PASSWORD'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = 465;
+    $mail->Port = $_ENV['SMTP_PORT'];
     $mail->CharSet = 'UTF-8';
     $mail->Encoding = 'base64';
 
@@ -156,7 +161,7 @@ try {
     $mail->addAddress($to);
     $mail->Subject = $subject;
     $mail->Body = $mail_body;
-    // $mail->send();
+    $mail->send();
     $mail_result = true;
     error_log("Mail success");
 } catch (Exception $e) {
@@ -227,12 +232,12 @@ $auto_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 $mail = new PHPMailer(true);
 try {
     $mail->isSMTP();
-    $mail->Host = 'smtp.lolipop.jp';
+    $mail->Host = $_ENV['SMTP_HOST'];
     $mail->SMTPAuth = true;
-    $mail->Username = 'info@angels-healing.com';
-    $mail->Password = 'ZvC_qD724f_J4X1U';
+    $mail->Username = $_ENV['SMTP_USERNAME'];
+    $mail->Password = $_ENV['SMTP_PASSWORD'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = 465;
+    $mail->Port = $_ENV['SMTP_PORT'];
     $mail->CharSet = 'UTF-8';
     $mail->Encoding = 'base64';
 

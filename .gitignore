@@ -14,3 +14,9 @@ node_modules/
 # OS files
 .DS_Store
 Thumbs.db
+
+.env
+vendor/
+latest.zip
+.dev.php
+
