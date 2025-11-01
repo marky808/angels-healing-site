@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // reCAPTCHA 検証（ユーザーポータルからのリクエストは除外）
 $referrer = $_SERVER['HTTP_REFERER'] ?? '';
 if (strpos($referrer, 'user-portal') === false) {
-    $recaptcha_secret = '6LePAP4rAAAAAIoOXMPR8iqF12bAOeo053vSsHsQ'; // シークレットキー
+    $recaptcha_secret = $_ENV['RECAPTCHA_SECRET_KEY']; // シークレットキー
     $recaptcha_response = $_POST['recaptcha_response'] ?? '';
 
     if (empty($recaptcha_response)) {
@@ -60,6 +60,7 @@ if (strpos($referrer, 'user-portal') === false) {
     $recaptcha_result = json_decode($recaptcha_result, true);
 
     // 検証結果をログに記録
+    // $score = 0.2;
     $score = $recaptcha_result['score'] ?? 0;
     $action = $recaptcha_result['action'] ?? '';
     $hostname = $recaptcha_result['hostname'] ?? '';

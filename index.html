@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Google reCAPTCHA v3 -->
-    <script src="https://www.google.com/recaptcha/api.js?render=6LePAP4rAAAAAO9eKXZdZ-ThC8PvZTQDmAdhR49y" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC" async defer></script>
 </head>
 <body>
     <!-- ヘッダーコンポーネント -->
@@ -198,24 +198,24 @@
             // reCAPTCHAトークンを取得してフォーム送信
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
-                console.log('reCAPTCHA検証を実行中...');
+                // console.log('reCAPTCHA検証を実行中...');
                 
                 // reCAPTCHAが読み込まれているか確認
                 if (typeof grecaptcha === 'undefined') {
-                    console.warn('reCAPTCHAが読み込まれていません。通常のフォーム送信を試みます。');
+                    // console.warn('reCAPTCHAが読み込まれていません。通常のフォーム送信を試みます。');
                     form.submit();
                     return;
                 }
                 
                 grecaptcha.ready(function() {
-                    grecaptcha.execute('6LePAP4rAAAAAO9eKXZdZ-ThC8PvZTQDmAdhR49y', {action: 'submit'})
+                    grecaptcha.execute('6LeocfwrAAAAADHsRETBOJwQa3hrrrnB7pQeVjC', {action: 'submit'})
                         .then(function(token) {
-                            console.log('reCAPTCHAトークン取得完了。フォームを送信します。');
+                            // console.log('reCAPTCHAトークン取得完了。フォームを送信します。');
                             document.getElementById('recaptchaResponse').value = token;
                             form.submit();
                         })
                         .catch(function(error) {
-                            console.error('reCAPTCHAエラー:', error);
+                            // console.error('reCAPTCHAエラー:', error);
                             // エラーが発生した場合もフォームを送信（スパムチェックはサーバー側で行う）
                             form.submit();
                         });
