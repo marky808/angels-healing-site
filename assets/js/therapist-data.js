@@ -442,6 +442,40 @@ const therapistData = {
             '../assets/images/sakurazawa2.jpeg',
             '../assets/images/sakurazawa3.jpeg'
         ]
+    },
+    // セラピスト - 中田 陽子
+    '12': {
+        id: '12',
+        name: '中田 陽子',
+        gender: 'female',
+        categories: ['relaxation'],
+        specialities: ['relaxation'],
+        specialty: '足つぼ施術師',
+        photo: '../assets/images/nakata.jpg',
+        thumbnailPhoto: '../assets/images/nakata.jpg',
+        description: [
+            '元小学校教諭です。体を壊しこの足つぼに出会う。体に鞭を打って働く同僚。授業どころではない状態の子ども達。もっと自分の体を大切にしてほしいと退職し活動開始。',
+            '血液や韓方茶の勉強もし、様々な方向から健康をサポート中。教員の経験も生かして教育の相談も受けてます。'
+        ],
+        qualifications: [
+            '「足識食癒施術法」インストラクター'
+        ],
+        courses: [
+            {
+                title: '「足識食癒施術法」による足つぼ施術とプチ食事アドバイス',
+                description: '元小学校教諭が体の大切さに気付き行う、施術だけでは終わらせない足つぼ！血液や韓方茶の知識を活かし、様々な方向から健康をサポートします。',
+                duration: '施術時間: 15分'
+            }
+        ],
+        salon_info: {
+            name: 'SUNSUN',
+            url: 'https://lin.ee/a2PC6u0',
+            description: '自宅でサロンをしています。サロンでは静かな空間で、施術ベットを使用し、全身まで施術を行います。その後は体質に合わせた韓方茶を飲みながら、足湯で体を癒していただきます。施術結果をもとにカウンセリングも行います。全身を流れる血液の大切さに気づいた今では、ご希望で血管と血液の観察をし、そこに大きく影響しているのではないかと考えられている、マイナスイオンでのセラピーも合わせて行っています。ご自分の体と向き合うきっかけ作りとご褒美の時間を併せ持ったサロンです。'
+        },
+        treatment_photos: [
+            '../assets/images/nakata1.jpg',
+            '../assets/images/nakata2.jpg'
+        ]
     }
 };
 
