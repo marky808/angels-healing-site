@@ -406,6 +406,42 @@ const therapistData = {
             '../assets/images/ogino4.jpg',
             '../assets/images/ogino5.jpg'
         ]
+    },
+    // セラピスト - 桜河 雄幸
+    '11': {
+        id: '11',
+        name: '桜河 雄幸',
+        gender: 'male',
+        categories: ['relaxation'],
+        specialities: ['relaxation'],
+        specialty: 'ヘッドセラピスト',
+        photo: '../assets/images/sakurazawa1.jpg',
+        thumbnailPhoto: '../assets/images/sakurazawa1.jpg',
+        description: [
+            '平日は会社員、土日祝日はセラピストとして都内を中心に月1～2日週末イベントに出店しております。',
+            'ヘッドマッサージとレイキヒーリングの相性の良さに注目し両方を組み合わせた施術に拘します。',
+            '趣味は社交ダンス巡り、スポーツ観戦、カフェめぐりです。'
+        ],
+        qualifications: [
+            'ヘッドセラピスト1stプロ',
+            'REIKI Third Degree'
+        ],
+        courses: [
+            {
+                title: 'ヘッドセラピー',
+                description: '頭のこりをゆっくり、優しく揉み・摘むマッサージ、肩の揉み、背中をほぐしたり、疲れを取りリラックスする施術です。',
+                duration: '施術時間: 15分'
+            }
+        ],
+        salon_info: {
+            name: '頭のほぐし・ヒーリング 桜河雄幸',
+            url: '',
+            description: '定店舗はございませんが、イベント出店の際、そちらの会場で施術しております。'
+        },
+        treatment_photos: [
+            '../assets/images/sakurazawa2.jpeg',
+            '../assets/images/sakurazawa3.jpeg'
+        ]
     }
 };
 
