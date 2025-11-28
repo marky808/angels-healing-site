@@ -476,6 +476,40 @@ const therapistData = {
             '../assets/images/nakata1.jpg',
             '../assets/images/nakata2.jpg'
         ]
+    },
+    // セラピスト - 山田 洋
+    '13': {
+        id: '13',
+        name: '山田 洋',
+        gender: 'male',
+        categories: ['medical'],
+        specialities: ['medical'],
+        specialty: '整体師',
+        photo: '../assets/images/yamada1.jpg',
+        thumbnailPhoto: '../assets/images/yamada1.jpg',
+        description: [
+            'この仕事につく前にうつ病で４ヶ月入院！その後は嫌いなヤツは自分の人生に登場させないと決める！',
+            '朝活は山中湖でウエイクボード！ジム、サウナ、水風呂でスッキリ！みなさんからのオススメ動画を見ながらノンニコチンシーシャ！'
+        ],
+        qualifications: [
+            '日本疼痛リハビリテーション協会　ディプロマ'
+        ],
+        courses: [
+            {
+                title: '筋膜リリース',
+                description: '筋膜の繋がりを使って緩めていきます！繋がりとは筋膜、経絡、頭蓋、内臓など使っていくので痛い腰だけグリグリするという感じではないです！',
+                duration: '施術時間: 15分'
+            }
+        ],
+        salon_info: {
+            name: '整体院　翔舞',
+            url: 'https://beauty.hotpepper.jp/smartphone/kr/slnH000383417/',
+            description: '痛み、痺れ、コリで悩んでいる方、ハードワークでなんとかしてほしい方、メンテナンスの重要性を理解して継続する方を対象としています。'
+        },
+        treatment_photos: [
+            '../assets/images/yamada2.jpg',
+            '../assets/images/yamada3.jpg'
+        ]
     }
 };
 
