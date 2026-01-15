@@ -544,6 +544,81 @@ const therapistData = {
         treatment_photos: [
             '../assets/images/arayama2.jpg'
         ]
+    },
+    // セラピスト - 亀井 由香
+    '15': {
+        id: '15',
+        name: '亀井 由香',
+        gender: 'female',
+        categories: ['relaxation'],
+        specialities: ['relaxation'],
+        specialty: '彫刻リンパセラピスト',
+        photo: '../assets/images/kamei1.jpg',
+        thumbnailPhoto: '../assets/images/kamei1.jpg',
+        description: [
+            '歯科衛生士の視点で身体を整える。呼吸が深まる、巡りのケア。頑張る身体を、そっとゆるめる。',
+            '彫刻リンパセラピスト／歯科衛生士／マナカードセラピスト',
+            '歯科衛生士として「口・呼吸・筋肉・自律神経」と向き合い、彫刻リンパセラピストとして「巡り・姿勢・本来の美しさ」を整える。',
+            '心と身体は、いつも深くつながっている。だから私は、身体からも心からもアプローチできるセラピストでありたいと思っています。',
+            'リンパケアと口腔・筋肉の専門知識、そしてマナカードによる心への気づきを通して、本来のあなたが、自然体で輝くための癒しをお届けします。'
+        ],
+        qualifications: [
+            '彫刻リンパボディ',
+            'ヘッド',
+            'フェイシャル',
+            'スリミング'
+        ],
+        courses: [
+            {
+                title: '首肩スッキリ彫刻リンパ ヘッド ハンド',
+                description: 'イスに座ったままのトリートメント',
+                duration: '未設定'
+            }
+        ],
+        salon_info: {
+            name: 'Mana_Luana',
+            url: 'https://www.instagram.com/manaluana15',
+            description: '川崎サロン、出張にてトリートメント。岩盤マットでお身体を温めながらのトリートメントは、デトックス効果up、深いリンパへアプローチ出来ます。'
+        },
+        treatment_photos: [
+            '../assets/images/kamei2.jpg',
+            '../assets/images/kamei3.jpg'
+        ]
+    },
+    // セラピスト - 山口 智子
+    '16': {
+        id: '16',
+        name: '山口 智子',
+        gender: 'female',
+        categories: ['relaxation'],
+        specialities: ['relaxation'],
+        specialty: '足踏みセラピスト',
+        photo: '../assets/images/yamaguchi1.jpg',
+        thumbnailPhoto: '../assets/images/yamaguchi1.jpg',
+        description: [
+            '足の裏を使って全身を踏みほぐしていきます。',
+            '若い頃の暴飲暴食がたたり、胃腸の不調をきっかけに健康に興味をもち、セラピストの道へ。',
+            'たまたま足踏みセラピーの学校に行ったことで足踏みセラピストとして温泉で15年、フリーで２年目'
+        ],
+        qualifications: [
+            '足流療術師',
+            'ウイルワンアカデミーセラピストコース卒業',
+            'フットリンパ'
+        ],
+        courses: [
+            {
+                title: '足踏みセラピー',
+                description: '足の裏で全身を踏みほぐしていく技術',
+                duration: '15分 1,500円 / 30分 3,000円'
+            }
+        ],
+        salon_info: {
+            name: '湘南レッグス',
+            description: '出張、レンタルサロンにて施術。40分 4,000円＋出張費1,000円〜'
+        },
+        treatment_photos: [
+            '../assets/images/yamaguchi2.jpg'
+        ]
     }
 };
 
