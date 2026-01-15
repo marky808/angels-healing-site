@@ -510,6 +510,40 @@ const therapistData = {
             '../assets/images/yamada2.jpg',
             '../assets/images/yamada3.jpg'
         ]
+    },
+    // セラピスト - 阿良山 貴也
+    '14': {
+        id: '14',
+        name: '阿良山 貴也',
+        gender: 'male',
+        categories: ['medical'],
+        specialities: ['medical'],
+        specialty: '整体・トレーナー',
+        photo: '../assets/images/arayama1.jpg',
+        thumbnailPhoto: '../assets/images/arayama1.jpg',
+        description: [
+            '貴方の人生がきらきら輝くようサポートいたします！',
+            '立腰整体、立腰体操を通じて、身体の不調に苦しんでいる方や、快適な身体を手に入れたくて色々試したけれどしっくりこないと感じている方の力になりたいと活動しています。',
+            '20年以上社交ダンス、テニスに関わり、4年前から武術の学びも深め、立腰体操トレーナーの最高峰であるプロフェッショナルクラスで身体の在り方を探求し続けています。'
+        ],
+        qualifications: [
+            '立腰整体',
+            '立腰体操トレーナー'
+        ],
+        courses: [
+            {
+                title: '立腰整体',
+                description: '①歪みタイプ（フィジカルタイプ）診断 ②タイプに合わせた身体調整 ③ご自身でできる調整方法をアドバイス',
+                duration: '施術時間: 15分'
+            }
+        ],
+        salon_info: {
+            name: '貴楽良（KIRARA）／たか立腰整体院',
+            url: 'https://tategoshi.jimdofree.com'
+        },
+        treatment_photos: [
+            '../assets/images/arayama2.jpg'
+        ]
     }
 };
 
