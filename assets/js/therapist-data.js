@@ -619,6 +619,46 @@ const therapistData = {
         treatment_photos: [
             '../assets/images/yamaguchi2.jpg'
         ]
+    },
+    // セラピスト - 明石 知子
+    '17': {
+        id: '17',
+        name: '明石 知子',
+        gender: 'female',
+        categories: ['beauty'],
+        specialities: ['beauty'],
+        specialty: 'ドライヘッドスパ',
+        photo: '../assets/images/akashi1.jpg',
+        thumbnailPhoto: '../assets/images/akashi1.jpg',
+        description: [
+            'ヘッド、首肩の凝りをほぐして心も体も整えてリフレッシュしてください。',
+            'エステティシャン、セラピストとして多くのお客様の施術をさせて頂いた経験から、お一人お一人に寄り添いながら、その時々で最善のケアをさせて頂きます。',
+            'スポーツ観戦が好きです♥よろしくお願いします。'
+        ],
+        qualifications: [
+            'AEA上級エステティシャン認定資格',
+            'リンパアドバイザー認定資格',
+            'リラクゼーションセラピスト２級',
+            '耳つぼジュエリー認定資格',
+            'アロマテラピー１級'
+        ],
+        courses: [
+            {
+                title: 'ドライヘッドスパ',
+                description: 'ヘッド、首肩の凝りをほぐして心も体も整えてリフレッシュできる施術です。',
+                duration: '未設定'
+            }
+        ],
+        salon_info: {
+            name: 'リラクゼーション&エステ SHINY',
+            url: 'http://b.hpr.jp/kr/hp/H000677479',
+            photo: '../assets/images/akashi4.png',
+            description: 'ご自身の大切な心と身体を労わるお時間になって頂ければ幸いです。SHINYでは年齢を重ねるほど、美しく、自分らしく輝く☆そんな忙しい女性の癒しの場になれたら嬉しいです。'
+        },
+        treatment_photos: [
+            '../assets/images/akashi2.jpg',
+            '../assets/images/akashi3.jpg'
+        ]
     }
 };
 
