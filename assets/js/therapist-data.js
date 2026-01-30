@@ -659,6 +659,40 @@ const therapistData = {
             '../assets/images/akashi2.jpg',
             '../assets/images/akashi3.jpg'
         ]
+    },
+    // セラピスト - 濵﨑麻依
+    '18': {
+        id: '18',
+        name: '濵﨑 麻依',
+        gender: 'female',
+        categories: ['medical'],
+        specialities: ['medical'],
+        specialty: '看護師・アロマセラピスト',
+        photo: '../assets/images/hamasaki1.jpg',
+        thumbnailPhoto: '../assets/images/hamasaki1.jpg',
+        description: [
+            '自分らしくいきいき過ごせるお手伝い。こころとからだに寄り添うやさしいケアです。',
+            '在宅の現場で看護師として働く中で、支える立場の方ほど自分を後回しにしてしまう現実を感じてきました。心と体がふっと緩む時間を大切に、リンパケアを行なっています。'
+        ],
+        qualifications: [
+            '正看護師',
+            'メディカルエステ協会アロマセラピスト'
+        ],
+        courses: [
+            {
+                title: 'リフレクソロジー（膝下）',
+                description: 'オイルを使用しやさしくマッサージすることで、全身の血液やリンパの流れを整えるケアです。',
+                duration: '未設定'
+            }
+        ],
+        salon_info: {
+            name: 'to me.care',
+            description: '横須賀市を中心に活動しています。サロン、訪問にて施術いたします。'
+        },
+        treatment_photos: [
+            '../assets/images/hamasaki2.jpg',
+            '../assets/images/hamasaki3.jpg'
+        ]
     }
 };
 
