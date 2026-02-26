@@ -410,15 +410,11 @@ footer {
 }
 
 .footer-info {
-    max-width: 30%;
+    max-width: 50%;
 }
 
 .footer-links {
-    max-width: 30%;
-}
-
-.footer-company {
-    max-width: 30%;
+    max-width: 50%;
 }
 
 .footer-logo {
@@ -639,7 +635,7 @@ footer {
         flex-direction: column;
     }
     
-    .footer-info, .footer-links, .footer-company {
+    .footer-info, .footer-links {
         max-width: 100%;
         margin-bottom: 30px;
     }
