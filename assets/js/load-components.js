@@ -115,8 +115,9 @@ async function loadComponent(element, componentType) {
         
         if (DEBUG_MODE) console.log(`コンポーネントを読み込み中: ${adjustedPath}`);
         
-        // コンポーネントのHTMLを取得
-        const response = await fetch(adjustedPath);
+        // コンポーネントのHTMLを取得（キャッシュバスティング付き）
+        const cacheBuster = new Date().getTime();
+        const response = await fetch(`${adjustedPath}?v=${cacheBuster}`);
         
         if (!response.ok) {
             throw new Error(`HTTPエラー: ${response.status} - ${adjustedPath}`);
