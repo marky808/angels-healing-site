@@ -1,0 +1,322 @@
+/* 会社概要ページ専用スタイル */
+
+/* Hero Section */
+.company-hero {
+    background: linear-gradient(135deg, #4a7c59, #5e996e);
+    padding: 120px 0 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.company-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><circle cx="40" cy="40" r="1.5" fill="rgba(255,255,255,0.08)"/></svg>') repeat;
+    background-size: 40px 40px;
+}
+
+.company-hero-inner {
+    position: relative;
+    z-index: 1;
+}
+
+.company-hero h1 {
+    color: #fff;
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 0.05em;
+}
+
+.company-hero p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.2rem;
+}
+
+/* 会社情報セクション */
+.company-info-section {
+    padding: 80px 0;
+    background-color: #fff;
+}
+
+.company-info-card {
+    max-width: 800px;
+    margin: 50px auto 0;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.company-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.company-table tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.3s ease;
+}
+
+.company-table tr:last-child {
+    border-bottom: none;
+}
+
+.company-table tr:hover {
+    background-color: #f9fdfb;
+}
+
+.company-table th {
+    width: 200px;
+    padding: 22px 30px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: #f8fbf9;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.company-table th i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.company-table td {
+    padding: 22px 30px;
+    color: var(--dark-text);
+    line-height: 1.7;
+}
+
+/* 事業内容セクション */
+.company-business-section {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+}
+
+.business-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.business-card {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 4px solid var(--primary-color);
+}
+
+.business-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.business-card-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 25px;
+    background: linear-gradient(135deg, rgba(74, 124, 89, 0.1), rgba(94, 153, 110, 0.15));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.business-card:hover .business-card-icon {
+    transform: scale(1.1);
+}
+
+.business-card h3 {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.business-card p {
+    color: #555;
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+/* アクセスセクション */
+.company-access-section {
+    padding: 80px 0;
+    background-color: #fff;
+}
+
+.access-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    margin-top: 50px;
+    align-items: start;
+}
+
+.access-info {
+    background: #f8fbf9;
+    border-radius: 12px;
+    padding: 30px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.access-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.access-detail > i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+.access-detail h4 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.access-detail p {
+    color: #555;
+    line-height: 1.7;
+}
+
+.access-map {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* CTAセクション（corporate.cssから継承） */
+.contact-cta-section {
+    padding: 80px 0;
+    background-color: #f0f7f4;
+    text-align: center;
+}
+
+.contact-cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.contact-cta-content h2 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+.contact-cta-content p {
+    color: #666;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.cta-icon {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* レスポンシブ */
+@media (max-width: 992px) {
+    .access-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .company-hero {
+        padding: 100px 20px 60px;
+    }
+
+    .company-hero h1 {
+        font-size: 2rem;
+    }
+
+    .company-hero p {
+        font-size: 1rem;
+    }
+
+    .company-info-section,
+    .company-business-section,
+    .company-access-section {
+        padding: 50px 0;
+    }
+
+    .company-table th {
+        width: 130px;
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+
+    .company-table td {
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+
+    .business-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .contact-cta-content h2 {
+        font-size: 1.6rem;
+    }
+
+    .contact-cta-content p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .company-hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .company-table th,
+    .company-table td {
+        display: block;
+        width: 100%;
+        padding: 12px 20px;
+    }
+
+    .company-table th {
+        background-color: #f0f7f4;
+        border-bottom: none;
+        padding-bottom: 5px;
+    }
+
+    .company-table td {
+        padding-top: 5px;
+        padding-bottom: 18px;
+    }
+
+    .company-table tr {
+        border-bottom: 1px solid #e8e8e8;
+    }
+}
