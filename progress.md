@@ -12,11 +12,12 @@
 - [x] ローカルHTTPサーバで /user-portal/therapists.html, therapist-detail.html?id=19, gibo1〜4.jpg が 200 を返すことを確認
 
 ## 進行中
-- [ ] ドラフトPR作成 + /code-review 実行 ← 今ここ
+- [x] ドラフトPR #3 作成
+- [x] /code-review 初回実行 → 信頼度85でキャッシュバスティング未更新を指摘
+- [x] 指摘修正: user-portal/*.php 4ファイルの ?v=20260131 → ?v=20260423 に更新
+- [ ] /code-review 再実行 → 指摘ゼロ確認 ← 今ここ
 
 ## 未着手
-- [ ] 信頼度80以上の指摘を修正
-- [ ] /code-review で指摘ゼロ確認
 - [ ] ドラフト解除 → マージ
 
 ## 注意事項・ブロッカー
