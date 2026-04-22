@@ -693,6 +693,48 @@ const therapistData = {
             '../assets/images/hamasaki2.jpg',
             '../assets/images/hamasaki3.jpg'
         ]
+    },
+    // セラピスト - 宜保香代子
+    '19': {
+        id: '19',
+        name: '宜保 香代子',
+        gender: 'female',
+        categories: ['medical'],
+        specialities: ['medical'],
+        specialty: '氣功整体セラピスト',
+        photo: '../assets/images/gibo1.jpg',
+        thumbnailPhoto: '../assets/images/gibo1.jpg',
+        description: [
+            '看護師30年 × 心と体をふんわり整える氣功整体',
+            '看護師30年の経験からお薬だけに頼らない氣功整体をお届けしています。',
+            '体と心をふんわり整え、笑顔と元気と喜びを取り戻すお手伝いをしています。'
+        ],
+        qualifications: [
+            '看護師国家資格',
+            '氣功整体セラピスト（一般社団法人 日本おうち整体®︎協会 認定セラピスト）'
+        ],
+        courses: [
+            {
+                title: '上半身ゆるほぐし（座ったまま）',
+                description: '首、肩、背中、頭のコリを優しく触れながら緩めていきます。氣血の巡りを整えることで、頭や目がスッキリし呼吸も楽に。短時間でも動きの軽さを実感できます。',
+                duration: '未設定'
+            },
+            {
+                title: '全身リフレッシュほぐし（横になって）',
+                description: '頭からつま先までお体の状態を見ながら不調箇所を優しく整えていきます。氣血の巡りを高め、深いコリや緊張を緩めることで、まるで鎧を脱いだような軽やかさへ。体だけでなく、心までふっと緩む深いリラックスを感じていただけます。',
+                duration: '未設定'
+            }
+        ],
+        salon_info: {
+            name: 'ふんわり',
+            url: 'https://smart.reservestock.jp/48162',
+            photo: '../assets/images/gibo4.jpg',
+            description: 'サロンは持たず、出張やレンタルスペースにて施術を行っています。その方のご都合に合わせて場所やお時間は柔軟にご相談いただけます。毎週木曜日は氣功整体の体験も開催中。年齢を問わず初めての方にも安心して受けていただける優しい施術です。看護師歴30年の経験を生かし、体だけでなく、心までふんわり整うケアを大切にしています。一人ひとりに丁寧に寄り添いながらホッと力が抜けるような時間をお届けします。'
+        },
+        treatment_photos: [
+            '../assets/images/gibo2.jpg',
+            '../assets/images/gibo3.jpg'
+        ]
     }
 };
 
