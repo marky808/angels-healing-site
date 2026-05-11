@@ -735,6 +735,51 @@ const therapistData = {
             '../assets/images/gibo2.jpg',
             '../assets/images/gibo3.jpg'
         ]
+    },
+    // セラピスト - 桑原 真莉子
+    '20': {
+        id: '20',
+        name: '桑原 真莉子',
+        gender: 'female',
+        categories: ['beauty'],
+        specialities: ['beauty'],
+        specialty: 'PERFECT RE:SET',
+        photo: '../assets/images/kuwahara1.png',
+        thumbnailPhoto: '../assets/images/kuwahara1.png',
+        description: [
+            '全身バランスを整えることでカラダの負担が減り、美と健康を同時に手に入れられます。',
+            '私自身、TVで紹介されてる方の施術を受けてもなかなか改善せず、諦めていた時に出会った冨田勝先生のRE:SET。今は20代よりカラダが軽く、肩凝りってどんな状態？と思うほどに。正しい知識とセルフケアでカラダは変わり、良い状態をキープできます。'
+        ],
+        qualifications: [
+            'RE:SET Auto Update Therapy コース修了',
+            'RESET Advanced course 修了'
+        ],
+        courses: [
+            {
+                title: '首肩スッキリ小顔ケア',
+                description: '科学的に証明された技術で効果実感！優しい施術で揉み返しがなく、首凝り肩凝り解消と小顔が同時に叶うケア',
+                duration: '未設定'
+            },
+            {
+                title: 'ウエストサイズダウン！腰軽可動域UPケア',
+                description: '科学的に証明された技術で効果実感！優しい施術で揉み返しがなく、腰痛改善とウエストダウンが同時に叶うケア',
+                duration: '未設定'
+            },
+            {
+                title: '肩凝り首凝り腰痛改善！小顔とウエストスッキリも叶うケア',
+                description: '科学的に証明された技術で効果実感！優しい施術で揉み返しがなく、首凝り肩凝り腰痛解消と小顔、ウエストダウンの健康・美容が同時に叶う全身ケア',
+                duration: '未設定'
+            }
+        ],
+        salon_info: {
+            name: 'PERFECT RE:SET',
+            url: 'https://perfect-reset-bodymake.com/',
+            photo: '../assets/images/kuwahara3.png',
+            description: 'RE:SET®️は臨床試験を行い、エビデンスが取得され、科学的に矯正効果が証明されている技術です。また、「医学と薬学」にも論文掲載された矯正法となります。当院では、脳とカラダの本質を知り、バランスを学ぶことで、再発しない方法と究極の「健康」「美容」「アンチエイジング」を手に入れ、対症療法、肩凝り、腰痛、たるみからも卒業することができます。全身のバランスを真から整えることで、"受ける整体"から"手に入れる整体"に導き、良い状態をキープすることがきる根本改善を行なっています。'
+        },
+        treatment_photos: [
+            '../assets/images/kuwahara2.png'
+        ]
     }
 };
 
