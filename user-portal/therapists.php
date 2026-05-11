@@ -14,7 +14,7 @@ requireAuth('therapists.php');
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="../assets/js/therapist-data.js?v=20260423"></script>
+    <script src="../assets/js/therapist-data.js?v=20260512"></script>
 </head>
 <body>
     <!-- ヘッダーコンポーネント -->
