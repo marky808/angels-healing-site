@@ -23,3 +23,6 @@ latest.zip
 # 手書きPlaywright検証スクリプト（使い捨て）
 tmp/
 
+# ログイン試行レート制限の実行時データ
+user-portal/.login_attempts.json
+

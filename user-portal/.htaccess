@@ -1,6 +1,11 @@
 # セキュリティ設定
 Options -Indexes
 
+# ログイン試行記録ファイルへの直接アクセスを禁止
+<Files ".login_attempts.json">
+    Require all denied
+</Files>
+
 # PHPセッション設定
 php_value session.cookie_httponly 1
 php_value session.use_strict_mode 1

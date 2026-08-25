@@ -9,6 +9,59 @@ $correct_password = '104184';
 // LINE公式アカウント用の特別アクセストークン
 $line_access_token = 'LINE_ANGELS_HEALING_2024';
 
+// ブルートフォース対策：IPごとのログイン失敗回数を制限
+// （contact.phpのreCAPTCHAスキップがこのセッションに紐づくため、共有パスワードの
+// 総当たりを防ぐ必要がある）
+define('LOGIN_RATE_LIMIT_FILE', __DIR__ . '/.login_attempts.json');
+define('LOGIN_RATE_LIMIT_MAX', 5);
+define('LOGIN_RATE_LIMIT_WINDOW', 900); // 15分
+
+function isLoginRateLimited() {
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    if ($ip === '' || !file_exists(LOGIN_RATE_LIMIT_FILE)) {
+        return false;
+    }
+    $content = @file_get_contents(LOGIN_RATE_LIMIT_FILE);
+    $attempts = $content ? (json_decode($content, true) ?: []) : [];
+    if (!isset($attempts[$ip])) {
+        return false;
+    }
+    if (time() - $attempts[$ip]['first'] > LOGIN_RATE_LIMIT_WINDOW) {
+        return false;
+    }
+    return $attempts[$ip]['count'] >= LOGIN_RATE_LIMIT_MAX;
+}
+
+function recordLoginFailure() {
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+    if ($ip === '') {
+        return;
+    }
+    $fp = @fopen(LOGIN_RATE_LIMIT_FILE, 'c+');
+    if (!$fp) {
+        return; // 書き込めない場合はレート制限をスキップ（ログイン自体は継続させる）
+    }
+    flock($fp, LOCK_EX);
+    $size = filesize(LOGIN_RATE_LIMIT_FILE);
+    $attempts = $size > 0 ? (json_decode(fread($fp, $size), true) ?: []) : [];
+    $now = time();
+    foreach ($attempts as $key => $data) {
+        if ($now - $data['first'] > LOGIN_RATE_LIMIT_WINDOW) {
+            unset($attempts[$key]);
+        }
+    }
+    if (isset($attempts[$ip])) {
+        $attempts[$ip]['count']++;
+    } else {
+        $attempts[$ip] = ['count' => 1, 'first' => $now];
+    }
+    ftruncate($fp, 0);
+    rewind($fp);
+    fwrite($fp, json_encode($attempts));
+    flock($fp, LOCK_UN);
+    fclose($fp);
+}
+
 // トークンによる自動認証チェック（GETパラメータ）
 if (isset($_GET['token']) && $_GET['token'] === $line_access_token) {
     $_SESSION['portal_authenticated'] = true;
@@ -30,17 +83,20 @@ function isLoggedIn() {
 
 // パスワード認証処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
-    if ($_POST['password'] === $correct_password) {
+    if (isLoginRateLimited()) {
+        $error_message = 'ログイン試行回数が上限に達しました。しばらく時間をおいて再度お試しください。';
+    } elseif ($_POST['password'] === $correct_password) {
         $_SESSION['portal_authenticated'] = true;
         $_SESSION['authenticated_via'] = 'password';
-        
+
         // リダイレクト先を決定
         $redirect_to = isset($_SESSION['requested_page']) ? $_SESSION['requested_page'] : 'index.php';
         unset($_SESSION['requested_page']);
-        
+
         header('Location: ' . $redirect_to);
         exit;
     } else {
+        recordLoginFailure();
         $error_message = 'パスワードが正しくありません。';
     }
 }
