@@ -21,7 +21,7 @@
 - ⑤ reCAPTCHAスコア閾値の見直し（ロリポップ管理画面のエラーログ確認待ち、ユーザー調査中）
 
 ## 注意事項・ブロッカー
-- 【緊急・別件】レビュー中にPRと無関係な重大な脆弱性を発見: components/from/fffm.php が認証なし（$use_auth=false）のPHPファイルマネージャで、$root_path=DOCUMENT_ROOTのままリポジトリに残存し本番にもデプロイされている（deploy.ymlの除外対象外）。過去2回削除されたが2025-09-14のリファクタリングコミットで誤って復活。要早急対応。
+- 【緊急対応済み】components/from/fffm.php（認証なしPHPファイルマネージャ、$use_auth=false・$root_path=DOCUMENT_ROOT）を削除しPR #6でマージ・デプロイ完了(2026-08-26)。過去2回削除されたが2025-09-14のリファクタリングコミットで誤って復活していたもの。再発防止（deploy.ymlの除外リスト整備や定期棚卸し）は未着手、必要なら別途検討。
 - dryrun_report.md は git 管理外のローカル一時資料（コミットせず）。
 - ローカル検証用に C:\tools\php (PHP 8.3) と composer.phar を導入済み。vendor/, node_modules/, .env はテスト後に都度削除している。
 
