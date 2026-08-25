@@ -40,8 +40,13 @@ requireAuth('contact-form.php');
                 </div>
             <?php endif; ?>
 
-            <!-- 既存のcontact.phpに送信（リファラー判定でポータル用処理される） -->
-            <form action="../contact.php" method="POST" class="contact-form-inner">
+            <!-- 既存のcontact.phpに送信（ログイン済みセッションでポータル用処理される） -->
+            <form action="../contact.php" method="POST" class="contact-form-inner" id="portalContactForm">
+                <input type="hidden" name="form_elapsed_ms" id="formElapsedMs" value="0">
+                <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+                    <label for="website">Website</label>
+                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                </div>
                 <div class="form-group">
                     <label for="name">お名前 <span class="required">*</span></label>
                     <input type="text" id="name" name="name" required>
@@ -88,5 +93,16 @@ requireAuth('contact-form.php');
     <div id="footer" data-component="portal-footer"></div>
 
     <script src="../assets/js/load-components.js"></script>
+    <script>
+        // フォーム表示時刻を記録（bot対策：入力にかかった時間をサーバー側で検証）
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('portalContactForm');
+            if (!form) return;
+            const formLoadTime = Date.now();
+            form.addEventListener('submit', function() {
+                document.getElementById('formElapsedMs').value = Date.now() - formLoadTime;
+            });
+        });
+    </script>
 </body>
 </html>
