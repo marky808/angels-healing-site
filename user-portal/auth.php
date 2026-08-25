@@ -1,4 +1,6 @@
 <?php
+// contact.php（ルート直下）と同じセッションを参照できるようCookieパスを揃える
+session_set_cookie_params(['path' => '/']);
 session_start();
 
 // パスワード設定（実際のパスワードに変更してください）

@@ -1,6 +1,11 @@
 <?php
 // PHPによるお問い合わせフォーム処理
 
+// ユーザーポータルの認証セッションを参照するため、Cookieパスを揃えて開始
+// （Refererヘッダーは送信側が自由に偽装できるため、認証判定には使用しない）
+session_set_cookie_params(['path' => '/']);
+session_start();
+
 require 'vendor/autoload.php';
 
 // Load environment variables
@@ -11,25 +16,33 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-// 送信元のリファラーを検証
-$referrer = $_SERVER['HTTP_REFERER'] ?? '';
-// ローカル環境用にlocalhost/127.0.0.1も許可
-// if (strpos($referrer, 'angels-healing.com') === false && 
-//     strpos($referrer, 'frenchkiss.jp-angels-healing') === false &&
-//     strpos($referrer, 'localhost') === false && 
-//     strpos($referrer, '127.0.0.1') === false) {
-//     die('不正なリクエストです。');
-// }
-
 // POSTデータの取得と検証
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.html');
     exit;
 }
 
-// reCAPTCHA 検証（ユーザーポータルからのリクエストは除外）
-$referrer = $_SERVER['HTTP_REFERER'] ?? '';
-if (strpos($referrer, 'user-portal') === false) {
+// ユーザーポータルからの問い合わせか（ログイン済みセッションの有無で判定）
+$is_portal = isset($_SESSION['portal_authenticated']) && $_SESSION['portal_authenticated'] === true;
+
+// ハニーポット検証（bot が自動入力しがちな非表示フィールド）
+$honeypot = $_POST['website'] ?? '';
+if ($honeypot !== '') {
+    error_log('ハニーポット検知: bot と判定されました, IP: ' . $_SERVER['REMOTE_ADDR']);
+    header('Location: form-error.html');
+    exit;
+}
+
+// タイムトラップ検証（フォーム表示から送信までの経過時間が短すぎる場合はbotと判定）
+$elapsed_ms = isset($_POST['form_elapsed_ms']) ? (int)$_POST['form_elapsed_ms'] : 0;
+if ($elapsed_ms < 2000) {
+    error_log('タイムトラップ検知: 入力が速すぎます (' . $elapsed_ms . 'ms), IP: ' . $_SERVER['REMOTE_ADDR']);
+    header('Location: form-error.html');
+    exit;
+}
+
+// reCAPTCHA 検証（ユーザーポータルの認証済みセッションからのリクエストは除外）
+if (!$is_portal) {
     $recaptcha_secret = $_ENV['RECAPTCHA_SECRET_KEY']; // シークレットキー
     $recaptcha_response = $_POST['recaptcha_response'] ?? '';
 
@@ -96,9 +109,7 @@ $message = isset($_POST['message']) ? htmlspecialchars($_POST['message'], ENT_QU
 
 // 必須項目のチェック
 if (empty($name) || empty($email) || empty($message)) {
-    // リファラーに基づいてリダイレクト先を決定
-    $referrer = $_SERVER['HTTP_REFERER'] ?? '';
-    if (strpos($referrer, 'user-portal') !== false) {
+    if ($is_portal) {
         header('Location: user-portal/index.php?error=required');
     } else {
         header('Location: index.html?error=required');
@@ -108,9 +119,7 @@ if (empty($name) || empty($email) || empty($message)) {
 
 // メールアドレスの形式チェック
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    // リファラーに基づいてリダイレクト先を決定
-    $referrer = $_SERVER['HTTP_REFERER'] ?? '';
-    if (strpos($referrer, 'user-portal') !== false) {
+    if ($is_portal) {
         header('Location: user-portal/index.php?error=email');
     } else {
         header('Location: index.html?error=email');
@@ -120,10 +129,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 // メールの件名と本文を作成
 $subject = "【天使たちの癒し】お問い合わせがありました";
-
-// ポータルからのお問い合わせか企業からのお問い合わせかを判定
-$referrer = $_SERVER['HTTP_REFERER'] ?? '';
-$is_portal = strpos($referrer, 'user-portal') !== false;
 
 if ($is_portal) {
     // ポータル用のメール本文

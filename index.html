@@ -131,6 +131,11 @@
                 </div>                  <form action="contact.php" method="POST" id="contactForm">
                     <input type="hidden" name="_subject" value="【天使たちの癒し】お問い合わせがありました">
                     <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+                    <input type="hidden" name="form_elapsed_ms" id="formElapsedMs" value="0">
+                    <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+                        <label for="website">Website</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
                     <div class="form-group">
                         <label for="company">会社名/施設名</label>
                         <input type="text" id="company" name="company" required>
@@ -183,21 +188,26 @@
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('contactForm');
             if (!form) return;
-            
+
             console.log('お問い合わせフォームを発見しました');
-            
+
+            // フォーム表示時刻を記録（bot対策：入力にかかった時間をサーバー側で検証）
+            const formLoadTime = Date.now();
+
             // reCAPTCHAトークンを取得してフォーム送信
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
                 // console.log('reCAPTCHA検証を実行中...');
-                
+
+                document.getElementById('formElapsedMs').value = Date.now() - formLoadTime;
+
                 // reCAPTCHAが読み込まれているか確認
                 if (typeof grecaptcha === 'undefined') {
                     // console.warn('reCAPTCHAが読み込まれていません。通常のフォーム送信を試みます。');
                     form.submit();
                     return;
                 }
-                
+
                 grecaptcha.ready(function() {
                     grecaptcha.execute('6LdGFv4rAAAAAKrqL6sPlmcSMhlYDiAKJYmBsyTx', {action: 'submit'})
                         .then(function(token) {
