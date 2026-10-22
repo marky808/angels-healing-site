@@ -1,0 +1,38 @@
+# 公開してはいけないファイルへのアクセス拒否（2026-10-22 の巻き戻し事故を受けた対策）
+# ※ user-portal/.htaccess は RewriteEngine を独自に持つため、下の RewriteRule は
+#    user-portal 配下には効かない。FilesMatch は配下にも継承される。
+
+Options -Indexes
+
+# ドット始まりのファイル（.env, .git* , .ftp-deploy-sync-state.json, .htaccess など）
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# バックアップ・アーカイブ・ログ・DBダンプ類
+<FilesMatch "\.(zip|tar|gz|tgz|7z|rar|bak|old|orig|sql|log|swp)$">
+    Require all denied
+</FilesMatch>
+
+# テスト・デバッグ・バックアップ用ページ、依存管理・ドキュメント類
+<FilesMatch "^(debug-.*\.html|form-test\.html|form-test\.js|index-backup\.html|index-clean\.html|test\.php|composer\.(json|lock)|start-server\.cmd)$">
+    Require all denied
+</FilesMatch>
+
+# メモ・ドキュメント（robots.txt は除外）
+<FilesMatch "\.md$">
+    Require all denied
+</FilesMatch>
+<FilesMatch "^(?!robots\.txt$).+\.txt$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # ドット始まりのディレクトリ配下（.git/ .claude/ .vscode/ など）。.well-known は除外
+    RewriteRule (^|/)\.(?!well-known(/|$)) - [F,L]
+
+    # サーバー内部用ディレクトリ
+    RewriteRule ^(vendor|bot_script|node_modules)(/|$) - [F,L]
+</IfModule>
