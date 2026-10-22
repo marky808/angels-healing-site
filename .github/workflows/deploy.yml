@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  # 手動実行は常にdry-run（変更内容をログに出すだけで、サーバーは変更しない）
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -20,6 +22,9 @@ jobs:
           server: ftp.lolipop.jp
           username: frenchkiss.jp-angels-healing
           password: ${{ secrets.FTP_PASSWORD }}
+          # 手動実行(workflow_dispatch)のときだけdry-run。push(main)は通常デプロイ
+          dry-run: ${{ github.event_name == 'workflow_dispatch' }}
+          # 状態ファイルは .htaccess の「ドット始まりのファイル拒否」で外部から見えなくする
           exclude: |
             **/.git*
             **/.git*/**
@@ -31,3 +36,5 @@ jobs:
             **/start-server.cmd
             **/.github*
             **/.github*/**
+            **/tests
+            **/tests/**
